@@ -11,6 +11,7 @@
     <Folder Include="Areas\Backend\Models\" />
     <Folder Include="Areas\Frontend\Data\" />
     <Folder Include="Areas\Frontend\Models\" />
+    <Folder Include="DB_backup\" />
     <Folder Include="wwwroot\data\" />
   </ItemGroup>
 

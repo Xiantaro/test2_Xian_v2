@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using test2.Models;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
+using test2.Models.ManagementModels.ZhongXian.BorrowQuery;
 
 namespace test2.Areas.Backend.Controllers
 {
@@ -43,6 +44,77 @@ namespace test2.Areas.Backend.Controllers
         // 借閱查詢_查詢列表_partial
         public IActionResult BorrowResult(string borrow_BorrowID = "All", string borrow_UserID = "All", string borrow_bookNum = "All", string borrow_state = "All", DateTime? borrow_initDate = null, DateTime? borrow_lastDate = null, string borrow_perPage = "10", string borrow_date = "borrowDate", string borrow_order = "desc", int page = 1)
         {
+
+
+            Debug.WriteLine("已進入查詢!!!!!!!!!!!!!!!!!");
+            bool BorrowIsEmptyFilter()
+            {
+                return borrow_BorrowID == null &&
+                    borrow_bookNum == null &&
+                    borrow_UserID == null &&
+                    borrow_initDate == null &&
+                    borrow_lastDate == null &&
+                    borrow_state == "ALL";
+            }
+            Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookNum} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_OrderDate} + {borrow_orderBy} + 頁數: {page}");
+            Debug.WriteLine("開始進行查詢");
+            var result = _context.Set<Borrow>().Include(x => x.Collection).ThenInclude(x => x.Book).Include(user => user.CIdNavigation).Include(statu => statu.BorrowStatus).Select(result => new BorrowQueryDTO
+            {
+                borrowId = result.BorrowId,
+                collectionId = result.CollectionId,
+                title = result.Collection.Book.Title,
+                cId = result.CId,
+                cName = result.CIdNavigation.CName,
+                borrowDate = result.BorrowDate,
+                dueDate = result.DueDate,
+                returnDate = result.ReturnDate,
+                borrowStatus = result.BorrowStatus.BorrowStatus1
+            }).AsQueryable();
+
+            // 各種條件的篩選
+            if (borrow_BorrowID != null) { result = result.Where(id => id.borrowId == borrow_BorrowID); }
+            if (borrow_UserID != null) { result = result.Where(id => id.cId == borrow_UserID); }
+            if (borrow_bookNum != null) { result = result.Where(id => id.collectionId == borrow_bookNum); }
+
+            if (borrow_initDate != null && borrow_lastDate == null) { result = result.Where(id => id.borrowDate > borrow_initDate); }
+            if (borrow_initDate == null && borrow_lastDate != null) { result = result.Where(id => id.borrowDate < borrow_lastDate); }
+            if (borrow_initDate != null && borrow_lastDate != null)
+            {
+                DateTime? StartTime = borrow_initDate;
+                if (borrow_initDate > borrow_lastDate) { StartTime = borrow_lastDate; result = result.Where(id => id.borrowDate < borrow_initDate && id.borrowDate > borrow_lastDate); }
+                else { result = result.Where(id => id.borrowDate > borrow_initDate && id.borrowDate < borrow_lastDate); }
+            }
+            if (borrow_state != "ALL") result = result.Where(id => id.borrowStatus == borrow_state);
+            if (BorrowIsEmptyFilter()) { result = result.Where(re => re.borrowDate <= DateTime.Now && re.borrowDate >= DateTime.Now.AddMonths(-2)); }
+            // 各種條件的篩選 END
+
+            result = (borrow_OrderDate, borrow_orderBy) switch
+            {
+                ("borrowDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+                ("borrowDate", "asc") => result.OrderBy(x => x.borrowDate),
+                ("dueDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+                ("dueDate", "asc") => result.OrderBy(x => x.borrowDate),
+                ("returnDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+                ("returnDate", "asc") => result.OrderBy(x => x.borrowDate)
+            };
+            var totalCount = await result.CountAsync();
+            if (totalCount == 0) return Json(0);
+
+
+            var BorrowResultPage = await result.Skip((page - 1) * borrow_perPage).Take(borrow_perPage).ToListAsync();
+
+            var BorrowQueryViewModels2 = new BorrowQueryViewModel()
+            {
+                BorrowQueryDTOs = BorrowResultPage,
+                TotalCount = totalCount,
+                TotalPage = (int)Math.Ceiling((double)totalCount / borrow_perPage),
+                CurrentPage = page,
+                FromIndex = (page - 1) * borrow_perPage + 1,
+                ToIndex = Math.Min(page * borrow_perPage, totalCount)
+            };
+
+
+
             Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookNum} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_date} + {borrow_order} + 頁數: {page}");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowResultPartial.cshtml");
         }
@@ -71,20 +143,22 @@ namespace test2.Areas.Backend.Controllers
                 title = BookInfo?.Title ?? "查無此書本!!",
                 bookid = borrwoMode_BookId
             };
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeContent.cshtml", result);
+            return PartialView("~/Areas/Backend/Views/Shared/Manage/BorrowModeContent.cshtml", result);
         }
         // 借書模式_借書人資訊
         public async Task<IActionResult> BorrowUserMessage(int userId)
         {
+            Debug.WriteLine("借書人資訊訊借書人資訊訊借書人資訊訊借書人資訊訊");
             var UserInfoamtion = await _context.Clients.Where(x => x.CId == userId).Select(result => new BorrowUser
             {
                 cId = result.CId,
                 cName = result.CName
             }).ToListAsync();
-
+            Debug.WriteLine("++++++++++++++++++++++++++++++++++++");
             if (UserInfoamtion.Count != 1) { return Json(false); }
-            Debug.WriteLine(UserInfoamtion);
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeUser.cshtml", UserInfoamtion);
+            
+            Debug.WriteLine("哈哈哈"+UserInfoamtion);
+            return PartialView("~/Areas/Backend/Views/Manage/BorrowModeUser.cshtml", UserInfoamtion);
         }
         // 借書模式_書本資訊
         public async Task<IActionResult> BorrowBookMessage(string bookId)
@@ -92,7 +166,7 @@ namespace test2.Areas.Backend.Controllers
             var BookInformation = await _context.Set<BorrowBookInfomationDTO>().FromSqlInterpolated($"EXEC BookInfomationForBorrow {bookId}").ToListAsync();
             if (BookInformation.Count != 1) { return Json(false); }
             Debug.WriteLine(bookId);
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeBook.cshtml", BookInformation);
+            return PartialView("~/Areas/Backend/Views/Manage/BorrowModeBook.cshtml", BookInformation);
         }
         #endregion 借閱模式END
 
@@ -104,7 +178,7 @@ namespace test2.Areas.Backend.Controllers
         public IActionResult ReturnBookSend(string ReturnBookID)
         {
             Debug.WriteLine($"借閱者{ReturnBookID}還書成功");
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_returnBookContent.cshtml");
+            return PartialView("~/Areas/Backend/Views/Manage/ReturnBookContent.cshtml");
         }
         #endregion 還書模式 END
 
@@ -118,12 +192,12 @@ namespace test2.Areas.Backend.Controllers
         {
             Debug.WriteLine("書本預約狀況 載入成功...." + "使用者ID: " + appointmentMode_UserID + "書籍ID: " + appointmentMode_BookNumber);
 
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appoimtmentContent.cshtml", appointmentMode_UserID);
+            return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentContent.cshtml", appointmentMode_UserID);
         }
         public IActionResult AppointmentMode1Query(string keyWord, string state, string pageCount)
         {
             Debug.WriteLine($"預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}");
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appoimtmentModeQuery.cshtml");
+            return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml");
         }
         #endregion
 

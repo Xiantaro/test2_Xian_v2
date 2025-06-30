@@ -97,6 +97,7 @@ function BorrowModeMode() {
 // 動態搜尋 借閱者
 function BorrowModeModeUserDynamic() {
     $("#BorrowModeSuccessContent").html("");
+    console.log("借閱者動態查詢");
     let userId = $("#borrwoMode_UserID").val().trim();
     if (userId === "") { $("#BorrowModeUser").html(pleaseInputUserId); return; }
     $.post("/Backend/Manage/BorrowUserMessage", { userId: userId }, (result) => {
@@ -106,6 +107,7 @@ function BorrowModeModeUserDynamic() {
 }
 // 動態搜尋 書本資訊
 function BorrowModeModeBookDynamic() {
+    console.log("書本資訊");
     $("#BorrowModeSuccessContent").html("");
     let bookId = $("#borrwoMode_BookNumber").val().trim();
     if (bookId === "") { $("#BorrowModeBook").html(pleaseInputBookId); return; }
