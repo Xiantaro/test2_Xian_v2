@@ -1,0 +1,81 @@
+﻿@{
+    DateTime NowTime = DateTime.Now;
+    string twoMonth = NowTime.AddMonths(-2).ToString("yyyy-MM-dd");
+    string DateTiemNow = NowTime.ToString("yyyy-MM-dd");
+}
+<!-- 主內容 START -->
+<div class="row mt-1">
+    <div class="col">
+        <!-- 搜尋 START-->
+        <form id="appointmenSearch" class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+            <!-- 查詢表單欄位 -->
+            <div class="d-flex flex-wrap gap-3">
+                <div>
+                    <label class="form-label mb-0">預約編號：</label>
+                    <input name="appointment_reservationNum" type="text" class="form-control form-control-sm" placeholder="All" />
+                </div>
+                <div>
+                    <label class="form-label mb-0">借閱人ID：</label>
+                    <input name="appointment_UserID" type="text" class="form-control form-control-sm" placeholder="All" />
+                </div>
+                <div>
+                    <label class="form-label mb-0">書籍編號：</label>
+                    <input name="appointment_bookNum" type="text" class="form-control form-control-sm" placeholder="All" />
+                </div>
+                <div>
+                    <label for="appointment_initDate" class="form-label mb-0">預約日期範圍</label>
+                    <input id="appointment_initDate" name="appointment_initDate" type="date" class="form-control form-control-sm" value="@twoMonth" />
+                </div>
+                <div>
+                    <label for="appointment_lastDate" class="form-label mb-0">至</label>
+                    <input id="appointment_lastDate" name="appointment_lastDate" class="form-control form-control-sm" type="date" max="@DateTiemNow" value="@DateTiemNow" />
+                </div>
+                <div>
+                    <label for="appointment_state" class="form-label mb-0">目前狀態：</label>
+                    <select name="appointment_state" class="form-select form-select-sm">
+                        <option value="All">全部</option>
+                        <option value="Borrow">已借出</option>
+                        <option value="Wait">等待中</option>
+                        <option value="Stay">待取書中</option>
+                        <option value="Cancel">取消</option>
+                    </select>
+                </div>
+                <div class="align-self-end">
+                    <button id="appointment_select" type="button" class="btn btn-primary btn-sm">查詢</button>
+                </div>
+                <div class="align-self-end">
+                    <button id="appointment_clear" type="button" class="btn-lg btn-close btn-light"></button>
+                </div>
+            </div>
+            <!-- 排序兩兄弟 START-->
+            <div class="d-flex flex-wrap gap-3">
+                <div>
+                    <label for="appointment_perPage" class="form-label mb-0">每頁筆數：</label>
+                    <select id="appointment_perPage" name="appointment_perPage" valus="10" class="form-select form-select-sm">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+                <!-- 排序方向 -->
+                <div>
+                    <label for="appointment_orderDate" class="form-label mb-0">預約日期排序：</label>
+                    <select id="appointment_orderDate" name="appointment_orderDate" class="form-select form-select-sm">
+                        <option value="desc">遞減（新到舊）</option>
+                        <option value="asc">遞增（舊到新）</option>
+                    </select>
+                </div>
+            </div>
+            <!-- 排序三兄弟 END -->
+        </form>
+        <!-- 搜尋 END-->
+        <!-- 借閱狀況 START-->
+        <div id="AppointmentContent">
+
+        </div>
+        <!-- 借閱狀況 END -->
+    </div>
+    <!-- 右邊的功能 END -->
+</div>
+<!-- 主內容 END -->
+

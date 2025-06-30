@@ -1,0 +1,10 @@
+﻿@{
+    var x = (ViewContext.RouteData.Values["controller"])!.ToString();
+    var y = (ViewContext.RouteData.Values["action"])!.ToString();
+
+    if (x == "Home" && y == "Index") { Layout = "~/Areas/Frontend/Views/Shared/_Layout/_Index.cshtml"; }
+    else if (x == "Home" && y == "Query") { Layout = "~/Areas/Frontend/Views/Shared/_Layout/_Query.cshtml"; }
+    else if (x == "Home" && y == "Collection") { Layout = "~/Areas/Frontend/Views/Shared/_Layout/_Collection.cshtml"; }
+    else if (x == "Home" && y == "LoginC") { Layout = "~/Areas/Frontend/Views/Shared/_Layout/_LoginC.cshtml"; }
+    else if (x == "Home" && y == "LoginM") { Layout = "~/Areas/Frontend/Views/Shared/_Layout/_LoginM.cshtml"; }
+}

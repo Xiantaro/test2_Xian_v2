@@ -1,0 +1,12 @@
+﻿<ul class="list-unstyled mx-3">
+    <li class="fs-3 my-3">借閱者ID: ABDJL42541235</li>
+    <li class="fs-3 my-3 " title="老王">借閱者姓名: 老王</li>
+</ul>
+
+
+@*以下正式版*@
+@*@model List<library_management_system.Models.ManagementModels.ViewModelDTO.BorrowUser>
+<ul class="list-unstyled mx-3">
+    <li class="fs-1 my-3">借閱者ID: @Model[0].cId</li>
+    <li class="fs-1 my-3 " title="老王">借閱者姓名: @Model[0].cName</li>
+</ul>*@

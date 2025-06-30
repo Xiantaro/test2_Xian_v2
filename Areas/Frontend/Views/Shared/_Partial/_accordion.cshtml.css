@@ -1,0 +1,18 @@
+﻿.accordion-button:focus {
+    border-color: var(--bs-border-color);
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--c-green2-025);
+}
+
+.btn_type {
+    display: block;
+    padding: .5rem .25rem;
+    text-decoration: none;
+}
+
+    .btn_type:hover {
+        background-color: var(--c-orange-025);
+    }

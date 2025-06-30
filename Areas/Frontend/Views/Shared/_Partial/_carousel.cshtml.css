@@ -1,0 +1,16 @@
+﻿figure:hover {
+    transform: scale(1.1);
+    transition: transform .5s ease-in-out;
+}
+
+figure:not(:hover) {
+    transition: transform .5s ease-in-out;
+}
+
+.carousel-control-prev {
+    left: -10%
+}
+
+.carousel-control-next {
+    right: -10%
+}

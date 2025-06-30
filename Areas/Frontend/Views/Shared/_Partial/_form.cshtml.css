@@ -1,0 +1,75 @@
+﻿.Qbtn_search {
+    width: 30%;
+    margin-left: 10px;
+    background-color: var(--c-green2-100);
+    color: white;
+}
+
+    .Qbtn_search:active {
+        background-color: var(--c-green2-100) !important;
+        color: var(--c-orange-100) !important;
+    }
+
+    .Qbtn_search:hover {
+        background-color: var(--c-green2-100);
+        color: var(--c-orange-100);
+        animation: ani_btn .75s infinite;
+    }
+
+#Qsel_type1 {
+    width: 30%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#Qbox_search_type {
+    width: 65%;
+    margin-left: 10px;
+}
+
+#Qbox_search_year1 {
+    width: 44%;
+    margin-right: 10px;
+    text-align: center;
+}
+
+#Qbox_search_year2 {
+    width: 44%;
+    margin-left: 10px;
+    text-align: center;
+}
+
+#Qsel_lang, #Qsel_type2 {
+    width: 98%;
+    font-size: 1rem;
+}
+
+    #Qbox_search:focus,
+    #Qsel_type1:focus,
+    #Qbox_search_type:focus,
+    #Qbox_search_year1:focus,
+    #Qbox_search_year2:focus,
+    #Qsel_lang:focus,
+    #Qsel_type2:focus {
+        border-color: var(--bs-border-color);
+        box-shadow: none;
+    }
+
+.Qbtn_hot {
+    min-width: 10%;
+    max-width: 20%;
+    margin-left: 20px;
+    background-color: var(--c-blue---050);
+    color: white;
+}
+
+    .Qbtn_hot:active {
+        background-color: var(--c-blue---050) !important;
+        color: white !important;
+    }
+
+    .Qbtn_hot:hover {
+        background-color: var(--c-blue---050);
+        color: white;
+        animation: ani_btn .75s infinite;
+    }

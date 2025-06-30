@@ -1,0 +1,6 @@
+﻿@{
+    var x = (ViewContext.RouteData.Values["controller"])!.ToString();
+    var y = (ViewContext.RouteData.Values["action"])!.ToString();
+
+    if (x == "Manage") { Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml"; }
+}

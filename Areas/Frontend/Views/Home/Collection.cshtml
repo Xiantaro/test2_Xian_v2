@@ -1,0 +1,16 @@
+﻿@await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_modal.cshtml")
+
+<section class="mt-0" id="sec1">
+    <div class="row w-100">
+        <div class="col-3 w-25 mt-5" style="text-align: center">
+            <h3><strong>導覽</strong></h3>
+
+            @await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_accordion.cshtml")
+        </div>
+        <div class="col-9 w-75 mt-5" style="text-align: center" id="box_shelf">
+            <div><h3><strong>藏書</strong></h3></div>
+
+            @await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_book.cshtml")
+        </div>
+    </div>
+</section>

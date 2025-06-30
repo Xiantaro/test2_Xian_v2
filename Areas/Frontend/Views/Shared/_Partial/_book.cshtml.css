@@ -1,0 +1,80 @@
+﻿.page {
+    border: solid 1px var(--c-gray2-050);
+    border-radius: 1rem;
+}
+
+.box_book {
+    height: 35vh;
+    background-color: var(--c-brown1-010);
+}
+
+    .box_book img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: fill;
+    }
+
+    .box_book table {
+        font-size: 1.25rem;
+    }
+
+        .box_book table th {
+            padding-right: 1rem;
+        }
+
+.sep {
+    border-bottom: solid 1px var(--c-gray2-025);
+}
+
+.btn_book {
+    width: 10%;
+    background-color: var(--c-blue---050);
+    color: white;
+}
+
+    .btn_book:active {
+        background-color: var(--c-blue---050) !important;
+        color: white !important;
+    }
+
+    .btn_book:hover {
+        background-color: var(--c-blue---050);
+        color: white;
+        animation: ani_btn .75s infinite;
+    }
+
+#box_man i {
+    pointer-events: none;
+    margin-left: .8rem;
+    margin-right: .8rem;
+    color: var(--c-gray3-100);
+}
+
+#box_pag {
+    display: flex;
+    justify-content: center;
+}
+
+.page-link {
+    min-width: 3rem;
+    background-color: var(--c-brown2-050);
+    color: white;
+}
+
+    .page-link:hover {
+        background-color: var(--c-brown2-050) !important;
+        color: white !important;
+    }
+
+    .page-link:focus {
+        background-color: var(--c-brown2-050) !important;
+        color: white !important;
+        box-shadow: none;
+    }
+
+/*RWD*/
+@media(max-width: 992px) {
+    .box_book table {
+        font-size: 1rem;
+    }
+}

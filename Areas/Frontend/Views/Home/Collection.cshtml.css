@@ -1,0 +1,14 @@
+﻿#sec1 {
+    min-height: 90vh;
+    height: auto;
+    width: 100%;
+    justify-content: start;
+    align-items: start;
+}
+
+#box_shelf h3 {
+    background-image: url('../images/hbg.png');
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+}

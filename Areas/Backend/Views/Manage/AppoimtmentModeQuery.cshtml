@@ -1,0 +1,57 @@
+﻿
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th scope="col">書籍編號</th>
+            <th scope="col">書籍名稱</th>
+            <th scope="col">作者</th>
+            <th scope="col">狀況</th>
+            <th scope="col">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int x = 39999; x < 40000; x++)
+        {
+            @*@if (x % 3 == 0)
+                {
+                    <tr>
+                        <td class="align-middle bookNumber" data-booknumber="@x">AAAAASSSSSS</td>
+                        <td class="align-middle text-truncate" style="max-width: 150px" title="魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典">魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典</td>
+                        <td class="align-middle text-truncate" style="max-width: 100px" title="寓言盒子">寓言盒子</td>
+                        <td class='text-bg-success align-middle'>未借出</td>
+                        <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
+                    </tr>
+                }
+                else if (x % 2 == 0)
+                {*@
+            <tr>
+                <td class="align-middle bookNumber" data-booknumber="@x">@x</td>
+                <td class="align-middle text-truncate" style="max-width: 200px" title="持續買進">持續買進</td>
+                <td class="align-middle text-truncate" style="max-width:200px" title="尼克．馬朱利"> 尼克．馬朱利 </td>
+                <td class='text-bg-danger'>借出</td>
+                <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
+            </tr>
+            @*}*@
+        }
+    </tbody>
+</table>
+<div class="container d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous" data-page="1">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int x = 1; x < 5; x++)
+            {
+                <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" data-page="2">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

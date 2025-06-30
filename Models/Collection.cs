@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace test2.Models;
+
+public partial class Collection
+{
+    public int CollectionId { get; set; }
+
+    public string Title { get; set; } = null!;
+
+    public string CollectionDesc { get; set; } = null!;
+
+    public string CollectionImg { get; set; } = null!;
+
+    public int TypeId { get; set; }
+
+    public string Author { get; set; } = null!;
+
+    public string Translator { get; set; } = null!;
+
+    public string Publisher { get; set; } = null!;
+
+    public string LanguageCode { get; set; } = null!;
+
+    public string Isbn { get; set; } = null!;
+
+    public DateTime PublishDate { get; set; }
+
+    public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+
+    public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
+
+    public virtual Language LanguageCodeNavigation { get; set; } = null!;
+
+    public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+
+    public virtual Type Type { get; set; } = null!;
+}

@@ -1,0 +1,88 @@
+﻿@{
+    <form asp-controller="Home" asp-action="Query" method="post">
+        <div class="modal fade" id="mod_search" tabindex="-1" aria-labelledby="mod_search_header" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" id="box_modal1">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="mod_search_header1">搜尋</h1>
+                    </div>
+                    <div class="modal-body d-flex" style="justify-content: center">
+                        <input type="text" class="form-control" id="box_search" name="query1" placeholder="書名、作者、分類、ISBN">
+                        <button type="button" class="btn mt-0 btn_search" id="btn_search1">搜尋</button>
+                        <button type="button" class="btn mt-0 btn_search" id="btn_search2">更多</button>
+                        <button type="submit" class="d-none" id="btn_submit1"></button>
+                    </div>
+                    <div class="modal-footer d-flex" style="justify-content: start">
+                        <p class="mx-2">熱門:</p>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot1">哈利波特</button>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot2">金庸</button>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot3">波西傑克森</button>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot4">飢餓遊戲</button>
+                    </div>
+                </div>
+
+                <div class="modal-content d-none" id="box_modal2">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="mod_search_header2">進階搜尋</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex" style="justify-content: center">
+                            <select class="form-select form-select-lg" id="sel_type1" name="type1">
+                                <option value="title">書名</option>
+                                <option value="author">作者</option>
+                                <option value="type">分類</option>
+                                <option value="isbn">ISBN</option>
+                            </select>
+                            <input type="text" class="form-control" id="box_search_type" name="query2">
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center; font-size: 24px">
+                            <input type="text" class="form-control" id="box_search_year1" placeholder="年份" name="year1">
+                            至
+                            <input type="text" class="form-control" id="box_search_year2" placeholder="年份" name="year2">
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center">
+                            <select class="form-select form-select-lg" id="sel_lang" name="lang">
+                                <option value="all">語言</option>
+                                <option value="chinese">中文</option>
+                                <option value="english">English</option>
+                                <option value="japanese">日本語</option>
+                                <option value="korean">한국어</option>
+                                <option value="french">le français</option>
+                            </select>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center">
+                            <select class="form-select form-select-lg" id="sel_type2" name="type2">
+                                <option value="all">類別</option>
+                                <option value="1">中文圖書</option>
+                                <option value="2">兒童圖書</option>
+                                <option value="3">青少年圖書</option>
+                                <option value="4">漫畫</option>
+                                <option value="5">小說</option>
+                            </select>
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content: center">
+                            <button type="button" class="btn mt-0 btn_search" id="btn_search3">搜尋</button>
+                            <button type="button" class="btn mt-0 btn_search" id="btn_search4">更少</button>
+                            <button type="submit" class="d-none" id="btn_submit2"></button>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex" style="justify-content: start">
+                        <p class="mx-2">熱門:</p>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot1">哈利波特</button>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot2">金庸</button>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot3">波西傑克森</button>
+                        <button type="button" class="btn mt-0 btn_hot" id="btn_hot4">飢餓遊戲</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="text" class="d-none" id="box_status" name="status">
+        <input type="text" class="d-none" id="box_author" name="author">
+        <input type="text" class="d-none" id="box_translator" name="translator">
+        <input type="text" class="d-none" id="box_publisher" name="publisher">
+        <input type="text" class="d-none" id="box_isbn" name="isbn">
+    </form>
+}
+
+@* <a href="@Url.Action("Query", "Home", new { area = "Frontend" })" class="d-none btn_guideQ"></a> *@
+<a asp-area="Frontend" asp-controller="Home" asp-action="Query" class="d-none btn_guideQ"></a>

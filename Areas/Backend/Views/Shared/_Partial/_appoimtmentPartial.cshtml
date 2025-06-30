@@ -1,0 +1,79 @@
+﻿
+<div class="row">
+    <div class="col-4 my">
+        <h1>預約模式</h1>
+        <form id="appointmentModeForm" class="mt-1">
+            <div class="col-10 ">
+                <hr />
+                <label class="fs-3" for="appointmentMode_UserID">關鍵字查詢: </label>
+                <div class="input-group">
+                    <input id="appointmentMode_KeyWord" type="text" class="form-control" />
+                    <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelKeyWordBtn">&times;</button>
+                </div>
+            </div>
+            <div class="col-10">
+                <label class="fs-3" for="appointmentMode_UserID">借閱者ID: </label>
+                <div class="input-group">
+                    <input id="appointmentMode_UserID" type="number" name="appointmentMode_UserID" class="form-control" />
+                    <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelUserIdBtn">&times;</button>
+                </div>
+            </div>
+            <div class="col-10">
+                <label class="fs-3" for="appointmentMode_BookNumber">書籍編號: </label>
+                <div class="input-group">
+                    <input id="appointmentMode_BookNumber" type="number" name="appointmentMode_BookNumber" class="form-control" />
+                    <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelBookNumBtn">&times;</button>
+                </div>
+            </div>
+            <div class="my-4">
+                <button id="appointmentSend" type="button" class="btn btn-success btn-lg" value="appointment">預約</button>
+            </div>
+        </form>
+        @*預約發送後的顯示*@
+        <div id="appointmentSuccessContent">
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start">總共查詢到 OO筆紀錄 目前O 至 OO 目前頁數1/10</div>
+            <div class="d-flex flex-wrap gap-3 justify-content-end">
+                <div>
+                    <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
+                    <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+                        <option value="Borrow">已借出</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
+                    <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="appointmentQueryBook">
+            <table class="table mt-2">
+                <thead>
+                    <tr>
+                        <th scope="col">書籍編號</th>
+                        <th scope="col">書籍名稱</th>
+                        <th scope="col">狀況</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="container align-middle">
+                <h1 class="text-danger">查無書籍</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

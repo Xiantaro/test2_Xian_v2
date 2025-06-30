@@ -1,0 +1,96 @@
+﻿.modal-header {
+    justify-content: center;
+}
+
+.modal-body > input {
+    display: inline;
+    align-items: center;
+}
+
+#box_search {
+    width: 65%;
+    text-align: center;
+}
+
+.btn_search {
+    width: 15%;
+    margin-left: 10px;
+    background-color: var(--c-green2-100);
+    color: white;
+}
+
+    .btn_search:active {
+        background-color: var(--c-green2-100) !important;
+        color: var(--c-orange-100) !important;
+    }
+
+    .btn_search:hover {
+        background-color: var(--c-green2-100);
+        color: var(--c-orange-100);
+        animation: ani_btn .75s infinite;
+    }
+
+#sel_type1 {
+    width: 30%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#box_search_type {
+    width: 65%;
+    margin-left: 10px;
+}
+
+#box_search_year1 {
+    width: 44%;
+    margin-right: 10px;
+    text-align: center;
+}
+
+#box_search_year2 {
+    width: 44%;
+    margin-left: 10px;
+    text-align: center;
+}
+
+#sel_lang, #sel_type2 {
+    width: 98%;
+    font-size: 1rem;
+}
+
+    #box_search:focus,
+    #sel_type1:focus,
+    #box_search_type:focus,
+    #box_search_year1:focus,
+    #box_search_year2:focus,
+    #sel_lang:focus,
+    #sel_type2:focus {
+        border-color: var(--bs-border-color);
+        box-shadow: none;
+    }
+
+.btn_hot {
+    min-width: 15%;
+    max-width: 30%;
+    margin-left: 10px;
+    background-color: var(--c-blue---050);
+    color: white;
+}
+
+    .btn_hot:active {
+        background-color: var(--c-blue---050) !important;
+        color: white !important;
+    }
+
+    .btn_hot:hover {
+        background-color: var(--c-blue---050);
+        color: white;
+        animation: ani_btn .75s infinite;
+    }
+
+/*RWD*/
+@media(max-width: 576px) {
+    #btn_hot4 {
+        display: none;
+    }
+}

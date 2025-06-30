@@ -1,0 +1,218 @@
+﻿<div class="mt-1 fs-5">總共查詢到 OO筆紀錄 目前O 至 OO 目前頁數1/10</div>
+<table class="table mt-1">
+    <thead>
+        <tr>
+            <th scope="col">借閱編號</th>
+            <th scope="col">書籍編號</th>
+            <th scope="col">借閱書籍</th>
+            <th scope="col">借閱人名稱</th>
+            <th scope="col">借閱日期</th>
+            <th scope="col">實際還書日期</th>
+            <th scope="col">借閱狀況</th>
+            <th scope="col" class="text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int x = 0; x < 20; x++)
+        {
+            <tr>
+                <td class="align-middle">AL305</td>
+                <td class="align-middle NotificationUserid">IJL25344153</td>
+                <td class="align-middle text-truncate" style="max-width:200px" title="持續買進">持續買進</td>
+                <td class="align-middle text-truncate" style="max-width:100px" title="老王">老王</td>
+                <td class="align-middle">2025-06-23</td>
+                <td class="align-middle">2025-06-30</td>
+                <td class='text-bg-success align-middle'>借出中</td>
+                <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="container d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous" data-page="1">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int x = 1; x < 5; x++)
+            {
+                <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+            }
+
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" data-page="2">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- 置中 -->
+        <div class="modal-content border">
+            <div class="modal-header">
+                <h5 class="modal-title">取消預約&通知</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
+            </div>
+            <div class="modal-body">
+                <form id="NotificationFom">
+                    <div class="mb-3">
+                        <label for="NotificationUser" class="form-label">收件人:</label>
+                        <input type="text" class="form-control" id="NotificationUser" name="NotificationUserInput" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationType" class="form-label">通知類型:</label>
+                        <select class="form-select" id="NotificationType" name="NotificationType">
+                            <option value="NormalNotification" selected>通知</option>
+                            <option value="ExpiringSoonNotification">即將到期通知</option>
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationTextarea" class="form-label">內容</label>
+                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+                <button type="button" class="btn btn-danger" id="NotificationClear">清除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*以下正式版
+@model library_management_system.Models.ManagementModels.ViewModelDTO.BorrowQueryViewModel*@
+
+
+<!--@if (Model != null)
+{
+    <div class="mt-1 fs-5">總共 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex  目前頁數  @Model.CurrentPage /@Model.TotalPage</div>
+    <table class="table mt-1">
+        <thead>
+            <tr>
+                <th scope="col">借閱編號</th>
+                <th scope="col">書籍編號</th>
+                <th scope="col">借閱書籍</th>
+                <th scope="col">借閱人編號</th>
+                <th scope="col">借閱人名稱</th>
+                <th scope="col">借閱日期</th>
+                <th scope="col">借閱期限</th>
+                <th scope="col">還書日期</th>
+                <th scope="col">借閱狀況</th>
+                <th scope="col" class="text-center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.BorrowQueryDTOs!)
+            {
+                <tr>
+                    <td class="align-middle">@x.borrowId</td>
+                    <td class="align-middle ">@x.collectionId</td>
+                    <td class="align-middle text-truncate BorrowBookTitle" style="max-width:200px" title="@x.title">@x.title</td>
+                    <td class="align-middle text-truncate NotificationUserid" style="max-width:100px" title="@x.cId">@x.cId</td>
+                    <td class="align-middle text-truncate NotificationUserName" style="max-width:100px" title="@x.cName">@x.cName</td>
+                    <td class="align-middle">@x.borrowDate</td>
+                    <td class="align-middle BorrowDueDate">@x.dueDate</td>
+                    <td class="align-middle">@x.returnDate </td>
+                    @if (@x.borrowStatus == "借出中")
+                    {
+                        <td class='text-bg-warning align-middle'>@x.borrowStatus</td>
+                        <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+;
+                    }
+                    @if (@x.borrowStatus == "已歸還")
+                    {
+                        <td class='text-bg-success align-middle'>@x.borrowStatus</td>
+                        <td class="align-middle align-items-center text-center "><button class="btn btn-secondary mx-3 NotificationBtn disabled" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+}
+                    @if (@x.borrowStatus == "已逾期")
+                    {
+                        <td class='text-bg-danger align-middle'>@x.borrowStatus</td>
+                        <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+;
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    @if (@Model.CurrentPage == 1)
+                    {<a class="page-link disabled" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
+                    else
+                    { <a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage -1)"><span aria-hidden="true">&laquo;</span></a>}
+                </li>
+                @for (int x = 1; x <= @Model.TotalPage; x++)
+                {
+                    <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+                }
+                <li class="page-item">
+                    @if (@Model.CurrentPage == @Model.TotalPage)
+                    {<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
+                    else
+                    { <a class="page-link" href="#" aria-label="Next" data-page="@(@Model.CurrentPage + 1)"><span aria-hidden="true">&raquo;</span></a>}
+                </li>
+            </ul>
+        </nav>
+    </div>
+}
+else
+{
+    <h1>找不到資料</h1>
+}
+
+
+
+
+<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">-->
+        <!-- 置中 -->
+        <!--<div class="modal-content border">
+            <div class="modal-header">
+                <h5 class="modal-title">通知訊息</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
+            </div>
+            <div class="modal-body">
+                <form id="NotificationFom">
+                    <div class="mb-3">
+                        <label for="NotificationId" class="form-label">收件人編號:</label>
+                        <input type="number" class="form-control" id="NotificationId" name="NotificationId" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationName" class="form-label">收件人名稱:</label>
+                        <input type="text" class="form-control" id="NotificationName" name="NotificationName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationType" class="form-label">通知類型:</label>
+                        <select class="form-select" id="NotificationType" name="NotificationType">
+                            <option value="UpcomingExpirationNotice">即將到期通知</option>
+                            <option value="ExpirationNoticeWarning">到期通知警告</option>
+                            <option value="Other">其他</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationTextarea" class="form-label">內容</label>
+                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+                <button type="button" class="btn btn-danger" id="NotificationClear">清除</button>
+            </div>
+        </div>
+    </div>
+</div>-->

@@ -1,0 +1,68 @@
+﻿@await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_modal.cshtml")
+
+@* sec1 *@
+<section id="sec1" class="m-0">
+    @await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_form.cshtml")
+
+    <div class="row" id="box_result">
+        <div class="col-4 d-flex" style="justify-content: center; align-items: center"><img src="~/images/book3.png" /></div>
+        <div class="col-8 d-flex" style="justify-content: left; align-items: center">
+            <table>
+                <tr>
+                    <th>
+                        <h2>
+                            <strong>
+                                @{
+                                    if (Context.Session.GetString("query1") != string.Empty)
+                                    {
+                                        @Context.Session.GetString("query1")
+                                    }
+                                    else
+                                    {
+                                        @Context.Session.GetString("query2")
+                                    }
+                                }
+                            </strong>
+                        </h2>
+                    </th>
+                </tr>
+                <tr>
+                    <th>作者</th>
+                    <td>database</td>
+                </tr>
+                <tr>
+                    <th>譯者</th>
+                    <td>database</td>
+                </tr>
+                <tr>
+                    <th>出版社</th>
+                    <td>database</td>
+                </tr>
+                <tr>
+                    <th>語言</th>
+                    <td>database</td>
+                </tr>
+                <tr>
+                    <th>ISBN</th>
+                    <td>database</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+@* sec2 *@
+<section id="sec2">
+    <nav>
+        <div class="nav nav-tabs" role="tablist" id="box_tab">
+            <button class="nav-link active default" id="btn_tab1" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">書本簡介</button>
+            <button class="nav-link" id="btn_tab2" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">作者簡介</button>
+            <button class="nav-link" id="btn_tab3" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">館藏狀態</button>
+        </div>
+    </nav>
+
+    @await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_tab.cshtml")
+
+    <h3 class="mt-5 mb-5"><strong>推薦藏書</strong></h3>
+    <div class="row" id="box_relate">@await Html.PartialAsync("~/Areas/Frontend/Views/Shared/_Partial/_carousel.cshtml")</div>
+</section>

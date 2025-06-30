@@ -1,0 +1,83 @@
+﻿html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    height: 100%;
+    background-color: #E0E8D7; /* 柔和灰綠 */
+    color: #235A32; /* 文字深綠 */
+    margin: 0;
+}
+
+header {
+    background-color: #2E7D32; /* 深綠 */
+    color: white;
+    padding: 1rem;
+}
+
+
+.nav-link {
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+    .nav-link:hover {
+        color: #F5F5DC; /* 米色 */
+        background-color: #8C5B42; /* 棕色 */
+        border-radius: 5px;
+    }
+
+.accordion {
+    background-color: #D0E0B8;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.accordion-button {
+    background-color: #2E7D32;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+    .accordion-button:not(.collapsed) {
+        background-color: #8C5B42;
+        color: white;
+    }
+
+.nav-link {
+    color: #235A32;
+    padding-left: 1rem;
+}
+
+    .nav-link:hover {
+        color: #F5F5DC;
+        background-color: #8C5B42;
+        border-radius: 5px;
+    }
+
+.sub-category {
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+footer {
+    background-color: #2E7D32;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 92.5vh;
+}
+
+.content {
+    flex: 1;
+}
+

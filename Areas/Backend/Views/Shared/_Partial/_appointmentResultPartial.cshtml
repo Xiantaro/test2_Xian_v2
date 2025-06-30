@@ -1,0 +1,113 @@
+﻿<div class="mt-1 fs-5">總共查詢到 OO筆紀錄 目前O 至 OO 目前頁數1/10</div>
+<table class="table mt-1">
+    <thead>
+        <tr>
+            <th scope="col">預約編號</th>
+            <th scope="col">書籍編號</th>
+            <th scope="col">書籍名稱</th>
+            <th scope="col">作者</th>
+            <th scope="col">借閱人ID</th>
+            <th scope="col">借閱人名稱</th>
+            <th scope="col">預約日期</th>
+            <th scope="col">狀況</th>
+            <th scope="col" class="text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td class="align-middle">1</td>
+            <td class="align-middle">789</td>
+            <td class="align-middle text-truncate" style="max-width: 150px" title="持續買進">持續買進</td>
+            <td class="align-middle text-truncate" style="max-width: 100px" title="尼克．馬朱利">尼克．馬朱利</td>
+            <td class="align-middle NotificationUserid">UID215613</td>
+            <td class="align-middle text-truncate" style="max-width:100px" title="老王">老王</td>
+            <td class="align-middle">@DateTime.Now</td>
+            <td class='text-bg-success align-middle'>借出</td>
+            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+        </tr>
+
+        <tr>
+            <td class="align-middle">2</td>
+            <td class="align-middle">1234</td>
+            <td class="align-middle text-truncate" style="max-width: 150px" title="魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典">魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典</td>
+            <td class="align-middle text-truncate" style="max-width: 100px" title="寓言盒子">寓言盒子</td>
+            <td class="align-middle NotificationUserid">UID215613</td>
+            <td class="align-middle text-truncate" style="max-width:100px" title="老王">老王</td>
+            <td class="align-middle">@DateTime.Now</td>
+            <td class='text-bg-secondary align-middle'>取消</td>
+            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn" data-bs-toggle="modal" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+        </tr>
+
+        <tr>
+            <td class="align-middle appointmentid" data-appointmentid="IJL25344153">3</td>
+            <td class="align-middle ">456</td>
+            <td class="align-middle text-truncate" style="max-width: 150px" title="持續買進">持續買進</td>
+            <td class="align-middle text-truncate" style="max-width: 100px" title="尼克．馬朱利">尼克．馬朱利</td>
+            <td class="align-middle NotificationUserid">UID215613</td>
+            <td class="align-middle text-truncate" style="max-width:100px" title="老王">老王</td>
+            <td class="align-middle">@DateTime.Now</td>
+            <td class='text-bg-danger align-middle'>等待</td>
+            <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+        </tr>
+
+
+    </tbody>
+</table>
+<div class="container d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous" data-page="1">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int x = 1; x < 5; x++)
+            {
+                <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" data-page="2">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- 置中 -->
+        <div class="modal-content border">
+            <div class="modal-header">
+                <h5 class="modal-title">取消預約&通知</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
+            </div>
+            <div class="modal-body">
+                <form id="NotificationFom">
+                    <div class="mb-3">
+                        <label for="NotificationUser" class="form-label">收件人:</label>
+                        <input type="text" class="form-control" id="NotificationUser" name="NotificationUserInput" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationType" class="form-label">通知類型:</label>
+                        <select class="form-select" id="NotificationType" name="NotificationType">
+                            <option value="CancelNotification" selected>取消預約通知</option>
+                            <option value="NormalNotification">通知</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationTextarea" class="form-label">內容</label>
+                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+                <button type="button" class="btn btn-danger" id="NotificationClear">清除</button>
+            </div>
+        </div>
+    </div>
+</div>
