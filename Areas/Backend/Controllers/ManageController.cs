@@ -1,11 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using test2.Models;
+using test2.Models.ManagementModels.ZhongXian.Borrow;
 
 namespace test2.Areas.Backend.Controllers
 {
     [Area("Backend")]
     public class ManageController : Controller
     {
+        private readonly Test2Context _context;
+        public ManageController(Test2Context context)
+        {
+            _context = context;
+        }
         #region view
         public IActionResult Index() { return View(); }
         #endregion
@@ -46,49 +55,44 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModePartial.cshtml");
         }
         // 借書模式_借書
-        public IActionResult BorrowSend(string borrwoMode_UserID, string borrwoMode_BookNumber)
+        public async Task<IActionResult> BorrowSend(int borrwoMode_UserID, int borrwoMode_BookId)
         {
-            #region 測試回傳可刪
-            //var mystatu = new BorrowModeSendClass();
-            //if (borrwoMode_UserID != "1234")
-            //{
-            //    mystatu.IsSuccess = false;
-            //    mystatu.MistakeMessag = "借閱者不存在";
-            //    return PartialView("_BorrowModeContent", mystatu);
-            //}
-            //if (borrwoMode_BookNumber != "1234")
-            //{
-            //    mystatu.IsSuccess = false;
-            //    mystatu.MistakeMessag = "書本不存在";
-            //    return PartialView("_BorrowModeContent", mystatu);
-            //}
-            //Debug.WriteLine($"成功借書 ID:{borrwoMode_UserID} BookID: {borrwoMode_BookNumber}");
-            //mystatu.UserId = borrwoMode_UserID;
-            //mystatu.BookName = borrwoMode_BookNumber;
-            #endregion 
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeContent.cshtml");
-        }
-        // 預約模式_預約
-        public IActionResult AppointmentSend(string borrwoMode_UserID, string borrwoMode_BookNumber)
-        {
-            Debug.WriteLine($"使用者: {borrwoMode_UserID} ；書籍ID {borrwoMode_BookNumber}");
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeContent.cshtml");
+            var UserId = await _context.Clients.Where(x => x.CId == borrwoMode_UserID).Select(y => new { y.CId, y.CName }).FirstOrDefaultAsync();
+            if (UserId == null) { return Json(0); };
+            var BookInfo = await _context.Books.Join(_context.Collections, bok => bok.CollectionId, col => col.CollectionId, (bok, col) => new { bok, col }).Where(x => x.bok.BookId == borrwoMode_BookId).Select(result => new { result.col.Title}).FirstOrDefaultAsync();
+
+            var SqlResult = await _context.Set<BorrwoMessageDTO>().FromSqlInterpolated($"EXEC BorrowResult {borrwoMode_UserID} {borrwoMode_BookId}").ToListAsync();
+            var result = new BorrowResultViewModel()
+            {
+                ResultCode = SqlResult[0].ResultCode,
+                Message = SqlResult[0].Message,
+                Cid = UserId.CId,
+                cName = UserId.CName ?? "查無此借閱者!!",
+                title = BookInfo?.Title ?? "查無此書本!!",
+                bookid = borrwoMode_BookId
+            };
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeContent.cshtml", result);
         }
         // 借書模式_借書人資訊
-        public IActionResult BorrowUserMessage(string userId)
+        public async Task<IActionResult> BorrowUserMessage(int userId)
         {
-            // 之後要建立 ViewModel 用來裝搜尋到的 借書人資訊
-            // 並回傳到 PartialView 上
-            Debug.WriteLine(userId);
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeUser.cshtml");
+            var UserInfoamtion = await _context.Clients.Where(x => x.CId == userId).Select(result => new BorrowUser
+            {
+                cId = result.CId,
+                cName = result.CName
+            }).ToListAsync();
+
+            if (UserInfoamtion.Count != 1) { return Json(false); }
+            Debug.WriteLine(UserInfoamtion);
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeUser.cshtml", UserInfoamtion);
         }
         // 借書模式_書本資訊
-        public IActionResult BorrowBookMessage(string bookId)
+        public async Task<IActionResult> BorrowBookMessage(string bookId)
         {
-            // 之後要建立 ViewModel 用來裝搜尋到的 書本資訊
-            // 並回傳到 PartialView 上
+            var BookInformation = await _context.Set<BorrowBookInfomationDTO>().FromSqlInterpolated($"EXEC BookInfomationForBorrow {bookId}").ToListAsync();
+            if (BookInformation.Count != 1) { return Json(false); }
             Debug.WriteLine(bookId);
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeBook.cshtml");
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModeBook.cshtml", BookInformation);
         }
         #endregion 借閱模式END
 

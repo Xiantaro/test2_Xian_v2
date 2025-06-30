@@ -1,39 +1,22 @@
-﻿<div class="my-auto">
-    <img src="https://dummyimage.com/200x300/000/fff" style="width:300px ;height:400px" />
-</div>
-<ul class="list-unstyled mx-3">
-    <li class="fs-4 my-3">書本編號: 453453</li>
-    <li class="fs-4 my-3 text-truncate" style="max-width:500px" title="老人與海dsddddddddddddddddddddddddddddddddddddddddddddddddddd">書本名稱: 老人與海dsddddddddddddddddddddddddddddddddddddddddddddddddddd</li>
-    <li class="fs-4 my-3" text-truncate" style="max-width:500px" title="海明威">作者: 海明威</li>
-    <li class="fs-4 my-3" text-truncate" style="max-width:500px" title="老王">譯者: 老王</li>
-    <li class="fs-4 my-3" text-truncate" style="max-width:500px">類型: 海明威</li>
-    <li class="fs-4 my-3">出版社: 醬燒豬排社</li>
-    <li class="fs-4 my-3">出版年份: 海明威</li>
-    <li class="fs-4 my-3">狀況: 未借出</li>
-</ul>
-
-
-@*以下正式版*@
-@*@model List<library_management_system.Models.ManagementModels.ViewModelDTO.BookInfo>
-
+﻿@model List<test2.Models.ManagementModels.ZhongXian.Borrow.BorrowBookInfomationDTO>
 
 <div class="my-auto">
-    <img src="https://dummyimage.com/200x300/000/fff" style="width:300px ;height:400px" />
+    <img src="https://dummyimage.com/200x300/000/fff" style="width:300px ;height:400px" alt="@Model[0].collectionImg"/>
 </div>
 <table class="table table-hover table-borderless mx-3 my-auto table-dark">
-    <tr class="fs-3 fw-bold"><td style="width:200px">書本編號:</td><td style="max-width:400px" title="@Model[0].Title">@Model[0].CollectionId</td></tr>
-    <tr class="fs-3 fw-bold"><td style="width:200px">書本名稱:</td><td style="max-width:400px" title="@Model[0].Title">@Model[0].Title</td></tr>
-    <tr class="fs-3 fw-bold"><td style="width:200px">作者: </td><td style="max-width:400px" title="@Model[0].Author">@Model[0].Author</td></tr>
-    <tr class="fs-3 fw-bold"><td style="width:200px">譯者:</td><td style="max-width:400px" title="@Model[0].Translator">@Model[0].Translator</td></tr>
-    <tr class="fs-3 fw-bold"><td style="width:200px">類型:</td><td style="max-width:400px" title="@Model[0].Type">@Model[0].Type</td></tr>
-    <tr class="fs-3 fw-bold"><td style="width:200px">出版社:</td><td style="max-width:400px" title="@Model[0].Publisher">@Model[0].Publisher</td></tr>
-    <tr class="fs-3 fw-bold"><td style="width:200px">出版年份:</td><td style="max-width:400px" title="@Model[0].Year">@Model[0].Year</td></tr>
-    @if (@Model[0].CollectionStatus == "借出")
+    <tr class="fs-3 fw-bold"><td style="width:200px">書本編號:</td><td style="max-width:400px" title="@Model[0].bookId">@Model[0].bookId</td></tr>
+    <tr class="fs-3 fw-bold"><td style="width:200px">書本名稱:</td><td style="max-width:400px" title="@Model[0].title">@Model[0].title</td></tr>
+    <tr class="fs-3 fw-bold"><td style="width:200px">作者: </td><td style="max-width:400px" title="@Model[0].author">@Model[0].author</td></tr>
+    <tr class="fs-3 fw-bold"><td style="width:200px">譯者:</td><td style="max-width:400px" title="@Model[0].translator">@Model[0].translator</td></tr>
+    <tr class="fs-3 fw-bold"><td style="width:200px">類型:</td><td style="max-width:400px" title="@Model[0].type">@Model[0].type</td></tr>
+    <tr class="fs-3 fw-bold"><td style="width:200px">出版社:</td><td style="max-width:400px" title="@Model[0].publisher">@Model[0].publisher</td></tr>
+    <tr class="fs-3 fw-bold"><td style="width:200px">出版年份:</td><td style="max-width:400px" title="@Model[0].publishDate">@Model[0].publishDate</td></tr>
+    @if (@Model[0].bookStatus == "借出")
     {
-        <tr class="fs-3"><td>狀況 :</td><td>@Model[0].CollectionStatus</td></tr>
+        <tr class="fs-3"><td>狀況 :</td><td>@Model[0].bookStatus</td></tr>
     }
     else
     {
-        <tr class="fs-3"><td>狀況 :</td><td>@Model[0].CollectionStatus</td></tr>
+        <tr class="fs-3"><td>狀況 :</td><td>@Model[0].bookStatus</td></tr>
     }
-</table>*@
+</table>
