@@ -42,81 +42,81 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowQueryPartial.cshtml");
         }
         // 借閱查詢_查詢列表_partial
-        public IActionResult BorrowResult(string borrow_BorrowID = "All", string borrow_UserID = "All", string borrow_bookNum = "All", string borrow_state = "All", DateTime? borrow_initDate = null, DateTime? borrow_lastDate = null, string borrow_perPage = "10", string borrow_date = "borrowDate", string borrow_order = "desc", int page = 1)
+        public async Task<IActionResult> BorrowResult(int borrow_BorrowID, int borrow_UserID, string borrow_bookCode, string borrow_state = "All", DateTime? borrow_initDate = null, DateTime? borrow_lastDate = null, int borrow_perPage = 10, string borrow_OrderDate = "borrowDate", string borrow_orderBy = "desc", int page = 1)
         {
 
 
-            //Debug.WriteLine("已進入查詢!!!!!!!!!!!!!!!!!");
-            //bool BorrowIsEmptyFilter()
-            //{
-            //    return borrow_BorrowID == null &&
-            //        borrow_bookNum == null &&
-            //        borrow_UserID == null &&
-            //        borrow_initDate == null &&
-            //        borrow_lastDate == null &&
-            //        borrow_state == "ALL";
-            //}
-            //Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookNum} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_OrderDate} + {borrow_orderBy} + 頁數: {page}");
-            //Debug.WriteLine("開始進行查詢");
-            //var result = _context.Set<Borrow>().Include(x => x.Collection).ThenInclude(x => x.Book).Include(user => user.CIdNavigation).Include(statu => statu.BorrowStatus).Select(result => new BorrowQueryDTO
-            //{
-            //    borrowId = result.BorrowId,
-            //    collectionId = result.CollectionId,
-            //    title = result.Collection.Book.Title,
-            //    cId = result.CId,
-            //    cName = result.CIdNavigation.CName,
-            //    borrowDate = result.BorrowDate,
-            //    dueDate = result.DueDate,
-            //    returnDate = result.ReturnDate,
-            //    borrowStatus = result.BorrowStatus.BorrowStatus1
-            //}).AsQueryable();
+            Debug.WriteLine("已進入查詢!!!!!!!!!!!!!!!!!");
+            bool BorrowIsEmptyFilter()
+            {
+                return borrow_BorrowID  == null &&
+                    borrow_bookCode == null &&
+                    borrow_UserID == null &&
+                    borrow_initDate == null &&
+                    borrow_lastDate == null &&
+                    borrow_state == "All";
+            }
+            Debug.WriteLine($"++++++測試借閱載入: BorrowID:{borrow_BorrowID}; UserID:{borrow_UserID} ; BookCode: {borrow_bookCode} ; BookState:{borrow_state}; 日期:{borrow_initDate}到{borrow_lastDate}； 每頁比數:{borrow_perPage} ; 排序依據: {borrow_OrderDate} ; 排序方向{borrow_orderBy} + 目前頁數: {page}");
+            Debug.WriteLine("開始進行查詢..........");
+            var result = _context.Set<Borrow>().Include(x => x.Book).ThenInclude(x => x.Collection).Include(user => user.CIdNavigation).Include(statu => statu.BorrowStatus).Select(result => new BorrowQueryResultDTO
+            {
+                borrowId = result.BorrowId,
+                bookCode = result.Book.BookCode,
+                title = result.Book.Collection.Title,
+                cId = result.CId,
+                borrowDate = result.BorrowDate,
+                dueDateB = result.DueDateB,
+                returnDate = result.ReturnDate,
+                borrowStatus = result.BorrowStatus.BorrowStatus1
+            }).AsQueryable();
 
-            //// 各種條件的篩選
-            //if (borrow_BorrowID != null) { result = result.Where(id => id.borrowId == borrow_BorrowID); }
-            //if (borrow_UserID != null) { result = result.Where(id => id.cId == borrow_UserID); }
-            //if (borrow_bookNum != null) { result = result.Where(id => id.collectionId == borrow_bookNum); }
+            // 各種條件的篩選
+            if (borrow_BorrowID != 0) { result = result.Where(id => id.borrowId == borrow_BorrowID); }
+            if (borrow_UserID != 0) { result = result.Where(id => id.cId == borrow_UserID); }
+            if (borrow_bookCode != null) { result = result.Where(id => id.bookCode == borrow_bookCode); }
 
-            //if (borrow_initDate != null && borrow_lastDate == null) { result = result.Where(id => id.borrowDate > borrow_initDate); }
-            //if (borrow_initDate == null && borrow_lastDate != null) { result = result.Where(id => id.borrowDate < borrow_lastDate); }
-            //if (borrow_initDate != null && borrow_lastDate != null)
-            //{
-            //    DateTime? StartTime = borrow_initDate;
-            //    if (borrow_initDate > borrow_lastDate) { StartTime = borrow_lastDate; result = result.Where(id => id.borrowDate < borrow_initDate && id.borrowDate > borrow_lastDate); }
-            //    else { result = result.Where(id => id.borrowDate > borrow_initDate && id.borrowDate < borrow_lastDate); }
-            //}
-            //if (borrow_state != "ALL") result = result.Where(id => id.borrowStatus == borrow_state);
-            //if (BorrowIsEmptyFilter()) { result = result.Where(re => re.borrowDate <= DateTime.Now && re.borrowDate >= DateTime.Now.AddMonths(-2)); }
-            //// 各種條件的篩選 END
+            if (borrow_initDate != null && borrow_lastDate == null) { result = result.Where(id => id.borrowDate > borrow_initDate); }
+            if (borrow_initDate == null && borrow_lastDate != null) { result = result.Where(id => id.borrowDate < borrow_lastDate); }
+            if (borrow_initDate != null && borrow_lastDate != null)
+            {
+                DateTime? StartTime = borrow_initDate;
+                if (borrow_initDate > borrow_lastDate) { StartTime = borrow_lastDate; result = result.Where(id => id.borrowDate < borrow_initDate && id.borrowDate > borrow_lastDate); }
+                else { result = result.Where(id => id.borrowDate > borrow_initDate && id.borrowDate < borrow_lastDate); }
+            }
+            if (borrow_state != "ALL") result = result.Where(id => id.borrowStatus == borrow_state);
+            // 預設搜尋搜尋
+            if (BorrowIsEmptyFilter()) { result = result.Where(re => re.borrowDate <= DateTime.Now && re.borrowDate >= DateTime.Now.AddMonths(-2)); }
+            // 各種條件的篩選 END
 
-            //result = (borrow_OrderDate, borrow_orderBy) switch
-            //{
-            //    ("borrowDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-            //    ("borrowDate", "asc") => result.OrderBy(x => x.borrowDate),
-            //    ("dueDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-            //    ("dueDate", "asc") => result.OrderBy(x => x.borrowDate),
-            //    ("returnDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-            //    ("returnDate", "asc") => result.OrderBy(x => x.borrowDate)
-            //};
-            //var totalCount = await result.CountAsync();
-            //if (totalCount == 0) return Json(0);
-
-
-            //var BorrowResultPage = await result.Skip((page - 1) * borrow_perPage).Take(borrow_perPage).ToListAsync();
-
-            //var BorrowQueryViewModels2 = new BorrowQueryViewModel()
-            //{
-            //    BorrowQueryDTOs = BorrowResultPage,
-            //    TotalCount = totalCount,
-            //    TotalPage = (int)Math.Ceiling((double)totalCount / borrow_perPage),
-            //    CurrentPage = page,
-            //    FromIndex = (page - 1) * borrow_perPage + 1,
-            //    ToIndex = Math.Min(page * borrow_perPage, totalCount)
-            //};
+            result = (borrow_OrderDate, borrow_orderBy) switch
+            {
+                ("borrowDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+                ("borrowDate", "asc") => result.OrderBy(x => x.borrowDate),
+                ("dueDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+                ("dueDate", "asc") => result.OrderBy(x => x.borrowDate),
+                ("returnDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+                ("returnDate", "asc") => result.OrderBy(x => x.borrowDate)
+            };
+            var totalCount = await result.CountAsync();
+            if (totalCount == 0) return Json(0);
 
 
+            var BorrowResultPage = await result.Skip((page - 1) * borrow_perPage).Take(borrow_perPage).ToListAsync();
 
-            Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookNum} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_date} + {borrow_order} + 頁數: {page}");
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowResultPartial.cshtml");
+            var BorrowQueryViewModels2 = new BorrowQueryViewModel()
+            {
+                BorrowQueryDTOs = BorrowResultPage,
+                TotalCount = totalCount,
+                TotalPage = (int)Math.Ceiling((double)totalCount / borrow_perPage),
+                CurrentPage = page,
+                FromIndex = (page - 1) * borrow_perPage + 1,
+                ToIndex = Math.Min(page * borrow_perPage, totalCount)
+            };
+
+
+
+            Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookCode} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_OrderDate} + {borrow_orderBy} + 頁數: {page}");
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowResultPartial.cshtml", BorrowQueryViewModels2);
         }
         #endregion
 
@@ -214,7 +214,7 @@ namespace test2.Areas.Backend.Controllers
 
         public IActionResult TestDbContext()
         {
-            Debug.WriteLine("Db連線測試開始");
+            Debug.WriteLine("Db連線測試開始.........");
             try
             {
                 var canContext = _context.Database.CanConnect();
@@ -223,7 +223,7 @@ namespace test2.Areas.Backend.Controllers
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"連線失敗: {ex}");
+                Debug.WriteLine($"連線失敗代碼: {ex}");
                 return Json(0);
             }
         }
