@@ -46,72 +46,72 @@ namespace test2.Areas.Backend.Controllers
         {
 
 
-            Debug.WriteLine("已進入查詢!!!!!!!!!!!!!!!!!");
-            bool BorrowIsEmptyFilter()
-            {
-                return borrow_BorrowID == null &&
-                    borrow_bookNum == null &&
-                    borrow_UserID == null &&
-                    borrow_initDate == null &&
-                    borrow_lastDate == null &&
-                    borrow_state == "ALL";
-            }
-            Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookNum} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_OrderDate} + {borrow_orderBy} + 頁數: {page}");
-            Debug.WriteLine("開始進行查詢");
-            var result = _context.Set<Borrow>().Include(x => x.Collection).ThenInclude(x => x.Book).Include(user => user.CIdNavigation).Include(statu => statu.BorrowStatus).Select(result => new BorrowQueryDTO
-            {
-                borrowId = result.BorrowId,
-                collectionId = result.CollectionId,
-                title = result.Collection.Book.Title,
-                cId = result.CId,
-                cName = result.CIdNavigation.CName,
-                borrowDate = result.BorrowDate,
-                dueDate = result.DueDate,
-                returnDate = result.ReturnDate,
-                borrowStatus = result.BorrowStatus.BorrowStatus1
-            }).AsQueryable();
+            //Debug.WriteLine("已進入查詢!!!!!!!!!!!!!!!!!");
+            //bool BorrowIsEmptyFilter()
+            //{
+            //    return borrow_BorrowID == null &&
+            //        borrow_bookNum == null &&
+            //        borrow_UserID == null &&
+            //        borrow_initDate == null &&
+            //        borrow_lastDate == null &&
+            //        borrow_state == "ALL";
+            //}
+            //Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookNum} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_OrderDate} + {borrow_orderBy} + 頁數: {page}");
+            //Debug.WriteLine("開始進行查詢");
+            //var result = _context.Set<Borrow>().Include(x => x.Collection).ThenInclude(x => x.Book).Include(user => user.CIdNavigation).Include(statu => statu.BorrowStatus).Select(result => new BorrowQueryDTO
+            //{
+            //    borrowId = result.BorrowId,
+            //    collectionId = result.CollectionId,
+            //    title = result.Collection.Book.Title,
+            //    cId = result.CId,
+            //    cName = result.CIdNavigation.CName,
+            //    borrowDate = result.BorrowDate,
+            //    dueDate = result.DueDate,
+            //    returnDate = result.ReturnDate,
+            //    borrowStatus = result.BorrowStatus.BorrowStatus1
+            //}).AsQueryable();
 
-            // 各種條件的篩選
-            if (borrow_BorrowID != null) { result = result.Where(id => id.borrowId == borrow_BorrowID); }
-            if (borrow_UserID != null) { result = result.Where(id => id.cId == borrow_UserID); }
-            if (borrow_bookNum != null) { result = result.Where(id => id.collectionId == borrow_bookNum); }
+            //// 各種條件的篩選
+            //if (borrow_BorrowID != null) { result = result.Where(id => id.borrowId == borrow_BorrowID); }
+            //if (borrow_UserID != null) { result = result.Where(id => id.cId == borrow_UserID); }
+            //if (borrow_bookNum != null) { result = result.Where(id => id.collectionId == borrow_bookNum); }
 
-            if (borrow_initDate != null && borrow_lastDate == null) { result = result.Where(id => id.borrowDate > borrow_initDate); }
-            if (borrow_initDate == null && borrow_lastDate != null) { result = result.Where(id => id.borrowDate < borrow_lastDate); }
-            if (borrow_initDate != null && borrow_lastDate != null)
-            {
-                DateTime? StartTime = borrow_initDate;
-                if (borrow_initDate > borrow_lastDate) { StartTime = borrow_lastDate; result = result.Where(id => id.borrowDate < borrow_initDate && id.borrowDate > borrow_lastDate); }
-                else { result = result.Where(id => id.borrowDate > borrow_initDate && id.borrowDate < borrow_lastDate); }
-            }
-            if (borrow_state != "ALL") result = result.Where(id => id.borrowStatus == borrow_state);
-            if (BorrowIsEmptyFilter()) { result = result.Where(re => re.borrowDate <= DateTime.Now && re.borrowDate >= DateTime.Now.AddMonths(-2)); }
-            // 各種條件的篩選 END
+            //if (borrow_initDate != null && borrow_lastDate == null) { result = result.Where(id => id.borrowDate > borrow_initDate); }
+            //if (borrow_initDate == null && borrow_lastDate != null) { result = result.Where(id => id.borrowDate < borrow_lastDate); }
+            //if (borrow_initDate != null && borrow_lastDate != null)
+            //{
+            //    DateTime? StartTime = borrow_initDate;
+            //    if (borrow_initDate > borrow_lastDate) { StartTime = borrow_lastDate; result = result.Where(id => id.borrowDate < borrow_initDate && id.borrowDate > borrow_lastDate); }
+            //    else { result = result.Where(id => id.borrowDate > borrow_initDate && id.borrowDate < borrow_lastDate); }
+            //}
+            //if (borrow_state != "ALL") result = result.Where(id => id.borrowStatus == borrow_state);
+            //if (BorrowIsEmptyFilter()) { result = result.Where(re => re.borrowDate <= DateTime.Now && re.borrowDate >= DateTime.Now.AddMonths(-2)); }
+            //// 各種條件的篩選 END
 
-            result = (borrow_OrderDate, borrow_orderBy) switch
-            {
-                ("borrowDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-                ("borrowDate", "asc") => result.OrderBy(x => x.borrowDate),
-                ("dueDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-                ("dueDate", "asc") => result.OrderBy(x => x.borrowDate),
-                ("returnDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-                ("returnDate", "asc") => result.OrderBy(x => x.borrowDate)
-            };
-            var totalCount = await result.CountAsync();
-            if (totalCount == 0) return Json(0);
+            //result = (borrow_OrderDate, borrow_orderBy) switch
+            //{
+            //    ("borrowDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+            //    ("borrowDate", "asc") => result.OrderBy(x => x.borrowDate),
+            //    ("dueDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+            //    ("dueDate", "asc") => result.OrderBy(x => x.borrowDate),
+            //    ("returnDate", "desc") => result.OrderByDescending(x => x.borrowDate),
+            //    ("returnDate", "asc") => result.OrderBy(x => x.borrowDate)
+            //};
+            //var totalCount = await result.CountAsync();
+            //if (totalCount == 0) return Json(0);
 
 
-            var BorrowResultPage = await result.Skip((page - 1) * borrow_perPage).Take(borrow_perPage).ToListAsync();
+            //var BorrowResultPage = await result.Skip((page - 1) * borrow_perPage).Take(borrow_perPage).ToListAsync();
 
-            var BorrowQueryViewModels2 = new BorrowQueryViewModel()
-            {
-                BorrowQueryDTOs = BorrowResultPage,
-                TotalCount = totalCount,
-                TotalPage = (int)Math.Ceiling((double)totalCount / borrow_perPage),
-                CurrentPage = page,
-                FromIndex = (page - 1) * borrow_perPage + 1,
-                ToIndex = Math.Min(page * borrow_perPage, totalCount)
-            };
+            //var BorrowQueryViewModels2 = new BorrowQueryViewModel()
+            //{
+            //    BorrowQueryDTOs = BorrowResultPage,
+            //    TotalCount = totalCount,
+            //    TotalPage = (int)Math.Ceiling((double)totalCount / borrow_perPage),
+            //    CurrentPage = page,
+            //    FromIndex = (page - 1) * borrow_perPage + 1,
+            //    ToIndex = Math.Min(page * borrow_perPage, totalCount)
+            //};
 
 
 
