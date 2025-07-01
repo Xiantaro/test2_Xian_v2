@@ -17,6 +17,8 @@ public partial class Activity
 
     public DateTime EndDate { get; set; }
 
+    public int Capacity { get; set; }
+
     public int ActivityTypeId { get; set; }
 
     public int AudienceId { get; set; }

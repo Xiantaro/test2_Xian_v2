@@ -91,7 +91,7 @@ function BorrowModeMode() {
         console.log("借書載入成功");
         $("#borrowSend").on("click", BorrowModeSend);
         $("#borrwoMode_UserID").on("input", BorrowModeModeUserDynamic)
-        $("#borrwoMode_BookNumber").on("input", BorrowModeModeBookDynamic);
+        $("#borrwoMode_BookCode").on("input", BorrowModeModeBookDynamic);
         $("#borrwoMode_CancelUserIDBtn").on("click", CancelBtnUser)
         $("#borrwoMode_CancelBookIdBtn").on("click", CancelBtnBook)
     });
@@ -111,7 +111,7 @@ function BorrowModeModeUserDynamic() {
 function BorrowModeModeBookDynamic() {
     console.log("書本資訊");
     $("#BorrowModeSuccessContent").html("");
-    let bookId = $("#borrwoMode_BookNumber").val().trim();
+    let bookId = $("#borrwoMode_BookCode").val().trim();
     if (bookId === "") { $("#BorrowModeBook").html(pleaseInputBookId); return; }
     console.log("測試動態書本資訊: " + bookId);
     $.post("/Backend/Manage/BorrowBookMessage", { bookId: bookId }, (result) => {
@@ -123,7 +123,7 @@ function BorrowModeModeBookDynamic() {
 function BorrowModeSend() {
 
     let userId = $("#borrwoMode_UserID").val();
-    let bookId = $("#borrwoMode_BookNumber").val();
+    let bookId = $("#borrwoMode_BookCode").val();
     if (userId === "" && bookId === "") { alert("請輸入借閱者ID和書籍編號"); return; }
     if (userId === "") { alert("請輸入借閱者ID!!"); return; }
     if (bookId === "") { alert("請輸入書籍編號!!"); return; }
@@ -136,6 +136,7 @@ function BorrowModeSend() {
             $("#BorrowModeSuccessContent").html(result);
         })
     }
+    
 }
 function CancelBtnUser() {
     console.log("點擊清除按鈕")

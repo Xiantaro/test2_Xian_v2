@@ -21,7 +21,7 @@ public partial class Collection
 
     public string Publisher { get; set; } = null!;
 
-    public string LanguageCode { get; set; } = null!;
+    public int LanguageId { get; set; }
 
     public string Isbn { get; set; } = null!;
 
@@ -31,7 +31,7 @@ public partial class Collection
 
     public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 
-    public virtual Language LanguageCodeNavigation { get; set; } = null!;
+    public virtual Language Language { get; set; } = null!;
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 

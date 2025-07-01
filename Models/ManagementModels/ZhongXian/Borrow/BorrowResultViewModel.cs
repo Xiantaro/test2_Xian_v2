@@ -7,6 +7,6 @@
         public int Cid { get; set; }
         public string? cName { get; set; }
         public string? title { get; set; }
-        public int bookid { get; set; }
+        public string? bookcode { get; set; }
     }
 }

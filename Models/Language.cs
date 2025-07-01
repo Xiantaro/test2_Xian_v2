@@ -5,11 +5,9 @@ namespace test2.Models;
 
 public partial class Language
 {
-    public string LanguageCode { get; set; } = null!;
+    public int LanguageId { get; set; }
 
-    public string LanguageZh { get; set; } = null!;
-
-    public string LanguageEn { get; set; } = null!;
+    public string Language1 { get; set; } = null!;
 
     public virtual ICollection<Collection> Collections { get; set; } = new List<Collection>();
 }

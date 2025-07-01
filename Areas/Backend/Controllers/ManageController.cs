@@ -127,13 +127,14 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowModePartial.cshtml");
         }
         // 借書模式_借書
-        public async Task<IActionResult> BorrowSend(int borrwoMode_UserID, int borrwoMode_BookId)
+        public async Task<IActionResult> BorrowSend(int borrwoMode_UserID, string borrwoMode_BookCode)
         {
+            Debug.WriteLine("借書開始" + borrwoMode_BookCode + "+++");
             var UserId = await _context.Clients.Where(x => x.CId == borrwoMode_UserID).Select(y => new { y.CId, y.CName }).FirstOrDefaultAsync();
             if (UserId == null) { return Json(0); };
-            var BookInfo = await _context.Books.Join(_context.Collections, bok => bok.CollectionId, col => col.CollectionId, (bok, col) => new { bok, col }).Where(x => x.bok.BookId == borrwoMode_BookId).Select(result => new { result.col.Title}).FirstOrDefaultAsync();
+            var BookInfo = await _context.Books.Join(_context.Collections, bok => bok.CollectionId, col => col.CollectionId, (bok, col) => new { bok, col }).Where(x => x.bok.BookCode == borrwoMode_BookCode).Select(result => new { result.col.Title}).FirstOrDefaultAsync();
 
-            var SqlResult = await _context.Set<BorrwoMessageDTO>().FromSqlInterpolated($"EXEC BorrowResult {borrwoMode_UserID} {borrwoMode_BookId}").ToListAsync();
+            var SqlResult = await _context.Set<BorrwoMessageDTO>().FromSqlInterpolated($"EXEC BorrowResult {borrwoMode_UserID}, {borrwoMode_BookCode}").ToListAsync();
             var result = new BorrowResultViewModel()
             {
                 ResultCode = SqlResult[0].ResultCode,
@@ -141,9 +142,9 @@ namespace test2.Areas.Backend.Controllers
                 Cid = UserId.CId,
                 cName = UserId.CName ?? "查無此借閱者!!",
                 title = BookInfo?.Title ?? "查無此書本!!",
-                bookid = borrwoMode_BookId
+                bookcode = borrwoMode_BookCode
             };
-            return PartialView("~/Areas/Backend/Views/Shared/Manage/BorrowModeContent.cshtml", result);
+            return PartialView("~/Areas/Backend/Views/Manage/BorrowModeContent.cshtml", result);
         }
         // 借書模式_借書人資訊
         public async Task<IActionResult> BorrowUserMessage(int userId)
@@ -216,8 +217,7 @@ namespace test2.Areas.Backend.Controllers
             Debug.WriteLine("Db連線測試開始");
             try
             {
-                using var context = new Test2Context();
-                var canContext = context.Database.CanConnect();
+                var canContext = _context.Database.CanConnect();
                 Debug.WriteLine($"是否可以連線到資料庫:  {canContext}");
                 return Json(canContext);
             }

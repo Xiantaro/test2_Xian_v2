@@ -1,17 +1,5 @@
-﻿<ul class="list-unstyled fs-3">
-    <li>借閱人: 老王</li>
-    <li>已成功借閱書籍 大亨小傳</li>
-    <li>借閱日期: @DateTime.Now</li>
-    <li>回書日期: @DateTime.Now.ToString("yyyy-MM-dd")</li>
-</ul>
-
-<div class="alert alert-success">這裡是找不到借閱人以及書本顯示區塊</div>
-
-
-
-@*以下正式版*@
-@*@model library_management_system.Models.ManagementModels.ViewModelDTO.BorrowResultViewModel
-
+﻿
+@model test2.Models.ManagementModels.ZhongXian.Borrow.BorrowResultViewModel
 
 @if (Model.ResultCode == 0)
 {
@@ -19,7 +7,7 @@
         <tr class="table-warning fw-bold"><td class="fs-3">成功借閱</td><td></td></tr>
         <tr class="fs-3 fw-bold" style="width:200px"><td>借閱ID:</td><td>@Model.Cid</td></tr>
         <tr class="fs-3 fw-bold" style="width:200px"><td>借閱者姓名:</td><td title="@Model.cName">@Model.cName</td></tr>
-        <tr class="fs-3 fw-bold" style="width:200px"><td>書籍編號: :</td><td title="@Model.bookid">@Model.bookid</td></tr>
+        <tr class="fs-3 fw-bold" style="width:200px"><td>書籍編號: :</td><td title="@Model.bookcode">@Model.bookcode</td></tr>
         <tr class="fs-3 fw-bold" style="width:200px"><td>書籍名稱: :</td><td title="@Model.title">@Model.title</td></tr>
         <tr class="fs-3 fw-bold" style="width:200px"><td>借閱日期: </td><td>@DateTime.Now</td></tr>
         <tr class="fs-3 fw-bold" style="width:200px"><td>還書日期:</td><td>@DateTime.Now.AddDays(14).ToString("yyyy/MM/dd")</td></tr>
@@ -28,5 +16,5 @@
 else
 {
     <div class="fs-1 alert alert-danger">@Model.Message</div>
-}*@
+}
 
