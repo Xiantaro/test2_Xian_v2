@@ -75,26 +75,30 @@
 
 
 
+
 <div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <!-- 置中 -->
         <div class="modal-content border">
             <div class="modal-header">
-                <h5 class="modal-title">取消預約&通知</h5>
+                <h5 class="modal-title">通知訊息</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
             </div>
             <div class="modal-body">
                 <form id="NotificationFom">
                     <div class="mb-3">
-                        <label for="NotificationUser" class="form-label">收件人:</label>
-                        <input type="text" class="form-control" id="NotificationUser" name="NotificationUserInput" readonly>
+                        <label for="NotificationId" class="form-label">收件人編號:</label>
+                        <input type="number" class="form-control" id="NotificationId" name="NotificationId" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationName" class="form-label">收件人名稱:</label>
+                        <input type="text" class="form-control" id="NotificationName" name="NotificationName" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="NotificationType" class="form-label">通知類型:</label>
                         <select class="form-select" id="NotificationType" name="NotificationType">
-                            <option value="NormalNotification" selected>通知</option>
-                            <option value="ExpiringSoonNotification">即將到期通知</option>
-
+                            <option value="UpcomingExpirationNotice">即將到期通知</option>
+                            <option value="ExpirationNoticeWarning">到期通知警告</option>
+                            <option value="Other">其他</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -112,8 +116,9 @@
 </div>
 
 
+
 @*以下正式版
-@model library_management_system.Models.ManagementModels.ViewModelDTO.BorrowQueryViewModel*@
+    @model library_management_system.Models.ManagementModels.ViewModelDTO.BorrowQueryViewModel*@
 
 
 <!--@if (Model != null)
@@ -194,47 +199,4 @@
 else
 {
     <h1>找不到資料</h1>
-}
-
-
-
-
-<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">-->
-        <!-- 置中 -->
-        <!--<div class="modal-content border">
-            <div class="modal-header">
-                <h5 class="modal-title">通知訊息</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
-            </div>
-            <div class="modal-body">
-                <form id="NotificationFom">
-                    <div class="mb-3">
-                        <label for="NotificationId" class="form-label">收件人編號:</label>
-                        <input type="number" class="form-control" id="NotificationId" name="NotificationId" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationName" class="form-label">收件人名稱:</label>
-                        <input type="text" class="form-control" id="NotificationName" name="NotificationName" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationType" class="form-label">通知類型:</label>
-                        <select class="form-select" id="NotificationType" name="NotificationType">
-                            <option value="UpcomingExpirationNotice">即將到期通知</option>
-                            <option value="ExpirationNoticeWarning">到期通知警告</option>
-                            <option value="Other">其他</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationTextarea" class="form-label">內容</label>
-                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
-                <button type="button" class="btn btn-danger" id="NotificationClear">清除</button>
-            </div>
-        </div>
-    </div>
-</div>-->
+}-->

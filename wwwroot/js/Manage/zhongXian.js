@@ -230,6 +230,9 @@ function CancelBtn_AppointVersion() {
     $(this).closest(".input-group").find(".form-control").val("");
     $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml);
 }
+// 取消預約按鈕
+
+
 
 // #endregion 預約模式 Module END
 
@@ -337,15 +340,12 @@ let borrowQueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`
 
 // #endregion
 
-
 //#region Db連線
 function DbContextText() {
     console.log("DB連線測試");
     $.post("/Backend/Manage/TestDbContext", (restult) => {
-        if (restult === 0) { alert("連線失敗..........."); }
+        if (restult === true) { alert("連線成功!!!"); }
+        else {alert("連線失敗...") }
     })
 }
-
-
-
 //#endregion
