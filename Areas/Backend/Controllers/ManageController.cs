@@ -210,5 +210,22 @@ namespace test2.Areas.Backend.Controllers
         }
         #endregion
         //------------------------------------------------------------------------------------------
+
+        public IActionResult TestDbContext()
+        {
+            Debug.WriteLine("Db連線測試開始");
+            try
+            {
+                using var context = new Test2Context();
+                var canContext = context.Database.CanConnect();
+                Debug.WriteLine($"是否可以連線到資料庫:  {canContext}");
+                return Json(0);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"連線失敗..................{ex}");
+                return Json(0);
+            }
+        }
     }
 }
