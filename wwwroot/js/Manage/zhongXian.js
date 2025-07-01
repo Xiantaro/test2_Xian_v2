@@ -6,6 +6,8 @@ $(() => {
     $("#BorrowMode").on("click", BorrowModeMode)
     $("#ReturnMode").on("click", ReturnBookMode);
     $("#AppointmentMode").on("click", AppointmentMode);
+    $("#dbConnect").on("click", DbContextText);
+    console.log("綁定結束")
 })
 // #endregion
 
@@ -334,3 +336,16 @@ let borrowQueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`
 
 
 // #endregion
+
+
+//#region Db連線
+function DbContextText() {
+    console.log("DB連線測試");
+    $.post("/Backend/Manage/TestDbContext", (restult) => {
+        if (restult === 0) { alert("連線失敗..........."); }
+    })
+}
+
+
+
+//#endregion

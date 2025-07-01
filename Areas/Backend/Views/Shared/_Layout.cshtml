@@ -12,10 +12,12 @@
 <body>
     <!-- 頁首 -->
     <header class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+
         <div class="d-flex gap-3 align-items-end">
             <a href="@Url.Action("Index", "Manage", new { area = "Backend" })" class="text-white text-decoration-none fw-bold fs-4">📚 圖書館管理系統</a>
         </div>
         <div class="d-flex gap-3 align-items-end">
+            <button type="button" id="dbConnect" class="btn btn-danger">資料庫連線測試</button>
             <a href="@Url.Action("Index", "Home", new { area = "Frontend" })" class="text-white text-decoration-none fw-bold fs-4">回到前端</a>
             <a href="#" class="text-white text-decoration-none fw-bold fs-4">登出</a>
         </div>
