@@ -1,16 +1,18 @@
-﻿
-@if (1 == 1)
+﻿@model test2.Models.ManagementModels.ZhongXian.Normal.ResultViewModel
+
+
+@if (Model.ResultCode != 0)
 {
     <table class="table table-hover">
         <tr class="table-warning fw-bold"><td class="fs-3">成功預約</td><td></td></tr>
-        <tr class="fs-4 fw-bold" style="width:200px"><td>借閱ID:</td><td>1234</td></tr>
-        <tr class="fs-4 fw-bold" style="width:200px"><td>借閱人:</td><td>老王</td></tr>
-        <tr class="fs-4 fw-bold" style="width:200px"><td>書籍編號:</td><td> 39999</td></tr>
-        <tr class="fs-4 fw-bold" style="width:200px"><td>預約名稱: </td><td>持續買進</td></tr>
+        <tr class="fs-4 fw-bold" style="width:200px"><td>借閱ID:</td><td>@Model.Cid</tr>
+        <tr class="fs-4 fw-bold" style="width:200px"><td>借閱人:</td><td>@Model.cName</td></tr>
+        <tr class="fs-4 fw-bold" style="width:200px"><td>書籍編號:</td><td> @Model.bookcode</td></tr>
+        <tr class="fs-4 fw-bold" style="width:200px"><td>書籍名稱: </td><td>@Model.title</td></tr>
         <tr class="fs-4 fw-bold" style="width:200px"><td>預約日期:</td><td>@DateTime.Now</td></tr>
     </table>
 }
 else
 {
-    <div class="alert alert-success">這裡是找不到借閱人以及書本顯示區塊</div>
+    <div class="alert alert-success">@Model.Message</div>
 }

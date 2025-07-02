@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
+using test2.Models.ManagementModels.ZhongXian.Normal;
 
 namespace test2.Models;
 
@@ -17,7 +18,7 @@ public partial class Test2Context : DbContext
     }
     // 憲自訂的
     public virtual DbSet<BorrowBookInfomationDTO> BorrowBookInfomationDTOs { get; set; }
-    public virtual DbSet<BorrwoMessageDTO> BorrwoMessageDTOs { get; set; }
+    public virtual DbSet<MessageDTO> BorrwoMessageDTOs { get; set; }
     // END
     public virtual DbSet<Activity> Activities { get; set; }
 
@@ -421,7 +422,7 @@ public partial class Test2Context : DbContext
                 .HasColumnName("type");
         });
         modelBuilder.Entity<BorrowBookInfomationDTO>().HasNoKey();
-        modelBuilder.Entity<BorrwoMessageDTO>().HasNoKey();
+        modelBuilder.Entity<MessageDTO>().HasNoKey();
         OnModelCreatingPartial(modelBuilder);
     }
 

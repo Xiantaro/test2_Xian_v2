@@ -1,6 +1,6 @@
-﻿namespace test2.Models.ManagementModels.ZhongXian.Borrow
+﻿namespace test2.Models.ManagementModels.ZhongXian.Normal
 {
-    public class BorrowResultViewModel
+    public class ResultViewModel
     {
         public int? ResultCode { get; set; }
         public string? Message { get; set; }

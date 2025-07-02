@@ -2,9 +2,9 @@
 @model test2.Models.ManagementModels.ZhongXian.BorrowQuery.BorrowQueryViewModel
 
 
-@if (Model.BorrowQueryDTOs.Count != 0)
+@if (Model.BorrowQueryDTOs?.Count != 0)
 {
-    <div class="mt-1 fs-5">總共 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex  目前頁數  @Model.CurrentPage /@Model.TotalPage</div>
+    <div class="mt-1 fs-5">@($"總共 {@Model.TotalCount} 筆紀錄 目前:{@Model.FromIndex} 至 {@Model.ToIndex}   目前頁數:   {@Model.CurrentPage} / {@Model.TotalPage}")</div>
     <table class="table mt-1">
         <thead>
             <tr>
@@ -54,7 +54,7 @@
     </table>
     <div class="container d-flex justify-content-center">
         <nav aria-label="Page navigation example">
-            @if (Model.TotalPage != 1)
+            @if (Model.TotalPage < 2)
             {
                 <ul class="pagination">
                     <li class="page-item">
@@ -65,7 +65,8 @@
                     </li>
                     @for (int x = 1; x <= @Model.TotalPage; x++)
                     {
-                        <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+                        @if(@Model.TotalPage != 1) {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }
+                        
                     }
                     <li class="page-item">
                         @if (@Model.CurrentPage == @Model.TotalPage)
@@ -99,10 +100,6 @@ else
                     <div class="mb-3">
                         <label for="NotificationId" class="form-label">收件人編號:</label>
                         <input type="number" class="form-control" id="NotificationId" name="NotificationId" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationName" class="form-label">收件人名稱:</label>
-                        <input type="text" class="form-control" id="NotificationName" name="NotificationName" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="NotificationType" class="form-label">通知類型:</label>

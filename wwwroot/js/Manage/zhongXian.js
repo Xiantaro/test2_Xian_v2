@@ -215,6 +215,8 @@ function AppointmentModeSend() {
     let formData = $("#appointmentModeForm").serialize();
     console.log("測試輸入: " + formData);
     $.post("/Backend/Manage/AppointmentMode1Send", formData, (result) => {
+        if (result === 0) { $("#appointmentSuccessContent").html(pleaseInputUserId); return; }
+        if (result === 1) { $("#appointmentSuccessContent").html(pleaseInputBookId); return; }
         $("#appointmentSuccessContent").html(result);
         console.log("預約按鈕是否成功回傳，YEEEEEE")
     })

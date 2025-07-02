@@ -6,6 +6,7 @@
             <th scope="col">書籍名稱</th>
             <th scope="col">作者</th>
             <th scope="col">狀況</th>
+            <th scope="col">預約人數</th>
             <th scope="col">操作</th>
         </tr>
     </thead>
@@ -24,13 +25,14 @@
                 }
                 else if (x % 2 == 0)
                 {*@
-            <tr>
-                <td class="align-middle bookNumber" data-booknumber="@x">@x</td>
-                <td class="align-middle text-truncate" style="max-width: 200px" title="持續買進">持續買進</td>
-                <td class="align-middle text-truncate" style="max-width:200px" title="尼克．馬朱利"> 尼克．馬朱利 </td>
-                <td class='text-bg-danger'>借出</td>
-                <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
-            </tr>
+        <tr>
+            <td class="align-middle bookNumber" data-booknumber="@x">@x</td>
+            <td class="align-middle text-truncate" style="max-width: 200px" title="持續買進">持續買進</td>
+            <td class="align-middle text-truncate" style="max-width:200px" title="尼克．馬朱利"> 尼克．馬朱利 </td>
+            <td class='align-middle text-bg-danger'>借出</td>
+            <td class="align-middle">5人</td>
+            <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
+        </tr>
             @*}*@
         }
     </tbody>
