@@ -2,7 +2,7 @@
 @model test2.Models.ManagementModels.ZhongXian.BorrowQuery.BorrowQueryViewModel
 
 
-@if (Model != null)
+@if (Model.BorrowQueryDTOs.Count != 0)
 {
     <div class="mt-1 fs-5">總共 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex  目前頁數  @Model.CurrentPage /@Model.TotalPage</div>
     <table class="table mt-1">
@@ -80,7 +80,7 @@
 }
 else
 {
-    <h1>找不到資料</h1>
+    <div class="alert alert-danger fs-1 mt-5">查無資料</div>
 }
 
 

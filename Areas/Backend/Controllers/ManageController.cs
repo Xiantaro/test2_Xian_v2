@@ -47,6 +47,7 @@ namespace test2.Areas.Backend.Controllers
             var borrowqueryFiltervar = new BorrowQueryFilter()
             {
                 borrow_BorrowID = borrow_BorrowID,
+                borrow_bookCode = borrow_bookCode,
                 borrow_UserID = borrow_UserID,
                 borrow_state = borrow_state,
                 borrow_initDate = borrow_initDate,
