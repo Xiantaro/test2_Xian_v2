@@ -165,9 +165,14 @@ namespace test2.Areas.Backend.Controllers
             string ViewUrl = "~/Areas/Backend/Views/Manage/AppoimtmentContent.cshtml";
             return PartialView(ViewUrl, result);
         }
-        public IActionResult AppointmentMode1Query(string keyWord, string state, string pageCount)
+        public async Task<IActionResult> AppointmentMode1Query(string keyWord, string state, string pageCount)
         {
             Debug.WriteLine($"預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}");
+
+            //var KeyValue = await _context.
+
+
+
             return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml");
         }
         #endregion

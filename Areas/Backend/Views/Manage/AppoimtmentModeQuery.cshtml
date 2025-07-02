@@ -13,18 +13,6 @@
     <tbody>
         @for (int x = 39999; x < 40000; x++)
         {
-            @*@if (x % 3 == 0)
-                {
-                    <tr>
-                        <td class="align-middle bookNumber" data-booknumber="@x">AAAAASSSSSS</td>
-                        <td class="align-middle text-truncate" style="max-width: 150px" title="魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典">魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典</td>
-                        <td class="align-middle text-truncate" style="max-width: 100px" title="寓言盒子">寓言盒子</td>
-                        <td class='text-bg-success align-middle'>未借出</td>
-                        <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
-                    </tr>
-                }
-                else if (x % 2 == 0)
-                {*@
         <tr>
             <td class="align-middle bookNumber" data-booknumber="@x">@x</td>
             <td class="align-middle text-truncate" style="max-width: 200px" title="持續買進">持續買進</td>
@@ -33,7 +21,6 @@
             <td class="align-middle">5人</td>
             <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
         </tr>
-            @*}*@
         }
     </tbody>
 </table>
