@@ -5,7 +5,7 @@
         // 借閱查詢篩選器
         public int? borrow_BorrowID {get;set;}
         public int? borrow_UserID { get; set; }
-        public int? borrow_bookNum { get; set; }
+        public string? borrow_bookCode { get; set; }
         public string? borrow_state { get; set; } = "ALL";
         public DateTime? borrow_initDate { get; set; }
         public DateTime? borrow_lastDate { get; set; }

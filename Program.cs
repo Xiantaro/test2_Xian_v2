@@ -24,7 +24,7 @@ builder.Services.AddSession(options =>
 // §Ú¬ODB Start
 builder.Services.AddSession();
 builder.Services.AddControllers();
-var connectionString = builder.Configuration.GetConnectionString("LibaraySystemString");
+var connectionString = builder.Configuration.GetConnectionString("Test2ConnString");
 builder.Services.AddDbContext<Test2Context>(x => x.UseSqlServer(connectionString));
 // DB END
 var app = builder.Build();
