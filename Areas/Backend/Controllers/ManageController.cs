@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using test2.Models;
+using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.BorrowQuery;
 using test2.Models.ManagementModels.ZhongXian.Normal;
@@ -169,11 +170,10 @@ namespace test2.Areas.Backend.Controllers
         {
             Debug.WriteLine($"預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}");
 
-            //var KeyValue = await _context.
+            var result = await _context.Set<AppoimtmentKeywordShow>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
+            if(result.Count == 0) { return Json(0); }
 
-
-
-            return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml");
+            return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", result);
         }
         #endregion
 

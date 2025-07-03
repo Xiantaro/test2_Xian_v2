@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.Normal;
 
@@ -17,6 +18,7 @@ public partial class Test2Context : DbContext
     {
     }
     // 憲自訂的
+    public virtual DbSet<AppoimtmentKeywordShow> AppoimtmentKeywordShows { get; set; }
     public virtual DbSet<BorrowBookInfomationDTO> BorrowBookInfomationDTOs { get; set; }
     public virtual DbSet<MessageDTO> BorrwoMessageDTOs { get; set; }
     // END
@@ -423,6 +425,7 @@ public partial class Test2Context : DbContext
         });
         modelBuilder.Entity<BorrowBookInfomationDTO>().HasNoKey();
         modelBuilder.Entity<MessageDTO>().HasNoKey();
+        modelBuilder.Entity<AppoimtmentKeywordShow>().HasNoKey();
         OnModelCreatingPartial(modelBuilder);
     }
 

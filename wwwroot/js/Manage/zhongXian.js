@@ -200,6 +200,7 @@ function AppointmentModeBookDynamic() {
     }
     if (keyWord === "") { $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml); return }
     $.post("/Backend/Manage/AppointmentMode1Query", obj, (result) => {
+        if (result == 0) { $("#appointmentQueryBook").html(pleaseInputBookId); return; }
         $("#appointmentQueryBook").html(result);
         console.log("成功載入書本");
         $(".AppointmentMode_AddBookNumBtn").on("click", AppointmentModeAddBook);

@@ -1,4 +1,6 @@
-﻿
+﻿@model List<test2.Models.ManagementModels.ZhongXian.Appoimtment.AppoimtmentKeywordShow>
+
+
 <table class="table mt-2">
     <thead>
         <tr>
@@ -11,16 +13,19 @@
         </tr>
     </thead>
     <tbody>
-        @for (int x = 39999; x < 40000; x++)
+        @if (Model.Count != 0)
         {
-        <tr>
-            <td class="align-middle bookNumber" data-booknumber="@x">@x</td>
-            <td class="align-middle text-truncate" style="max-width: 200px" title="持續買進">持續買進</td>
-            <td class="align-middle text-truncate" style="max-width:200px" title="尼克．馬朱利"> 尼克．馬朱利 </td>
-            <td class='align-middle text-bg-danger'>借出</td>
-            <td class="align-middle">5人</td>
-            <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
-        </tr>
+            @foreach (var bok in Model)
+            {
+                <tr>
+                    <td class="align-middle bookNumber" data-booknumber="@bok.bookCode">@bok.bookCode</td>
+                    <td class="align-middle text-truncate" style="max-width: 200px" title="@bok.title">@bok.title</td>
+                    <td class="align-middle text-truncate" style="max-width:200px" title="@bok.author"> @bok.author </td>
+                    <td class='align-middle text-bg-danger'>@bok.bookstatus</td>
+                    <td class="align-middle">@bok.number</td>
+                    <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
+                </tr>
+            }
         }
     </tbody>
 </table>
