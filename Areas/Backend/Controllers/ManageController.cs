@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using test2.Models;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
+using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.BorrowQuery;
 using test2.Models.ManagementModels.ZhongXian.Normal;
@@ -32,9 +33,25 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appointmentQueryPartial.cshtml");
         }
         //預約管理_查詢列表_partial
-        public IActionResult AppointmentResult(string appointment_reservationNum = "All", string appointment_UserID = "我是ID", string appointment_bookNum = "持續買進", DateTime? appointment_initDate = null, DateTime? appointment_lastDate = null, string? appointment_state = "All", string appointment_perPage = "10", string appointment_orderDate = "desc", int page = 1)
+        public IActionResult AppointmentResult(int appointment_reservationNum, int appointment_UserID, string appointment_bookNum, DateTime? appointment_initDate = null, DateTime? appointment_lastDate = null, string appointment_state = "ALL", int appointment_perPage = 10, string appointment_orderDate = "desc", int page = 1)
         {
             Debug.WriteLine("測試載入:  預約ID:" + appointment_reservationNum + " 使用者ID:" + appointment_UserID + " 書本名稱:" + appointment_bookNum + " 開始日期:" + appointment_initDate + " 今天日期:" + appointment_lastDate + " 狀態:" + appointment_state + " 頁數:" + appointment_perPage + " 日期排序:" + appointment_orderDate + "頁數" + page);
+            AppoimtmentQueryFilter filter = new AppoimtmentQueryFilter()
+            {
+                appointment_reservationNum = appointment_reservationNum,
+                appointment_UserID = appointment_UserID,
+                appointment_bookNum = appointment_bookNum,
+                appointment_initDate = appointment_initDate,
+                appointment_lastDate = appointment_lastDate,
+                appointment_state = appointment_state,
+                appointment_perPage = appointment_perPage,
+                appointment_orderDate = appointment_orderDate,
+                page = page
+            };
+
+
+
+            Debug.WriteLine("即將送出........預約搜尋結果!!");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appointmentResultPartial.cshtml");
         }
         #endregion

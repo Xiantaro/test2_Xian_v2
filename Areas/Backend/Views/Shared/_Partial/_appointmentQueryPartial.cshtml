@@ -12,11 +12,11 @@
             <div class="d-flex flex-wrap gap-3">
                 <div>
                     <label class="form-label mb-0">預約編號：</label>
-                    <input name="appointment_reservationNum" type="text" class="form-control form-control-sm" placeholder="All" />
+                    <input name="appointment_reservationNum" type="number" class="form-control form-control-sm" placeholder="All" />
                 </div>
                 <div>
                     <label class="form-label mb-0">借閱者ID：</label>
-                    <input name="appointment_UserID" type="text" class="form-control form-control-sm" placeholder="All" />
+                    <input name="appointment_UserID" type="number" class="form-control form-control-sm" placeholder="All" />
                 </div>
                 <div>
                     <label class="form-label mb-0">書籍編號：</label>
@@ -33,7 +33,7 @@
                 <div>
                     <label for="appointment_state" class="form-label mb-0">目前狀態：</label>
                     <select name="appointment_state" class="form-select form-select-sm">
-                        <option value="All">全部</option>
+                        <option value="ALL">全部</option>
                         <option value="Borrow">已借出</option>
                         <option value="Wait">等待中</option>
                         <option value="Stay">待取書中</option>
