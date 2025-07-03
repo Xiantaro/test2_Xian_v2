@@ -1,6 +1,27 @@
-﻿@model List<test2.Models.ManagementModels.ZhongXian.Appoimtment.AppoimtmentKeywordShow>
+﻿@model test2.Models.ManagementModels.ZhongXian.Appoimtment.AppoimtmentResult
 
-
+<h1>@Model.perPage</h1>
+<div class="d-flex justify-content-between align-items-end">
+    <div class="d-flex flex-wrap gap-3 justify-content-end">
+        <div>
+            <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
+            <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+                <option value="ALL" selected>全部</option>
+                <option value="IsLent">已借出</option>
+                <option value="Available">可借閱</option>
+            </select>
+        </div>
+        <div>
+            <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
+            <select id="appointmentMode_perPage" name="appointmentMode_perPage" class="form-select form-select-sm">
+                <option value="10"  selected="@(Model.perPage == 10 ? "selected": "")">10</option>
+                <option value="20"  selected="@(Model.perPage == 20 ? "selected": "")">20</option>
+                <option value="30" >30</option>
+            </select>
+        </div>
+    </div>
+    <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start">總共 @Model.TotalCount  筆資料__目前  @Model.FromIndex 至 @Model.ToIndex __目前頁數:@Model.CurrentPage/ @Model.TotalPage</div>
+</div>
 <table class="table mt-2">
     <thead>
         <tr>
@@ -13,15 +34,16 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Count != 0)
+        @if (Model.AppoimtmentKeywordShows?.Count != 0)
         {
-            @foreach (var bok in Model)
+            @foreach (var bok in Model.AppoimtmentKeywordShows!)
             {
                 <tr>
                     <td class="align-middle bookNumber" data-booknumber="@bok.bookCode">@bok.bookCode</td>
                     <td class="align-middle text-truncate" style="max-width: 200px" title="@bok.title">@bok.title</td>
                     <td class="align-middle text-truncate" style="max-width:200px" title="@bok.author"> @bok.author </td>
-                    <td class='align-middle text-bg-danger'>@bok.bookstatus</td>
+                    @if (@bok.bookstatus == "館內") {<td class='align-middle text-bg-success'>@bok.bookstatus</td> }
+                    else {<td class='align-middle text-bg-danger'>@bok.bookstatus</td>}
                     <td class="align-middle">@bok.number</td>
                     <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
                 </tr>
@@ -29,6 +51,9 @@
         }
     </tbody>
 </table>
+
+
+
 <div class="container d-flex justify-content-center">
     <nav aria-label="Page navigation example">
         <ul class="pagination">

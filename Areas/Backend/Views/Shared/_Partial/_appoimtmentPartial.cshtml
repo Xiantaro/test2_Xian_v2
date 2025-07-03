@@ -33,9 +33,9 @@
         <div id="appointmentSuccessContent">
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-8" id="appointmentQueryBook">
+
         <div class="d-flex justify-content-between align-items-end">
-            <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start">總共查詢到 OO筆紀錄 目前O 至 OO 目前頁數1/10</div>
             <div class="d-flex flex-wrap gap-3 justify-content-end">
                 <div>
                     <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
@@ -48,14 +48,17 @@
                 <div>
                     <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
                     <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm">
-                        <option value="10">10</option>
+                        <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div id="appointmentQueryBook">
+
+        @*這裡是結果*@
+        <div>
+            <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start"></div>
             <table class="table mt-2">
                 <thead>
                     <tr>

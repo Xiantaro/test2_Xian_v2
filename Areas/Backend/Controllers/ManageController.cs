@@ -166,14 +166,23 @@ namespace test2.Areas.Backend.Controllers
             string ViewUrl = "~/Areas/Backend/Views/Manage/AppoimtmentContent.cshtml";
             return PartialView(ViewUrl, result);
         }
-        public async Task<IActionResult> AppointmentMode1Query(string keyWord, string state, string pageCount)
+        public async Task<IActionResult> AppointmentMode1Query(string keyWord, string state, int pageCount, int  page = 1)
         {
-            Debug.WriteLine($"預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}");
+            Debug.WriteLine($"{DateTime.Now}:預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}、{page}");
 
             var result = await _context.Set<AppoimtmentKeywordShow>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
             if(result.Count == 0) { return Json(0); }
 
-            return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", result);
+            var FinalRestul = new AppoimtmentResult()
+            {
+                AppoimtmentKeywordShows = result,
+                TotalCount = result.Count(),
+                CurrentPage = page,
+                perPage = pageCount,
+            };
+
+
+            return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", FinalRestul);
         }
         #endregion
 

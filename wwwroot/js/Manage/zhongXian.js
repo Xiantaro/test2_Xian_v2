@@ -182,7 +182,7 @@ function AppointmentMode() {
         $("#appointmentMode_KeyWord").on("input", AppointmentModeBookDynamic);
         $("#appointmentMode_CancelUserIdBtn ,#appointmentMode_CancelBookNumBtn").on("click", CancelBtn);
         $("#appointmentMode_CancelKeyWordBtn").on("click", CancelBtn_AppointVersion);
-        $("#appointmentMode_status, #appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
+        //$("#appointmentMode_status, #appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
     })
 }
 
@@ -204,8 +204,10 @@ function AppointmentModeBookDynamic() {
         $("#appointmentQueryBook").html(result);
         console.log("成功載入書本");
         $(".AppointmentMode_AddBookNumBtn").on("click", AppointmentModeAddBook);
+        $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
+        $("#appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
     });
-}
+};
 // 預約按鈕發送
 function AppointmentModeSend() {
     let userId = $("#appointmentMode_UserID").val();
@@ -226,7 +228,7 @@ function AppointmentModeSend() {
 function AppointmentModeAddBook() {
     let bookNumber = $(this).closest("tr").find("td").data("booknumber");
     console.log("你的書本編號: " + bookNumber)
-    $("#appointmentMode_BookNumber").val(bookNumber);
+    $("#appointmentMode_BookCode").val(bookNumber);
 }
 // 關鍵字專屬清潔按鈕
 function CancelBtn_AppointVersion() {
@@ -234,7 +236,7 @@ function CancelBtn_AppointVersion() {
     $(this).closest(".input-group").find(".form-control").val("");
     $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml);
 }
-// 取消預約按鈕
+
 
 
 
@@ -321,21 +323,39 @@ function NotificationClose() {
 
 // #region 可用的HTML
 // 預約模式_顯示欄位
-let appointmentQueryBookHtml = `<table class="table mt-2">
-                    <thead>
-                        <tr>
-                            <th scope="col">書籍編號</th>
-                            <th scope="col">書籍名稱</th>
-                            <th scope="col">狀況</th>
-                            <th scope="col">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table><h1 class="text-danger">查無書籍</h1>`;
+let appointmentQueryBookHtml = `
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="d-flex flex-wrap gap-3 justify-content-end">
+                <div>
+                    <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
+                    <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+                        <option value="ALL" selected>全部</option>
+                        <option value="IsLent">已借出</option>
+                        <option value="Available">可借閱</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
+                    <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </div>
+            </div>
+        </div><table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col">書籍編號</th>
+                <th scope="col">書籍名稱</th>
+                <th scope="col">狀況</th>
+                <th scope="col">操作</th>
+            </tr>
+        </thead>
+    </table><h1 class="text-danger">查無書籍</h1>`;
 
 let pleaseInputUserId = `<div class="alert alert-danger fs-1">該名借閱者不存在，請重新輸入</div>`;
-let pleaseInputBookId = `<div class="alert alert-danger fs-1">查無書本，請重新輸入</div>`;
+let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">查無書本，請重新輸入</div>`;
 let pleaseInputUserId2 = `<div class="alert alert-danger fs-1">請輸入借閱者ID</div>`
 let pleaseInputBookId2 = `<div class="alert alert-danger fs-1">請輸入書本編號</div>`;
 let borrowQueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後</div>`;
