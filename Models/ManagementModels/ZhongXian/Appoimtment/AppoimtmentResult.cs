@@ -16,6 +16,7 @@ namespace test2.Models.ManagementModels.ZhongXian.Appoimtment
         public int FromIndex => (CurrentPage - 1)  * perPage + 1;
         // 到每頁最後一筆
         public int ToIndex => Math.Min(perPage * CurrentPage, TotalCount);
-        
+        // 狀態
+        public string? status { get; set; }
     }
 }

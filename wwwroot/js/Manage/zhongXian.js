@@ -192,7 +192,7 @@ function AppointmentModeBookDynamic() {
     let state = $("#appointmentMode_status").val();
     let pageCount = $("#appointmentMode_perPage").val();
     let obj = { keyWord: keyWord, state: state, pageCount: pageCount }
-    console.log(`${state}與${pageCount}`);
+    console.log(`${keyWord}與${state}與${pageCount}與`);
     if (keyWord === " ") {
         alert("請不要輸入空字串");
         $("#appointmentMode_KeyWord").val("");
@@ -200,8 +200,10 @@ function AppointmentModeBookDynamic() {
     }
     if (keyWord === "") { $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml); return }
     $.post("/Backend/Manage/AppointmentMode1Query", obj, (result) => {
-        if (result == 0) { $("#appointmentQueryBook").html(pleaseInputBookId); return; }
+        if (result == 0) { $("#appointmentQueryBook").html(appointmentQueryBookHtml); return; }
         $("#appointmentQueryBook").html(result);
+        $("#appointmentMode_status").val(state);
+        $("#appointmentMode_perPage").val(pageCount);
         console.log("成功載入書本");
         $(".AppointmentMode_AddBookNumBtn").on("click", AppointmentModeAddBook);
         $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
@@ -337,7 +339,7 @@ let appointmentQueryBookHtml = `
                 <div>
                     <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
                     <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm">
-                        <option value="10">10</option>
+                        <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>

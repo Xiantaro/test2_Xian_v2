@@ -1,6 +1,5 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.Appoimtment.AppoimtmentResult
 
-<h1>@Model.perPage</h1>
 <div class="d-flex justify-content-between align-items-end">
     <div class="d-flex flex-wrap gap-3 justify-content-end">
         <div>
@@ -14,9 +13,12 @@
         <div>
             <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
             <select id="appointmentMode_perPage" name="appointmentMode_perPage" class="form-select form-select-sm">
-                <option value="10"  selected="@(Model.perPage == 10 ? "selected": "")">10</option>
-                <option value="20"  selected="@(Model.perPage == 20 ? "selected": "")">20</option>
-                <option value="30" >30</option>
+
+                @foreach (var option in new[] { 10, 20, 30 })
+                {
+                    <option value="@option" selected="@(Model.perPage == @option ? "selected": "")">@option</option>
+                }
+
             </select>
         </div>
     </div>

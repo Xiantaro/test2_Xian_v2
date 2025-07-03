@@ -179,6 +179,7 @@ namespace test2.Areas.Backend.Controllers
                 TotalCount = result.Count(),
                 CurrentPage = page,
                 perPage = pageCount,
+                status = state
             };
 
 
