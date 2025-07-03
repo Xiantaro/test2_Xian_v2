@@ -239,9 +239,6 @@ function CancelBtn_AppointVersion() {
     $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml);
 }
 
-
-
-
 // #endregion 預約模式 Module END
 
 // #region 通用函數
