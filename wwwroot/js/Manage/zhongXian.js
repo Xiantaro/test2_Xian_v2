@@ -191,8 +191,9 @@ function AppointmentModeBookDynamic() {
     let keyWord = $("#appointmentMode_KeyWord").val();
     let state = $("#appointmentMode_status").val();
     let pageCount = $("#appointmentMode_perPage").val();
-    let obj = { keyWord: keyWord, state: state, pageCount: pageCount }
-    console.log(`${keyWord}與${state}與${pageCount}與`);
+    let page = $(this).data("page") || 1;
+    let obj = { keyWord: keyWord, state: state, pageCount: pageCount, page: page }
+    console.log(`${keyWord}與${state}與${pageCount}與${page}`);
     if (keyWord === " ") {
         alert("請不要輸入空字串");
         $("#appointmentMode_KeyWord").val("");
@@ -208,6 +209,7 @@ function AppointmentModeBookDynamic() {
         $(".AppointmentMode_AddBookNumBtn").on("click", AppointmentModeAddBook);
         $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
         $("#appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
+        $(".page-link").on("click", AppointmentModeBookDynamic);
     });
 };
 // 預約按鈕發送

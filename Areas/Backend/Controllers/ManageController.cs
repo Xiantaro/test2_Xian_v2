@@ -170,18 +170,19 @@ namespace test2.Areas.Backend.Controllers
         {
             Debug.WriteLine($"{DateTime.Now}:預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}、{page}");
 
-            var result = await _context.Set<AppoimtmentKeywordShow>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
-            if(result.Count == 0) { return Json(0); }
+            var result =  await _context.Set<AppoimtmentKeywordShow>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
+            var totalcount = result.Count();
+            if(totalcount == 0) { return Json(0); }
+            var final =  result.Skip((page - 1) * pageCount).Take(pageCount).ToList();
 
             var FinalRestul = new AppoimtmentResult()
             {
-                AppoimtmentKeywordShows = result,
+                AppoimtmentKeywordShows = final,
                 TotalCount = result.Count(),
                 CurrentPage = page,
                 perPage = pageCount,
                 status = state
             };
-
 
             return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", FinalRestul);
         }
