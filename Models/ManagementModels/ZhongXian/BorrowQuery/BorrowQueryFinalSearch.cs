@@ -50,6 +50,7 @@ namespace test2.Models.ManagementModels.ZhongXian.BorrowQuery
                 if (filter.borrow_initDate > filter.borrow_lastDate) { StartTime = filter.borrow_lastDate; result = result.Where(id => id.borrowDate < filter.borrow_initDate && id.borrowDate > filter.borrow_lastDate); }
                 else { result = result.Where(id => id.borrowDate > filter.borrow_initDate && id.borrowDate < filter.borrow_lastDate); }
             }
+            // ALL
             if (filter.borrow_state != "ALL") result = result.Where(id => id.borrowStatus == filter.borrow_state);
             // 預設搜尋搜尋
             if (BorrowIsEmptyFilter()) { result = result.Where(re => re.borrowDate <= DateTime.Now && re.borrowDate >= DateTime.Now.AddMonths(-2)); }
@@ -62,7 +63,8 @@ namespace test2.Models.ManagementModels.ZhongXian.BorrowQuery
                 ("dueDate", "desc") => result.OrderByDescending(x => x.borrowDate),
                 ("dueDate", "asc") => result.OrderBy(x => x.borrowDate),
                 ("returnDate", "desc") => result.OrderByDescending(x => x.borrowDate),
-                ("returnDate", "asc") => result.OrderBy(x => x.borrowDate)
+                ("returnDate", "asc") => result.OrderBy(x => x.borrowDate),
+                (_, _) => result.OrderByDescending(x => x.borrowDate),
             };
 
 

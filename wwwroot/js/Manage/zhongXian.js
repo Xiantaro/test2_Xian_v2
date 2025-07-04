@@ -33,6 +33,7 @@ function initAppointmentPage() {
 function appointment_queryEvent() {
     const value = $(this).data("page") || 1;
     let formData = $("#appointmenSearch").serialize() + `&page=${value}`;
+    console.log("預約查詢進入" + formData);
     $.post("/Backend/Manage/AppointmentResult", formData, (result) => {
         $("#AppointmentContent").html(result);
         $(".page-link").on("click", appointment_queryEvent);

@@ -11,7 +11,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
         // 總筆數
         public int TotalCount { get; set; }
         // 目前頁數
-        public int CurrentPage => 1;
+        public int CurrentPage { get; set; }
         // 每頁數量
         public int perPage { get; set; }
         // 從0筆

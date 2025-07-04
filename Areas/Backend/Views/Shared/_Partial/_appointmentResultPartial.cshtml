@@ -1,4 +1,6 @@
-﻿<div class="mt-1 fs-5">總共查詢到 OO筆紀錄 目前O 至 OO 目前頁數1/10</div>
+﻿@model test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery.AppointmentQueryViewModel
+
+<div class="mt-1 fs-5">總共查詢到 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex 目前頁數    @Model.CurrentPage / @Model.TotalPage   </div>
 <table class="table mt-1">
     <thead>
         <tr>
@@ -13,62 +15,76 @@
         </tr>
     </thead>
     <tbody>
+        @if (Model.AppointmentQueryResultDTOs?.Count != 0)
+        {
+            @foreach (var ap in Model.AppointmentQueryResultDTOs!)
+            {
+                <tr>
+                    <td class="align-middle">@ap.appointmentId</td>
+                    <td class="align-middle">@ap.bookCode</td>
+                    <td class="align-middle text-truncate" style="max-width: 150px" title="@ap.title">@ap.title</td>
+                    <td class="align-middle NotificationUserid">@ap.cid</td>
+                    <td class="align-middle">@ap.appointmentDate</td>
+                    <td class="align-middle">@ap.appointmentDue</td>
+                    <td class='text-bg-success align-middle'>@ap.appointmentStatus</td>
+                    <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+                </tr>
+            }
+        }
+        else
+        {
 
-        <tr>
-            <td class="align-middle">1</td>
-            <td class="align-middle">789</td>
-            <td class="align-middle text-truncate" style="max-width: 150px" title="持續買進">持續買進</td>
-            <td class="align-middle NotificationUserid">UID215613</td>
-            <td class="align-middle">@DateTime.Now</td>
-            <td class="align-middle"></td>
-            <td class='text-bg-success align-middle'>借出</td>
-            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
-        </tr>
+        }
 
-        <tr>
-            <td class="align-middle">2</td>
-            <td class="align-middle">1234</td>
-            <td class="align-middle text-truncate" style="max-width: 150px" title="魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典">魔法初探：跨越百年的神祕學，寓言盒子的西方魔法寶典</td>
-            <td class="align-middle NotificationUserid">UID215613</td>
-            <td class="align-middle">@DateTime.Now</td>
-            <td class="align-middle"></td>
-            <td class='text-bg-secondary align-middle'>取消</td>
-            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn" data-bs-toggle="modal" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
-        </tr>
-
-        <tr>
-            <td class="align-middle appointmentid" data-appointmentid="IJL25344153">3</td>
-            <td class="align-middle ">456</td>
-            <td class="align-middle text-truncate" style="max-width: 150px" title="持續買進">持續買進</td>
-            <td class="align-middle NotificationUserid">UID215613</td>
-            <td class="align-middle">@DateTime.Now</td>
-            <td class="align-middle"></td>
-            <td class='text-bg-danger align-middle'>等待</td>
-            <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
-        </tr>
 
 
     </tbody>
 </table>
 <div class="container d-flex justify-content-center">
     <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous" data-page="1">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            @for (int x = 1; x < 5; x++)
-            {
-                <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
-            }
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next" data-page="2">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+        @if (Model.TotalPage != 1)
+        {
+            <ul class="pagination">
+                <li class="page-item">
+
+
+                    
+                    @if (Model.CurrentPage < 2)
+                    {
+                        <a class="page-link disabled" href="#" aria-label="Previous" data-page="1">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="#" aria-label="Previous" data-page="1">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    }
+
+                </li>
+                @for (int x = 1; x < Model.TotalPage + 1; x++)
+                {
+                    <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+                }
+                <li class="page-item">
+                    @if (Model.CurrentPage == Model.TotalPage)
+                    {
+                        <a class="page-link disabled" href="#" aria-label="Next" data-page="2">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="#" aria-label="Next" data-page="2">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+                </li>
+            </ul>
+        }
+        </nav>
+
 </div>
 
 

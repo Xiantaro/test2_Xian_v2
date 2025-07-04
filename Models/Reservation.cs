@@ -15,11 +15,11 @@ public partial class Reservation
 
     public DateTime ReservationDate { get; set; }
 
-    public DateTime DueDateR { get; set; }
+    public DateTime? DueDateR { get; set; }
 
     public int ReservationStatusId { get; set; }
 
-    public virtual Book? Book { get; set; }
+    public virtual Book Book { get; set; }
 
     public virtual ICollection<Borrow> Borrows { get; set; } = new List<Borrow>();
 

@@ -1,8 +1,4 @@
-﻿@{
-    DateTime NowTime = DateTime.Now;
-    string twoMonth = NowTime.AddMonths(-2).ToString("yyyy-MM-dd");
-    string DateTiemNow = NowTime.ToString("yyyy-MM-dd");
-}
+﻿
 <!-- 主內容 START -->
 <div class="row mt-1">
     <div class="col">
@@ -24,20 +20,20 @@
                 </div>
                 <div>
                     <label for="appointment_initDate" class="form-label mb-0">預約日期範圍</label>
-                    <input id="appointment_initDate" name="appointment_initDate" type="date" class="form-control form-control-sm" value="@twoMonth" />
+                    <input id="appointment_initDate" name="appointment_initDate" type="date" class="form-control form-control-sm" value="@DateTime.Now.AddMonths(-2)" />
                 </div>
                 <div>
                     <label for="appointment_lastDate" class="form-label mb-0">至</label>
-                    <input id="appointment_lastDate" name="appointment_lastDate" class="form-control form-control-sm" type="date" max="@DateTiemNow" value="@DateTiemNow" />
+                    <input id="appointment_lastDate" name="appointment_lastDate" class="form-control form-control-sm" type="date" max="@DateTime.Now" value="@DateTime.Now" />
                 </div>
                 <div>
                     <label for="appointment_state" class="form-label mb-0">目前狀態：</label>
                     <select name="appointment_state" class="form-select form-select-sm">
                         <option value="ALL">全部</option>
-                        <option value="Borrow">已借出</option>
-                        <option value="Wait">等待中</option>
-                        <option value="Stay">待取書中</option>
-                        <option value="Cancel">取消</option>
+                        <option value="已借出">已借出</option>
+                        <option value="預約中">預約中</option>
+                        <option value="待取書中">待取書中</option>
+                        <option value="取消預約">取消預約</option>
                     </select>
                 </div>
                 <div class="align-self-end">
@@ -71,7 +67,7 @@
         <!-- 搜尋 END-->
         <!-- 借閱狀況 START-->
         <div id="AppointmentContent">
-
+            <h1 class="bg-danger">查無資料</h1>
         </div>
         <!-- 借閱狀況 END -->
     </div>

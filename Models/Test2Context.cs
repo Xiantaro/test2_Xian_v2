@@ -423,6 +423,8 @@ public partial class Test2Context : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("type");
         });
+
+        // 憲自訂
         modelBuilder.Entity<BorrowBookInfomationDTO>().HasNoKey();
         modelBuilder.Entity<MessageDTO>().HasNoKey();
         modelBuilder.Entity<AppoimtmentKeywordShow>().HasNoKey();
