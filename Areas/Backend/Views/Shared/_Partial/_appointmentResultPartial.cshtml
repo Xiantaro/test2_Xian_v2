@@ -26,8 +26,30 @@
                     <td class="align-middle NotificationUserid">@ap.cid</td>
                     <td class="align-middle">@ap.appointmentDate</td>
                     <td class="align-middle">@ap.appointmentDue</td>
-                    <td class='text-bg-success align-middle'>@ap.appointmentStatus</td>
-                    <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+                    @if (@ap.appointmentStatus == "已預約")
+                    {
+                        <td class='text-light fw-bold text-bg-info align-middle'>@ap.appointmentStatus</td>
+                        <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn" data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+                    }
+                    else
+                    {
+                        @if (@ap.appointmentStatus == "取消預約")
+                        {
+                            <td class='text-light fw-bold text-bg-secondary align-middle'>@ap.appointmentStatus</td>
+                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+                        }
+                        else if (@ap.appointmentStatus == "可取書")
+                        {
+                            <td class='text-light fw-bold text-bg-success align-middle'>@ap.appointmentStatus</td>
+                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+                        }
+                        else
+                        {
+                            <td class='text-light fw-bold text-bg-warning align-middle'>@ap.appointmentStatus</td>
+                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled" disabled data-bs-target="#notificationModal" data-type="cancelAppointment">取消預約</button></td>
+                        }
+                    }
+
                 </tr>
             }
         }

@@ -37,7 +37,7 @@ namespace test2.Areas.Backend.Controllers
         {
             Debug.WriteLine("++++++++++++++預約管理_查詢列表+++++++++++++++");
             Debug.WriteLine("測試載入:  預約ID:" + appointment_reservationNum + " 使用者ID:" + appointment_UserID + " 書本名稱:" + appointment_bookNum + " 開始日期:" + appointment_initDate + " 今天日期:" + appointment_lastDate + " 狀態:" + appointment_state + " 頁數:" + appointment_perPage + " 日期排序:" + appointment_orderDate + "頁數" + page);
-            #region 原本的
+            
             AppoimtmentQueryFilter filter = new AppoimtmentQueryFilter()
             {
                 appointment_reservationId = appointment_reservationNum,
@@ -55,7 +55,7 @@ namespace test2.Areas.Backend.Controllers
             var newclass = new AppointmentQueryFinalSearch(_context);
             var final = await newclass.AppointmentQuerySearch(filter);
             //var final = await _context
-            #endregion
+            
 
             Debug.WriteLine("即將送出........預約搜尋結果!!");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appointmentResultPartial.cshtml", final);
@@ -162,18 +162,18 @@ namespace test2.Areas.Backend.Controllers
             Debug.WriteLine("預約模式載入成功...............");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appoimtmentPartial.cshtml");
         }
-        public async Task<IActionResult> AppointmentMode1Send(int appointmentMode_UserID, string appointmentMode_BookCode)
+        public async Task<IActionResult> AppointmentMode1Send(int appointmentMode_UserID, int appointmentMode_BookId)
         {
             
-            Debug.WriteLine("書本預約狀況 載入成功...." + "使用者ID: " + appointmentMode_UserID + "書籍ID: " + appointmentMode_BookCode);
+            Debug.WriteLine("書本預約狀況 載入成功...." + "使用者ID: " + appointmentMode_UserID + "書籍ID: " + appointmentMode_BookId);
             var User = await _context.Clients.Where(x => x.CId == appointmentMode_UserID).ToListAsync();
             Debug.WriteLine($"使用者是否成功: {User.Count}");
             if(User.Count != 1) { return Json(0); }
-            var bookCode = await _context.Books.Join(_context.Collections, bok => bok.CollectionId, col => col.CollectionId, (bok, col) => new { bok, col }).Where(x => x.bok.BookCode == appointmentMode_BookCode).Select(result => new { result.col.Title}).ToListAsync();
-            Debug.WriteLine($"書本數量是否存在: {bookCode.Count}");
-            if (bookCode.Count != 1) { return Json(1); }
+            var bookId = await _context.Collections.Where(x => x.CollectionId == appointmentMode_BookId).Select(re => new { re.Title }).ToListAsync();
+            Debug.WriteLine($"書本數量是否存在: {bookId.Count}");
+            if (bookId.Count != 1) { return Json(1); }
 
-            var ResultMessage = await _context.Set<MessageDTO>().FromSqlInterpolated($"EXEC RevervationMode {appointmentMode_UserID}, {appointmentMode_BookCode}").ToListAsync();
+            var ResultMessage = await _context.Set<MessageDTO>().FromSqlInterpolated($"EXEC RevervationMode {appointmentMode_UserID}, {appointmentMode_BookId}").ToListAsync();
 
             var result = new ResultViewModel()
             {
@@ -181,8 +181,7 @@ namespace test2.Areas.Backend.Controllers
                 Message = ResultMessage[0].Message,
                 Cid = appointmentMode_UserID,
                 cName = User[0].CName,
-                title = bookCode[0].Title,
-                bookcode = appointmentMode_BookCode
+                title = bookId[0].Title,
             };
 
             Debug.WriteLine("預約模式最後..........要發送了!");

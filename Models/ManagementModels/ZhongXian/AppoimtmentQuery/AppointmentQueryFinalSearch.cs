@@ -25,7 +25,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
                     filter.appointment_lastDate == null &&
                     filter.appointment_state == "ALL";
             }
-            Debug.WriteLine("222222222222222222222");
+            
             var result =   _context.Reservations.Include(x => x.Book).Include(y => y.Collection).Include(z => z.ReservationStatus).Select(final => new AppointmentQueryResultDTO()
             {
                 appointmentId = final.ReservationId,

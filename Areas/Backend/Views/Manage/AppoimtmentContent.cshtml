@@ -7,12 +7,11 @@
         <tr class="table-warning fw-bold"><td class="fs-3">成功預約</td><td></td></tr>
         <tr class="fs-4 fw-bold" style="width:200px"><td>借閱ID:</td><td>@Model.Cid</tr>
         <tr class="fs-4 fw-bold" style="width:200px"><td>借閱人:</td><td>@Model.cName</td></tr>
-        <tr class="fs-4 fw-bold" style="width:200px"><td>書籍編號:</td><td> @Model.bookcode</td></tr>
         <tr class="fs-4 fw-bold" style="width:200px"><td>書籍名稱: </td><td>@Model.title</td></tr>
         <tr class="fs-4 fw-bold" style="width:200px"><td>預約日期:</td><td>@DateTime.Now</td></tr>
     </table>
 }
 else
 {
-    <div class="alert alert-success">@Model.Message</div>
+    <div class="alert alert-danger fs-1">@Model.Message</div>
 }

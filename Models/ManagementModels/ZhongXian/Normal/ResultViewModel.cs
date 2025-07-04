@@ -1,4 +1,6 @@
-﻿namespace test2.Models.ManagementModels.ZhongXian.Normal
+﻿using System.Net;
+
+namespace test2.Models.ManagementModels.ZhongXian.Normal
 {
     public class ResultViewModel
     {
