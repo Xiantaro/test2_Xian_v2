@@ -46,8 +46,8 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
                 if (filter.appointment_initDate <= filter.appointment_lastDate) { result = result.Where(x => filter.appointment_initDate <= x.appointmentDate && x.appointmentDate <= filter.appointment_lastDate); }
                 if (filter.appointment_initDate >= filter.appointment_lastDate) { result = result.Where(x => filter.appointment_initDate >= x.appointmentDate && x.appointmentDate >= filter.appointment_lastDate); }
             }
-            if (filter.appointment_orderDate == "desc") { result = result.OrderBy(x => x.appointmentDate); }
-            else { result = result.OrderByDescending(x => x.appointmentDate); }
+            if (filter.appointment_orderDate == "desc") { result = result.OrderByDescending(x => x.appointmentDate); }
+            else { result = result.OrderBy(x => x.appointmentDate); }
 
                 var totalCount = await result.CountAsync();
 
