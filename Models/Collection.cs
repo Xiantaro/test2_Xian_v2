@@ -9,15 +9,15 @@ public partial class Collection
 
     public string Title { get; set; } = null!;
 
-    public string CollectionDesc { get; set; } = null!;
+    public string? CollectionDesc { get; set; }
 
-    public string CollectionImg { get; set; } = null!;
+    public byte[] CollectionImg { get; set; } = null!;
 
     public int TypeId { get; set; }
 
     public string Author { get; set; } = null!;
 
-    public string Translator { get; set; } = null!;
+    public string? Translator { get; set; }
 
     public string Publisher { get; set; } = null!;
 

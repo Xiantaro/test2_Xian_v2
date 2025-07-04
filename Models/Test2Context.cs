@@ -17,11 +17,9 @@ public partial class Test2Context : DbContext
         : base(options)
     {
     }
-    // 憲自訂的
     public virtual DbSet<AppoimtmentKeywordShow> AppoimtmentKeywordShows { get; set; }
     public virtual DbSet<BorrowBookInfomationDTO> BorrowBookInfomationDTOs { get; set; }
     public virtual DbSet<MessageDTO> BorrwoMessageDTOs { get; set; }
-    // END
     public virtual DbSet<Activity> Activities { get; set; }
 
     public virtual DbSet<ActivityType> ActivityTypes { get; set; }
@@ -58,9 +56,9 @@ public partial class Test2Context : DbContext
 
     public virtual DbSet<Type> Types { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=XIANN\\SQLEXPRESS02;Database=test2;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;User ID=andy;Password=1234");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=XIANN\\SQLEXPRESS02;Database=test2;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;User ID=andy;Password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -68,15 +66,11 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Activity");
 
-            entity.HasIndex(e => e.ActivityImg, "UQ__Activity__4442C40450A68E18").IsUnique();
-
-            entity.HasIndex(e => e.ActivityTitle, "UQ__Activity__5F9FE5738F3AF343").IsUnique();
+            entity.HasIndex(e => e.ActivityTitle, "UQ__Activity__5F9FE5730461C05A").IsUnique();
 
             entity.Property(e => e.ActivityId).HasColumnName("activityId");
             entity.Property(e => e.ActivityDesc).HasColumnName("activityDesc");
-            entity.Property(e => e.ActivityImg)
-                .HasMaxLength(500)
-                .HasColumnName("activityImg");
+            entity.Property(e => e.ActivityImg).HasColumnName("activityImg");
             entity.Property(e => e.ActivityTitle)
                 .HasMaxLength(100)
                 .HasColumnName("activityTitle");
@@ -101,7 +95,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("ActivityType");
 
-            entity.HasIndex(e => e.ActivityType1, "UQ__Activity__1F1EE4DDD046F4FE").IsUnique();
+            entity.HasIndex(e => e.ActivityType1, "UQ__Activity__1F1EE4DD7824764E").IsUnique();
 
             entity.Property(e => e.ActivityTypeId).HasColumnName("activityTypeId");
             entity.Property(e => e.ActivityType1)
@@ -113,7 +107,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Announcement");
 
-            entity.HasIndex(e => e.AnnouncementTitle, "UQ__Announce__EBE0015F9CE2502B").IsUnique();
+            entity.HasIndex(e => e.AnnouncementTitle, "UQ__Announce__EBE0015FFBC8E468").IsUnique();
 
             entity.Property(e => e.AnnouncementId).HasColumnName("announcementId");
             entity.Property(e => e.AnnouncementDesc).HasColumnName("announcementDesc");
@@ -132,7 +126,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("AnnouncementType");
 
-            entity.HasIndex(e => e.AnnouncementType1, "UQ__Announce__D53C87B26D6169EB").IsUnique();
+            entity.HasIndex(e => e.AnnouncementType1, "UQ__Announce__D53C87B273E5726F").IsUnique();
 
             entity.Property(e => e.AnnouncementTypeId).HasColumnName("announcementTypeId");
             entity.Property(e => e.AnnouncementType1)
@@ -144,7 +138,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Audience");
 
-            entity.HasIndex(e => e.Audience1, "UQ__Audience__2C1B51FC5FD285AA").IsUnique();
+            entity.HasIndex(e => e.Audience1, "UQ__Audience__2C1B51FCE651CF62").IsUnique();
 
             entity.Property(e => e.AudienceId).HasColumnName("audienceId");
             entity.Property(e => e.Audience1)
@@ -156,7 +150,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Book");
 
-            entity.HasIndex(e => e.BookCode, "UQ__Book__3BB8DAE66D96A5A3").IsUnique();
+            entity.HasIndex(e => e.BookCode, "UQ__Book__3BB8DAE6FCCC8805").IsUnique();
 
             entity.Property(e => e.BookId).HasColumnName("bookId");
             entity.Property(e => e.AccessionDate).HasColumnName("accessionDate");
@@ -182,7 +176,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("BookStatus");
 
-            entity.HasIndex(e => e.BookStatus1, "UQ__BookStat__6890475C093EDBCE").IsUnique();
+            entity.HasIndex(e => e.BookStatus1, "UQ__BookStat__6890475C0428AD50").IsUnique();
 
             entity.Property(e => e.BookStatusId).HasColumnName("bookStatusId");
             entity.Property(e => e.BookStatus1)
@@ -227,7 +221,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("BorrowStatus");
 
-            entity.HasIndex(e => e.BorrowStatus1, "UQ__BorrowSt__EF08F8F4949A5D64").IsUnique();
+            entity.HasIndex(e => e.BorrowStatus1, "UQ__BorrowSt__EF08F8F4A15F2DF5").IsUnique();
 
             entity.Property(e => e.BorrowStatusId).HasColumnName("borrowStatusId");
             entity.Property(e => e.BorrowStatus1)
@@ -241,9 +235,9 @@ public partial class Test2Context : DbContext
 
             entity.ToTable("Client");
 
-            entity.HasIndex(e => e.CPhone, "UQ__Client__0A376ADCA4B9A4D0").IsUnique();
+            entity.HasIndex(e => e.CPhone, "UQ__Client__0A376ADC1835B096").IsUnique();
 
-            entity.HasIndex(e => e.CAccount, "UQ__Client__2F046D2372B8F7F2").IsUnique();
+            entity.HasIndex(e => e.CAccount, "UQ__Client__2F046D2330C839BF").IsUnique();
 
             entity.Property(e => e.CId).HasColumnName("cId");
             entity.Property(e => e.CAccount)
@@ -265,18 +259,14 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Collection");
 
-            entity.HasIndex(e => e.CollectionImg, "UQ__Collecti__5A4F486824C5CBE9").IsUnique();
-
-            entity.HasIndex(e => e.Isbn, "UQ__Collecti__99F9D0A4CDB7290B").IsUnique();
+            entity.HasIndex(e => e.Isbn, "UQ__Collecti__99F9D0A41DAAC436").IsUnique();
 
             entity.Property(e => e.CollectionId).HasColumnName("collectionId");
             entity.Property(e => e.Author)
                 .HasMaxLength(50)
                 .HasColumnName("author");
             entity.Property(e => e.CollectionDesc).HasColumnName("collectionDesc");
-            entity.Property(e => e.CollectionImg)
-                .HasMaxLength(500)
-                .HasColumnName("collectionImg");
+            entity.Property(e => e.CollectionImg).HasColumnName("collectionImg");
             entity.Property(e => e.Isbn)
                 .HasMaxLength(17)
                 .IsUnicode(false)
@@ -345,7 +335,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Language");
 
-            entity.HasIndex(e => e.Language1, "UQ__Language__EFADA5D954F16FDD").IsUnique();
+            entity.HasIndex(e => e.Language1, "UQ__Language__EFADA5D9CB3AEE61").IsUnique();
 
             entity.Property(e => e.LanguageId).HasColumnName("languageId");
             entity.Property(e => e.Language1)
@@ -404,7 +394,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("ReservationStatus");
 
-            entity.HasIndex(e => e.ReservationStatus1, "UQ__Reservat__C351879316A73558").IsUnique();
+            entity.HasIndex(e => e.ReservationStatus1, "UQ__Reservat__C3518793518D0616").IsUnique();
 
             entity.Property(e => e.ReservationStatusId).HasColumnName("reservationStatusId");
             entity.Property(e => e.ReservationStatus1)
@@ -416,14 +406,13 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Type");
 
-            entity.HasIndex(e => e.Type1, "UQ__Type__E3F852481077C120").IsUnique();
+            entity.HasIndex(e => e.Type1, "UQ__Type__E3F852480165B21C").IsUnique();
 
             entity.Property(e => e.TypeId).HasColumnName("typeId");
             entity.Property(e => e.Type1)
                 .HasMaxLength(50)
                 .HasColumnName("type");
         });
-
         // 憲自訂
         modelBuilder.Entity<BorrowBookInfomationDTO>().HasNoKey();
         modelBuilder.Entity<MessageDTO>().HasNoKey();

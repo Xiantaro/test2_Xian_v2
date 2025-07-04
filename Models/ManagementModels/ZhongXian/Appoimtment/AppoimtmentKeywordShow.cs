@@ -2,7 +2,7 @@
 {
     public class AppoimtmentKeywordShow
     {
-        public string? bookCode { get; set; }
+        public int collectionid { get; set; }
         public string? title { get; set; }
         public string? author { get; set; }
         public string? bookstatus { get; set; }

@@ -19,7 +19,7 @@ public partial class Reservation
 
     public int ReservationStatusId { get; set; }
 
-    public virtual Book Book { get; set; }
+    public virtual Book? Book { get; set; }
 
     public virtual ICollection<Borrow> Borrows { get; set; } = new List<Borrow>();
 

@@ -21,7 +21,7 @@
             <div class="col-10">
                 <label class="fs-3" for="appointmentMode_BookCode">書籍編號: </label>
                 <div class="input-group">
-                    <input id="appointmentMode_BookCode" type="text" name="appointmentMode_BookCode" class="form-control" />
+                    <input id="appointmentMode_BookCode" type="number" name="appointmentMode_BookCode" class="form-control" />
                     <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelBookNumBtn">&times;</button>
                 </div>
             </div>
@@ -40,9 +40,9 @@
                 <div>
                     <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
                     <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
-                        <option value="ALL" selected>全部</option>
-                        <option value="IsLent">已借出</option>
-                        <option value="Available">可借閱</option>
+                        <option value="IsLent" selected>可借閱</option>
+                        <option value="Available">借閱中</option>
+                        <option value="ALL">全部</option>
                     </select>
                 </div>
                 <div>

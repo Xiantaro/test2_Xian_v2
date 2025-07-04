@@ -11,7 +11,7 @@ public partial class Activity
 
     public string? ActivityDesc { get; set; }
 
-    public string ActivityImg { get; set; } = null!;
+    public byte[] ActivityImg { get; set; } = null!;
 
     public DateTime StartDate { get; set; }
 

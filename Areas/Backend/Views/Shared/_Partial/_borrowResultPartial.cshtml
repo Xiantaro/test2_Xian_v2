@@ -30,7 +30,7 @@
                     <td class="align-middle">@x.borrowDate</td>
                     <td class="align-middle BorrowDueDate">@x.dueDateB</td>
                     <td class="align-middle">@x.returnDate </td>
-                    @if (@x.borrowStatus == "借出中")
+                    @if (@x.borrowStatus == "借閱中")
                     {
                         <td class='text-bg-warning align-middle'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
@@ -41,7 +41,7 @@
                         <td class='text-bg-success align-middle'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-secondary mx-3 NotificationBtn disabled" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                     }
-                    @if (@x.borrowStatus == "已逾期")
+                    @if (@x.borrowStatus == "逾期")
                     {
                         <td class='text-bg-danger align-middle'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
@@ -54,7 +54,7 @@
     </table>
     <div class="container d-flex justify-content-center">
         <nav aria-label="Page navigation example">
-            @if (Model.TotalPage < 2)
+            @if (Model.TotalPage != 1)
             {
                 <ul class="pagination">
                     <li class="page-item">

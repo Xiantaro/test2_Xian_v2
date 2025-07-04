@@ -9,7 +9,7 @@
         public string? type { get; set; }
         public string publisher { get; set; } = null!;
         public DateTime publishDate { get; set; }
-        public string? collectionImg { get; set; }
+        public byte[]? collectionImg { get; set; }
         public string bookStatus { get; set; } = null!;
     }
 }

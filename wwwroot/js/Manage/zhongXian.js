@@ -231,7 +231,7 @@ function AppointmentModeSend() {
 }
 // 加入書籍編號到輸入框
 function AppointmentModeAddBook() {
-    let bookNumber = $(this).closest("tr").find("td").data("booknumber");
+    let bookNumber = $(this).closest("tr").find("td").data("bookid");
     console.log("你的書本編號: " + bookNumber)
     $("#appointmentMode_BookCode").val(bookNumber);
 }
