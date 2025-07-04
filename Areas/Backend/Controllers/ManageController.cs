@@ -40,7 +40,7 @@ namespace test2.Areas.Backend.Controllers
             {
                 appointment_reservationNum = appointment_reservationNum,
                 appointment_UserID = appointment_UserID,
-                appointment_bookNum = appointment_bookNum,
+                appointment_bookCode = appointment_bookNum,
                 appointment_initDate = appointment_initDate,
                 appointment_lastDate = appointment_lastDate,
                 appointment_state = appointment_state,
@@ -49,6 +49,7 @@ namespace test2.Areas.Backend.Controllers
                 page = page
             };
 
+            
 
 
             Debug.WriteLine("即將送出........預約搜尋結果!!");
