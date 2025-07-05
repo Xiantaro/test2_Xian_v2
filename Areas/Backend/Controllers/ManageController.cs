@@ -229,10 +229,21 @@ namespace test2.Areas.Backend.Controllers
 
         #region 通用Action
         // 傳送通知
-        public IActionResult Notification(string NotificationUserInput, string NotificationType, string NotificationTextarea)
+        public async Task<IActionResult> Notification(int NotificationId, string NotificationType, string NotificationTextarea)
         {
-            Debug.WriteLine($"預約者編號: {NotificationUserInput}、通知類型 {NotificationType}、內容 : {NotificationTextarea}");
-            return Ok();
+            Debug.WriteLine($"預約者編號: {NotificationId}、通知類型 {NotificationType}、內容 : {NotificationTextarea}");
+            var user = await _context.Clients.FirstOrDefaultAsync(x => x.CId == NotificationId);
+            if (user == null) { return Json("該預約者不存在"); }
+
+            var NotificationSend = new Notification()
+            {
+                CId = NotificationId,
+                Message = NotificationTextarea,
+                NotificationDate = DateTime.UtcNow
+            };
+            await _context.AddAsync(NotificationSend);
+            await _context.SaveChangesAsync();
+            return Json(1);
         }
         // 取消預約
         public async Task<IActionResult> CancelAppointment(int NotificationAppointmentId, int NotificationUser, string NotificationTextarea)
@@ -254,8 +265,7 @@ namespace test2.Areas.Backend.Controllers
             if (cancelAppointment == null) { Json(0); }
             cancelAppointment!.ReservationStatusId = 4;
             await _context.Notifications.AddAsync(Noticaionl);
-            _context.SaveChanges();
-           
+            await _context.SaveChangesAsync();
             return Json(1);
         }
         #endregion

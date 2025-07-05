@@ -343,8 +343,11 @@ function ChageNotificationType() {
 // 送出按鈕
 function NotificationMessageSend() {
     let myform = $("#NotificationFom").serialize();
+    console.log(myform);
     $.post("/Backend/Manage/Notification", myform, (result) => {
-        if (result === "") { alert("成功送出") }
+        if (result === 1) { alert("成功送出!!"); }
+        else if (result === 0) { alert("送出失敗...."); }
+        else { alert(result); }
         NotificationClose();
     })
 };
