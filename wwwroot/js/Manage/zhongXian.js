@@ -39,20 +39,43 @@ function appointment_queryEvent() {
         $(".page-link").on("click", appointment_queryEvent);
 
         // 取消按鈕設置
-        $(".NotificationBtn").on("click", CancelAppointment);
+        $(".NotificationBtn").on("click", CancelAppointmentBtn);
         $("#NotificationClear").on("click", NotificationClearBtn);
         $("#CancelBox").on("click", NotificationClose);
-
-
-        // 新增傳送通知及取消預約
-        //$("#NotificationSend").on("click", NotificationMessageSend);
+        $("#NotificationSend").on("click", SendCancelAppointmentBtn);
     });
     console.log("查詢刷新~");
 }
-// 取消預約
-function CancelAppointment() {
-
-   
+// 取消預約按鈕
+function CancelAppointmentBtn() {
+    let appointmentDate = $(this).closest("tr").find(".appointmentDate").text();
+    let booktitle = $(this).closest("tr").find(".booktitle").text();
+    let appointmenId = $(this).closest("tr").find(".appointmentId").text();
+    let cid = $(this).closest("tr").find(".appointmentcid").text();
+    $("#NotificationAppointmentId").val(appointmenId);
+    $("#NotificationUser").val(cid);
+    let cancelAppointmentText =
+    `主旨：您預約的書籍已由管理員取消親愛的用戶您好
+您於 {${appointmentDate}} 
+所預約的書籍《 ${booktitle} 》
+已於 {${new Date().toLocaleString('zh-TW')}} 由本館管理員取消。
+取消原因： OOXX ，
+若您仍有借閱需求，歡迎重新進行預約。
+如有任何問題或需協助，敬請聯繫本館服務人員，
+我們將竭誠為您服務。
+感謝您的配合與理解！圖書館管理系統 敬上`
+    $("#NotificationTextarea").val(cancelAppointmentText);
+}
+// 送出取消預約
+function SendCancelAppointmentBtn() {
+    let CancelForm = $("#NotificationFom").serialize();
+    console.log(`表單序列話 :${CancelForm}`)
+    $.post("/Backend/Manage/CancelAppointment", CancelForm, (result) => {
+        console.log("已回傳");
+        if (result == 0) {alert("取消預約失敗....") }
+        if (result == 1) {alert("取消預約成功!!!!") }
+    })
+    console.log("送出")
 }
 
 // #endregion 預約查詢Module "END""

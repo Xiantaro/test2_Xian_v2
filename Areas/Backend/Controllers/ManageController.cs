@@ -234,6 +234,30 @@ namespace test2.Areas.Backend.Controllers
             Debug.WriteLine($"預約者編號: {NotificationUserInput}、通知類型 {NotificationType}、內容 : {NotificationTextarea}");
             return Ok();
         }
+        // 取消預約
+        public async Task<IActionResult> CancelAppointment(int NotificationAppointmentId, int NotificationUser, string NotificationTextarea)
+        {
+            Debug.WriteLine($"借閱編號:{NotificationAppointmentId}");
+            Debug.WriteLine($"預約者id:{NotificationUser}");
+            Debug.WriteLine($"文本內容:{NotificationTextarea}");
+            var Noticaionl = new Notification
+            {
+                CId = NotificationUser,
+                Message = NotificationTextarea,
+                NotificationDate = DateTime.UtcNow
+            };
+            var text = await _context.Reservations.Where(x => x.ReservationId == NotificationUser && x.CId == NotificationUser).ToListAsync();
+            if (text.IsNullOrEmpty()) { Json(0); }
+
+            var cancelAppointment = await _context.Reservations.FirstOrDefaultAsync(x => x.ReservationId == NotificationAppointmentId && x.CId == NotificationUser);
+
+            if (cancelAppointment == null) { Json(0); }
+            cancelAppointment!.ReservationStatusId = 4;
+            await _context.Notifications.AddAsync(Noticaionl);
+            _context.SaveChanges();
+           
+            return Json(1);
+        }
         #endregion
         //------------------------------------------------------------------------------------------
         #region DB連線測試

@@ -20,11 +20,11 @@
             @foreach (var ap in Model.AppointmentQueryResultDTOs!)
             {
                 <tr>
-                    <td class="align-middle">@ap.appointmentId</td>
+                    <td class="align-middle appointmentId"  data-appointmentId="@ap.appointmentId">@ap.appointmentId</td>
                     <td class="align-middle">@ap.bookCode</td>
-                    <td class="align-middle text-truncate" style="max-width: 150px" title="@ap.title">@ap.title</td>
-                    <td class="align-middle NotificationUserid">@ap.cid</td>
-                    <td class="align-middle">@ap.appointmentDate</td>
+                    <td class="align-middle text-truncate booktitle" style="max-width: 150px" title="@ap.title">@ap.title</td>
+                    <td class="align-middle appointmentcid" data-cid="@ap.cid">@ap.cid</td>
+                    <td class="align-middle appointmentDate">@ap.appointmentDate</td>
                     <td class="align-middle">@ap.appointmentDue</td>
                     @if (@ap.appointmentStatus == "已預約")
                     {
@@ -112,24 +112,32 @@
             <div class="modal-body">
                 <form id="NotificationFom">
                     <div class="mb-3">
+                        <label for="NotificationAppointmentId" class="form-label">預約編號:</label>
+                        <input type="number" class="form-control" id="NotificationAppointmentId" name="NotificationAppointmentId" readonly>
+                    </div>
+                    <div class="mb-3">
                         <label for="NotificationUser" class="form-label">借閱者ID:</label>
-                        <input type="text" class="form-control" id="NotificationUser" name="NotificationUserInput" readonly>
+                        <input type="number" class="form-control" id="NotificationUser" name="NotificationUser" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="NotificationType" class="form-label">通知類型:</label>
-                        <select class="form-select" id="NotificationType" name="NotificationType">
+                        <select class="form-select" id="NotificationType">
                             <option value="CancelNotification" selected>取消預約通知</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="NotificationTextarea" class="form-label">內容</label>
-                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea"></textarea>
+                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea" style="height:200px"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
-                <button type="button" class="btn btn-danger" id="NotificationClear">清除</button>
+                <div class="d-flex flex-wrap" gap-3>
+                    <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+                </div>
+                <div class="d-flex flex-wrap" gap-3>
+                    <button type="button" class="btn btn-danger mx-3" id="NotificationClear">清除</button>
+                </div>
             </div>
         </div>
     </div>
