@@ -1,19 +1,18 @@
-﻿@if (1 == 1)
+﻿@model test2.Models.ManagementModels.ZhongXian.Normal.ResultViewModel
+
+@if (Model != null)
 {
     <table class="table table-hover table-info">
-        <tr class="fs-2 fw-bold" style="width:90px;"><td>借閱者ID:</td><td>123</td></tr>
-        <tr class="fs-2 fw-bold" style="width:90px;"><td>借閱者:</td><td>老王</td></tr>
+        <tr class="fs-2 fw-bold" style="width:90px;"><td>借閱者ID:</td><td>@Model.Cid</td></tr>
         <tr class="fs-2 fw-bold" style="width:90px;"><td>於 </td><td>@DateTime.Now</td></tr>
         <tr class="fs-2 fw-bold " style="width:90px;"><td class="text-danger">已歸還</td><td></td></tr>
-        <tr class="fs-2 fw-bold" style="width:90px;"><td>書籍編號:</td><td>1314</td></tr>
-        <tr class="fs-2 fw-bold" style="width:90px;"><td>書籍名稱: </td><td>龍眠</td></tr>
+        <tr class="fs-2 fw-bold" style="width:90px;"><td>書籍編號:</td><td>@Model.bookcode</td></tr>
+        <tr class="fs-2 fw-bold" style="width:90px;"><td>書籍名稱: </td><td>@Model.title</td></tr>
     </table>
 }
 else
 {
-    <div class="alert alert-success">找不到書籍</div>
-    <div class="alert alert-success">該書本沒有被借閱</div>
-    <div class="alert alert-success">已逾期</div>
+    <div class="alert alert-danger">@Model.Message</div>
 }
 
 

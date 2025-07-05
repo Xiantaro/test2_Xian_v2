@@ -38,14 +38,21 @@ function appointment_queryEvent() {
         $("#AppointmentContent").html(result);
         $(".page-link").on("click", appointment_queryEvent);
 
-        // 點擊按鈕
-        $(".NotificationBtn").on("click", NotificationBtn);
-
-        $("#NotificationSend").on("click", NotificationMessageSend);
+        // 取消按鈕設置
+        $(".NotificationBtn").on("click", CancelAppointment);
         $("#NotificationClear").on("click", NotificationClearBtn);
         $("#CancelBox").on("click", NotificationClose);
+
+
+        // 新增傳送通知及取消預約
+        //$("#NotificationSend").on("click", NotificationMessageSend);
     });
     console.log("查詢刷新~");
+}
+// 取消預約
+function CancelAppointment() {
+
+   
 }
 
 // #endregion 預約查詢Module "END""
@@ -164,12 +171,13 @@ function ReturnBookMode() {
 
 // 還書送出
 function ReturnBookSend() {
-    let bookId = $("#ReturnBookID").val();
+    let bookId = $("#ReturnBookCode").val();
     if (bookId === "") { alert("請輸入書籍編號!!"); return; }
     let data = $("#ReturnBookIdForm").serialize();
     $.post("/Backend/Manage/ReturnBookSend", data, (result) => {
+        if (result == 0) { $("#ReturnBookContent").html(retrunFalse); return; }
         $("#ReturnBookContent").html(result);
-        $("#ReturnBookID").val("");
+        $("#ReturnBookCode").val("");
     })
 }
 // #endregion 還書模式 END Module
@@ -362,6 +370,7 @@ let pleaseInputUserId2 = `<div class="alert alert-danger fs-1">請輸入借閱�
 let pleaseInputBookId2 = `<div class="alert alert-danger fs-1">請輸入書本編號</div>`;
 let borrowQueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後</div>`;
 let borrowQueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`;
+let retrunFalse = `<div class="alert alert-danger fs-1">此本書本不存在於借閱紀錄中</div>`;
 
 
 // #endregion

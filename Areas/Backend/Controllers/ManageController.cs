@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using test2.Models;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
@@ -54,8 +55,6 @@ namespace test2.Areas.Backend.Controllers
 
             var newclass = new AppointmentQueryFinalSearch(_context);
             var final = await newclass.AppointmentQuerySearch(filter);
-            //var final = await _context
-            
 
             Debug.WriteLine("即將送出........預約搜尋結果!!");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appointmentResultPartial.cshtml", final);
@@ -149,10 +148,28 @@ namespace test2.Areas.Backend.Controllers
         {
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_returnBookPartial.cshtml");
         }
-        public IActionResult ReturnBookSend(string ReturnBookID)
+        public async Task<IActionResult> ReturnBookSend(string ReturnBookCode)
         {
-            Debug.WriteLine($"借閱者{ReturnBookID}還書成功");
-            return PartialView("~/Areas/Backend/Views/Manage/ReturnBookContent.cshtml");
+            Debug.WriteLine($"還書編號: {ReturnBookCode}++++++++++++++++++++++++++++");
+
+            var retrunBookIsReal = await _context.Borrows.Include(x => x.Book).ThenInclude(x => x.Collection).Include(x => x.CIdNavigation).Where(x => x.Book.BookCode == ReturnBookCode)
+                .Select(re => new { re.CId,re.CIdNavigation.CName, re.Book.Collection.Title }).ToListAsync();
+            if (retrunBookIsReal.IsNullOrEmpty()) { return Json(0); }
+
+            Debug.WriteLine($"開始還書作業......");
+            var resultMessage = await _context.Set<MessageDTO>().FromSqlInterpolated($"EXEC ReturnBook {ReturnBookCode}").ToListAsync();
+
+            var resultViewModel = new ResultViewModel()
+            {
+                ResultCode = resultMessage[0].ResultCode,
+                Message = resultMessage[0].Message,
+                Cid = retrunBookIsReal[0].CId,
+                cName = retrunBookIsReal[0].CName,
+                title = retrunBookIsReal[0].Title,
+                bookcode = ReturnBookCode,
+            };
+            Debug.WriteLine($"借閱者:Cid、{ReturnBookCode}還書成功");
+            return PartialView("~/Areas/Backend/Views/Manage/ReturnBookContent.cshtml", resultViewModel);
         }
         #endregion 還書模式 END
 

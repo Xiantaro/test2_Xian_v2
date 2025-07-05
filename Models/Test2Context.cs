@@ -15,8 +15,8 @@ public partial class Test2Context : DbContext
 
     public Test2Context(DbContextOptions<Test2Context> options)
         : base(options)
-    {
-    }
+    { }
+    // 憲自訂
     public virtual DbSet<AppoimtmentKeywordShow> AppoimtmentKeywordShows { get; set; }
     public virtual DbSet<BorrowBookInfomationDTO> BorrowBookInfomationDTOs { get; set; }
     public virtual DbSet<MessageDTO> BorrwoMessageDTOs { get; set; }
