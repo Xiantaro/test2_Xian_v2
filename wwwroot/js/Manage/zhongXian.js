@@ -41,21 +41,23 @@ function appointment_queryEvent() {
         // 取消按鈕設置
         $(".NotificationBtn").on("click", CancelAppointmentBtn);
         $("#NotificationClear").on("click", NotificationClearBtn);
-        $("#CancelBox").on("click", NotificationClose);
+        $("#CancelBox").on("click", appointmentNotificationClose);
         $("#NotificationSend").on("click", SendCancelAppointmentBtn);
     });
     console.log("查詢刷新~");
 }
-// 取消預約按鈕
-function CancelAppointmentBtn() {
-    let appointmentDate = $(this).closest("tr").find(".appointmentDate").text();
-    let booktitle = $(this).closest("tr").find(".booktitle").text();
-    let appointmenId = $(this).closest("tr").find(".appointmentId").text();
-    let cid = $(this).closest("tr").find(".appointmentcid").text();
-    $("#NotificationAppointmentId").val(appointmenId);
-    $("#NotificationUser").val(cid);
+// 取消預約關閉按鈕
+function appointmentNotificationClose() {
+    console.log("關閉視窗按鈕成功")
+    $('#notificationModal').modal("hide");
+    $("#NotificationType").val("CancelNotification");
+}
+let booktitle;
+let appointmentDate;
+// 重新選擇
+function CancelNotificationChange() {
     let cancelAppointmentText =
-    `主旨：您預約的書籍已由管理員取消親愛的用戶您好
+        `主旨：您預約的書籍已由管理員取消親愛的用戶您好
 您於 {${appointmentDate}} 
 所預約的書籍《 ${booktitle} 》
 已於 {${new Date().toLocaleString('zh-TW')}} 由本館管理員取消。
@@ -65,6 +67,18 @@ function CancelAppointmentBtn() {
 我們將竭誠為您服務。
 感謝您的配合與理解！圖書館管理系統 敬上`
     $("#NotificationTextarea").val(cancelAppointmentText);
+}
+
+// 取消預約按鈕
+function CancelAppointmentBtn() {
+    appointmentDate = $(this).closest("tr").find(".appointmentDate").text();
+    booktitle = $(this).closest("tr").find(".booktitle").text();
+    let appointmenId = $(this).closest("tr").find(".appointmentId").text();
+    let cid = $(this).closest("tr").find(".appointmentcid").text();
+    CancelNotificationChange();
+    $("#NotificationType").on("click", CancelNotificationChange);
+    $("#NotificationAppointmentId").val(appointmenId);
+    $("#NotificationUser").val(cid);
 }
 // 送出取消預約
 function SendCancelAppointmentBtn() {
@@ -285,36 +299,29 @@ function CancelBtn() {
     console.log("點擊清除按鈕")
     $(this).closest(".input-group").find(".form-control").val("");
 }
-
-
-// 通知&取消預約按鈕
-function appointment_cancelEvent() {
-    let appointmentid = $(this).closest("tr").find(".appointmentid").data("appointmentid");
-    $.post("/Manage/AppointmentCancel", { appointmentid: appointmentid }, (result) => {
-        if (result == "") { alert(`成功取消預約，預約編號: ${appointmentid}`) }
-        else { alert("預約取消失敗"); }
-        appointment_queryEvent();
-    })
-    console.log("取消按鈕測試: " + appointmentid);
-}
+// ++++DROP ++++通知&取消預約按鈕
+//function appointment_cancelEvent() {
+//    let appointmentid = $(this).closest("tr").find(".appointmentid").data("appointmentid");
+//    $.post("/Manage/AppointmentCancel", { appointmentid: appointmentid }, (result) => {
+//        if (result == "") { alert(`成功取消預約，預約編號: ${appointmentid}`) }
+//        else { alert("預約取消失敗"); }
+//        appointment_queryEvent();
+//    })
+//    console.log("取消按鈕測試: " + appointmentid);
+//}
 
 // 清空搜尋資料
 function appointment_clearEvent() {
     $("#appointmenSearch")[0].reset();
 }
-
-
 // 點擊通知
 function NotificationBtn() {
     $("#NotificationType").on("change", ChageNotificationType);
     TempBookName = $(this).closest("tr").find(".BorrowBookTitle").text();
     DueDate = $(this).closest("tr").find(".BorrowDueDate").text();
+    ChageNotificationType();
     let recipientId = $(this).closest("tr").find(".NotificationUserid").text();
     let recipientName = $(this).closest("tr").find(".NotificationUserName").text();
-
-    let btnType = $(this).data("type");
-    if (btnType === "notification") { $("#NotificationType").val("NormalNotification"); }
-    else { $("#NotificationType").val("CancelNotification"); }
 
     let typeinput = $("#NotificationType").val();
     $("#NotificationInput").val(typeinput);
@@ -328,15 +335,15 @@ function ChageNotificationType() {
     let UpcomingExpirationNoticeText = `親愛的讀者您好\n您所借閱的書籍「《${TempBookName}》」\n即將於 { ${DueDate} } 到期 \n 請您於期限前歸還，以避免產生逾期費用。 \n 如需展延，歡迎提前登入系統進行續借操作。`;
     let ExpirationNoticeWarningText = `【逾期提醒】]\n書籍「《${TempBookName}》已逾期 \n請儘速歸還並聯繫館方補辦相關事宜，謝謝您的配合。`;
 
-    if (NotificationType === "UpcomingExpirationNotice") { $("#NotificationTextarea").text(UpcomingExpirationNoticeText); }
-    if (NotificationType === "ExpirationNoticeWarning") { $("#NotificationTextarea").text(ExpirationNoticeWarningText); }
-    if (NotificationType === "Other") { $("#NotificationTextarea").text(""); }
+    if (NotificationType === "UpcomingExpirationNotice") { $("#NotificationTextarea").val(UpcomingExpirationNoticeText); }
+    if (NotificationType === "ExpirationNoticeWarning") { $("#NotificationTextarea").val(ExpirationNoticeWarningText); }
+    if (NotificationType === "Other") { $("#NotificationTextarea").val(""); }
 }
 
 // 送出按鈕
 function NotificationMessageSend() {
     let myform = $("#NotificationFom").serialize();
-    $.post("/Manage/Notification", myform, (result) => {
+    $.post("/Backend/Manage/Notification", myform, (result) => {
         if (result === "") { alert("成功送出") }
         NotificationClose();
     })
@@ -350,6 +357,7 @@ function NotificationClose() {
     console.log("關閉視窗按鈕成功")
     $('#notificationModal').modal("hide");
     $("#NotificationTextarea").val("");
+    $("#NotificationType").val("UpcomingExpirationNotice");
 }
 
 // #endregion

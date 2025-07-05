@@ -228,7 +228,7 @@ namespace test2.Areas.Backend.Controllers
         #endregion
 
         #region 通用Action
-        // 回傳通知
+        // 傳送通知
         public IActionResult Notification(string NotificationUserInput, string NotificationType, string NotificationTextarea)
         {
             Debug.WriteLine($"預約者編號: {NotificationUserInput}、通知類型 {NotificationType}、內容 : {NotificationTextarea}");
