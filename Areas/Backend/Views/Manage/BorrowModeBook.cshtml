@@ -7,7 +7,7 @@
     <tr class="fs-4 fw-bold"><td style="width:200px">書本編號:</td><td style="max-width:400px" title="@Model[0].bookCode">@Model[0].bookCode</td></tr>
     <tr class="fs-4 fw-bold"><td style="width:200px">書本名稱:</td><td style="max-width:400px" title="@Model[0].title">@Model[0].title</td></tr>
     <tr class="fs-4 fw-bold"><td style="width:200px">作者: </td><td style="max-width:400px" title="@Model[0].author">@Model[0].author</td></tr>
-    <tr class="fs-4 fw-bold"><td style="width:200px">譯者:</td><td style="max-width:400px" title="@Model[0].translator">@Model[0].translator</td></tr>
+    @if(!string.IsNullOrEmpty(@Model[0].translator)) {     <tr class="fs-4 fw-bold"><td style="width:200px">譯者:</td><td style="max-width:400px" title="@Model[0].translator">@Model[0].translator</td></tr>}
     <tr class="fs-4 fw-bold"><td style="width:200px">類型:</td><td style="max-width:400px" title="@Model[0].type">@Model[0].type</td></tr>
     <tr class="fs-4 fw-bold"><td style="width:200px">出版社:</td><td style="max-width:400px" title="@Model[0].publisher">@Model[0].publisher</td></tr>
     <tr class="fs-4 fw-bold"><td style="width:200px">出版年份:</td><td style="max-width:400px" title="@Model[0].publishDate">@Model[0].publishDate</td></tr>

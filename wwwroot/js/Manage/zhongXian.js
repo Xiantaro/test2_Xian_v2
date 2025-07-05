@@ -247,17 +247,25 @@ function AppointmentModeBookDynamic() {
     }
     if (keyWord === "") { $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml); return }
     $.post("/Backend/Manage/AppointmentMode1Query", obj, (result) => {
-        if (result == 0) { $("#appointmentQueryBook").html(appointmentQueryBookHtml); return; }
+        if (result == 0) {
+            $("#appointmentQueryBook").html(appointmentQueryBookHtml);
+            $("#appointmentMode_status").val(state);
+            appointmentOnChange();
+            return;
+        }
         $("#appointmentQueryBook").html(result);
         $("#appointmentMode_status").val(state);
         $("#appointmentMode_perPage").val(pageCount);
         console.log("成功載入書本");
         $(".AppointmentMode_AddBookNumBtn").on("click", AppointmentModeAddBook);
-        $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
-        $("#appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
-        $(".page-link").on("click", AppointmentModeBookDynamic);
+        appointmentOnChange();
     });
 };
+function appointmentOnChange() {
+    $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
+    $("#appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
+    $(".page-link").on("click", AppointmentModeBookDynamic);
+}
 // 預約按鈕發送
 function AppointmentModeSend() {
     let userId = $("#appointmentMode_UserID").val();
@@ -272,6 +280,7 @@ function AppointmentModeSend() {
         if (result === 1) { $("#appointmentSuccessContent").html(pleaseInputBookId); return; }
         $("#appointmentSuccessContent").html(result);
         console.log("預約按鈕是否成功回傳，YEEEEEE")
+        AppointmentModeBookDynamic();
     })
 }
 // 加入書籍編號到輸入框
@@ -373,9 +382,9 @@ let appointmentQueryBookHtml = `
                 <div>
                     <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
                     <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+                        <option value="IsLent">可借閱</option>
+                        <option value="Available">借閱中</option>
                         <option value="ALL" selected>全部</option>
-                        <option value="IsLent">已借出</option>
-                        <option value="Available">可借閱</option>
                     </select>
                 </div>
                 <div>
@@ -390,13 +399,14 @@ let appointmentQueryBookHtml = `
         </div><table class="table mt-2">
         <thead>
             <tr>
-                <th scope="col">書籍編號</th>
                 <th scope="col">書籍名稱</th>
+                <th scope="col">作者</th>
                 <th scope="col">狀況</th>
+                <th scope="col">預約人數</th>
                 <th scope="col">操作</th>
             </tr>
         </thead>
-    </table><h1 class="text-danger">查無書籍</h1>`;
+    </table><h1 class="text-danger">查無書籍...</h1>`;
 
 let pleaseInputUserId = `<div class="alert alert-danger fs-1">該名借閱者不存在，請重新輸入</div>`;
 let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">查無書本，請重新輸入</div>`;
