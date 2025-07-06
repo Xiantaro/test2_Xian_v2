@@ -5,7 +5,7 @@
 @if (Model.BorrowQueryDTOs?.Count != 0)
 {
     <div class="mt-1 fs-5">@($"總共 {@Model.TotalCount} 筆紀錄 目前:{@Model.FromIndex} 至 {@Model.ToIndex}   目前頁數:   {@Model.CurrentPage} / {@Model.TotalPage}")</div>
-    <table class="table mt-1">
+    <table class="table mt-1 table-hover">
         <thead>
             <tr>
                 <th scope="col">借閱編號</th>
@@ -32,18 +32,18 @@
                     <td class="align-middle">@x.returnDate </td>
                     @if (@x.borrowStatus == "借閱中")
                     {
-                        <td class='text-bg-warning align-middle'>@x.borrowStatus</td>
+                        <td class='text-bg-warning align-middle fw-bold'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                         ;
                     }
                     @if (@x.borrowStatus == "已歸還")
                     {
-                        <td class='text-bg-success align-middle'>@x.borrowStatus</td>
+                        <td class='text-bg-success align-middle fw-bold'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-secondary mx-3 NotificationBtn disabled" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                     }
                     @if (@x.borrowStatus == "逾期")
                     {
-                        <td class='text-bg-danger align-middle'>@x.borrowStatus</td>
+                        <td class='text-bg-danger align-middle fw-bold'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                         ;
                     }
@@ -58,15 +58,14 @@
             {
                 <ul class="pagination">
                     <li class="page-item">
-                        @if (@Model.CurrentPage == 1)
-                        {<a class="page-link disabled" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
-                        else
-                        { <a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage -1)"><span aria-hidden="true">&laquo;</span></a>}
+                        @if (@Model.CurrentPage == 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
+                        else{ <a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage -1)"><span aria-hidden="true">&laquo;</span></a>}
                     </li>
                     @for (int x = 1; x <= @Model.TotalPage; x++)
                     {
-                        @if(@Model.TotalPage != 1) {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }
-                        
+                        @if(@Model.TotalPage != 1) {
+                            if (Model.CurrentPage == x) {<li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li> }
+                            else {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }}                    
                     }
                     <li class="page-item">
                         @if (@Model.CurrentPage == @Model.TotalPage)

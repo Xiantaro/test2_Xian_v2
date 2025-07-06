@@ -31,13 +31,14 @@ function initAppointmentPage() {
 };
 // 搜尋、排列、分頁
 function appointment_queryEvent() {
+    $("#AppointmentContent").html("");
+    $("#AppointmentContent").html(QueryWait);
     const value = $(this).data("page") || 1;
     let formData = $("#appointmenSearch").serialize() + `&page=${value}`;
     console.log("預約查詢進入" + formData);
     $.post("/Backend/Manage/AppointmentResult", formData, (result) => {
         $("#AppointmentContent").html(result);
         $(".page-link").on("click", appointment_queryEvent);
-
         // 取消按鈕設置
         $(".NotificationBtn").on("click", CancelAppointmentBtn);
         $("#NotificationClear").on("click", NotificationClearBtn);
@@ -110,18 +111,14 @@ function initBorrowPage() {
 // 搜尋、分頁、排列
 function borrow_queryEvent() {
     $("#BorrowContent").html("");
-    $("#BorrowContent").html(borrowQueryWait);
+    $("#BorrowContent").html(QueryWait);
     let value = $(this).data("page") || 1;
     let borrowData = $("#borrowForm").serialize() + `&page=${value}`;
     $.post("/Backend/Manage/BorrowResult", borrowData, (result) => {
-        if (result === 0) { $("#BorrowContent").html(borrowQueryFalse); return; }
         $("#BorrowContent").html(result);
-        console.log("成功");
         $(".page-link").on("click", borrow_queryEvent);
-
         // 點擊按鈕
         $(".NotificationBtn").on("click", NotificationBtn);
-
         $("#NotificationSend").on("click", NotificationMessageSend);
         $("#NotificationClear").on("click", NotificationClearBtn);
         $("#CancelBox").on("click", NotificationClose);
@@ -412,8 +409,8 @@ let pleaseInputUserId = `<div class="alert alert-danger fs-1">該名借閱者不
 let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">查無書本，請重新輸入</div>`;
 let pleaseInputUserId2 = `<div class="alert alert-danger fs-1">請輸入借閱者ID</div>`
 let pleaseInputBookId2 = `<div class="alert alert-danger fs-1">請輸入書本編號</div>`;
-let borrowQueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後</div>`;
-let borrowQueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`;
+let QueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後</div>`;
+let QueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`;
 let retrunFalse = `<div class="alert alert-danger fs-1">此本書本不存在於借閱紀錄中</div>`;
 
 

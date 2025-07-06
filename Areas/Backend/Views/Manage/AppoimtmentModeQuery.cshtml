@@ -24,7 +24,7 @@
     </div>
     <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start">總共 @Model.TotalCount  筆資料__目前  第 @Model.FromIndex 筆 至  第 @Model.ToIndex 筆 __ 目前頁數:@Model.CurrentPage/ @Model.TotalPage</div>
 </div>
-<table class="table mt-2">
+<table class="table mt-2 table-hover">
     <thead>
         <tr>
             <th scope="col">書籍名稱</th>
@@ -74,37 +74,16 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    @if (Model.CurrentPage <= 1)
-                    {
-                        <a class="page-link disabled" href="#" aria-label="Previous" data-page="" >
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage - 1)">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    }
-
+                    @if (Model.CurrentPage <= 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page="" ><span aria-hidden="true">&laquo;</span></a>}
+                    else{<a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage - 1)"><span aria-hidden="true">&laquo;</span></a>}
                 </li>
-                @for (int x = 1; x < Model.TotalPage + 1; x++)
-                {
-                    <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
-                }
+                @for (int x = 1; x <= Model.TotalPage; x++){
+                    if (Model.CurrentPage == x) { <li class="page-item"><a class="page-link page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>}
+                    else {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }
+                    }
             <li class="page-item">
-                @if (Model.CurrentPage == Model.TotalPage)
-                {
-                    <a class="page-link disabled" href="#" aria-label="Next" data-page="">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                }
-                else
-                {
-                    <a class="page-link" href="#" aria-label="Next" data-page="@(Model.CurrentPage + 1)">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                }
+                @if (Model.CurrentPage == Model.TotalPage){<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
+                else{<a class="page-link" href="#" aria-label="Next" data-page="@(Model.CurrentPage + 1)"><span aria-hidden="true">&raquo;</span></a>}
             </li>
             </ul>
         </nav>

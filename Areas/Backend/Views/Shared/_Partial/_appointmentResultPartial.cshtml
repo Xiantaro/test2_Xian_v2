@@ -1,26 +1,26 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery.AppointmentQueryViewModel
+@if (Model.AppointmentQueryResultDTOs?.Count != 0)
+{
+    <div class="mt-1 fs-5">總共查詢到 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex 目前頁數    @Model.CurrentPage / @Model.TotalPage   </div>
+    <table class="table mt-1 table-hover">
+        <thead>
+            <tr>
+                <th scope="col">預約編號</th>
+                <th scope="col">書籍編號</th>
+                <th scope="col">書籍名稱</th>
+                <th scope="col">借閱人ID</th>
+                <th scope="col">預約日期</th>
+                <th scope="col">取書期限</th>
+                <th scope="col">狀況</th>
+                <th scope="col" class="text-center">操作</th>
+            </tr>
+        </thead>
+        <tbody>
 
-<div class="mt-1 fs-5">總共查詢到 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex 目前頁數    @Model.CurrentPage / @Model.TotalPage   </div>
-<table class="table mt-1">
-    <thead>
-        <tr>
-            <th scope="col">預約編號</th>
-            <th scope="col">書籍編號</th>
-            <th scope="col">書籍名稱</th>
-            <th scope="col">借閱人ID</th>
-            <th scope="col">預約日期</th>
-            <th scope="col">取書期限</th>
-            <th scope="col">狀況</th>
-            <th scope="col" class="text-center">操作</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.AppointmentQueryResultDTOs?.Count != 0)
-        {
             @foreach (var ap in Model.AppointmentQueryResultDTOs!)
             {
                 <tr>
-                    <td class="align-middle appointmentId"  data-appointmentId="@ap.appointmentId">@ap.appointmentId</td>
+                    <td class="align-middle appointmentId" data-appointmentId="@ap.appointmentId">@ap.appointmentId</td>
                     <td class="align-middle">@ap.bookCode</td>
                     <td class="align-middle text-truncate booktitle" style="max-width: 150px" title="@ap.title">@ap.title</td>
                     <td class="align-middle appointmentcid" data-cid="@ap.cid">@ap.cid</td>
@@ -40,7 +40,7 @@
                         }
                         else if (@ap.appointmentStatus == "可取書")
                         {
-                            <td class='text-light fw-bold text-bg-success align-middle'>@ap.appointmentStatus</td>
+                            <td class='text-light fw-bold text-bg-primary align-middle'>@ap.appointmentStatus</td>
                             <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                         else
@@ -52,93 +52,78 @@
 
                 </tr>
             }
+        </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            @if (Model.TotalPage != 1)
+            {
+                <ul class="pagination">
+                    <li class="page-item">
+                        @if (Model.CurrentPage < 2)
+                        {<a class="page-link disabled" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
+                        else
+                        {<a class="page-link" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
+                    </li>
+                    @for (int x = 1; x <= Model.TotalPage; x++)
+                    {@if (Model.TotalPage != 1)
+            {
+            if (Model.CurrentPage == x){ <li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>}
+            else{ <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>}
         }
-
-    </tbody>
-</table>
-<div class="container d-flex justify-content-center">
-    <nav aria-label="Page navigation example">
-        @if (Model.TotalPage != 1)
-        {
-            <ul class="pagination">
-                <li class="page-item">
-                    @if (Model.CurrentPage < 2)
-                    {
-                        <a class="page-link disabled" href="#" aria-label="Previous" data-page="1">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
                     }
-                    else
-                    {
-                        <a class="page-link" href="#" aria-label="Previous" data-page="1">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    }
-                </li>
-                @for (int x = 1; x < Model.TotalPage + 1; x++)
-                {
-                    <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
-                }
-                <li class="page-item">
-                    @if (Model.CurrentPage == Model.TotalPage)
-                    {
-                        <a class="page-link disabled" href="#" aria-label="Next" data-page="2">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="page-link" href="#" aria-label="Next" data-page="2">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    }
-                </li>
-            </ul>
-        }
+                    <li class="page-item">
+                        @if (Model.CurrentPage == Model.TotalPage)
+                        {<a class="page-link disabled" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
+                        else
+                        {<a class="page-link" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
+                    </li>
+                </ul>
+            }
         </nav>
+    </div>
+}
+else {<div class="alert alert-danger fs-1 mt-5">查無資料</div> }
 
-</div>
 
-
-
-<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <!-- 置中 -->
-        <div class="modal-content border">
-            <div class="modal-header">
-                <h5 class="modal-title">取消預約&通知</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
-            </div>
-            <div class="modal-body">
-                <form id="NotificationFom">
-                    <div class="mb-3">
-                        <label for="NotificationAppointmentId" class="form-label">預約編號:</label>
-                        <input type="number" class="form-control" id="NotificationAppointmentId" name="NotificationAppointmentId" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationUser" class="form-label">借閱者ID:</label>
-                        <input type="number" class="form-control" id="NotificationUser" name="NotificationUser" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationType" class="form-label">通知類型:</label>
-                        <select class="form-select" id="NotificationType">
-                            <option value="CancelNotification" selected>取消預約通知</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="NotificationTextarea" class="form-label">內容</label>
-                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea" style="height:200px"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <div class="d-flex flex-wrap" gap-3>
-                    <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+    <div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- 置中 -->
+            <div class="modal-content border">
+                <div class="modal-header">
+                    <h5 class="modal-title">取消預約&通知</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
                 </div>
-                <div class="d-flex flex-wrap" gap-3>
-                    <button type="button" class="btn btn-danger mx-3" id="NotificationClear">清除</button>
+                <div class="modal-body">
+                    <form id="NotificationFom">
+                        <div class="mb-3">
+                            <label for="NotificationAppointmentId" class="form-label">預約編號:</label>
+                            <input type="number" class="form-control" id="NotificationAppointmentId" name="NotificationAppointmentId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="NotificationUser" class="form-label">借閱者ID:</label>
+                            <input type="number" class="form-control" id="NotificationUser" name="NotificationUser" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="NotificationType" class="form-label">通知類型:</label>
+                            <select class="form-select" id="NotificationType">
+                                <option value="CancelNotification" selected>取消預約通知</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="NotificationTextarea" class="form-label">內容</label>
+                            <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea" style="height:200px"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div class="d-flex flex-wrap" gap-3>
+                        <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+                    </div>
+                    <div class="d-flex flex-wrap" gap-3>
+                        <button type="button" class="btn btn-danger mx-3" id="NotificationClear">清除</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

@@ -52,10 +52,9 @@ namespace test2.Areas.Backend.Controllers
                 page = page
             };
 
-
             var newclass = new AppointmentQueryFinalSearch(_context);
             var final = await newclass.AppointmentQuerySearch(filter);
-
+            
             Debug.WriteLine("即將送出........預約搜尋結果!!");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appointmentResultPartial.cshtml", final);
         }
