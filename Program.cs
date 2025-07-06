@@ -1,7 +1,9 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using test2.Models;
+using test2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,18 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 });
 //memory service
 builder.Services.AddDistributedMemoryCache();
+
+// HandFire 排程!!
+
+builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration.GetConnectionString("Test2ConnString")));
+
+//builder.Services.AddHangfireServer();
+//builder.Services.AddHostedService<ReservationService>();
+
+//RecurringJob.AddOrUpdate<ReservationService>
+//    ("這應該只是名稱八?"
+//    , service => service.ExecuteAsync()
+//    , Cron.Minutely);
 
 //session service
 builder.Services.AddSession(options =>
@@ -27,6 +41,7 @@ builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("Test2ConnString");
 builder.Services.AddDbContext<Test2Context>(x => x.UseSqlServer(connectionString));
 // DB END
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,6 +58,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+// HandFire頁面
+app.UseHangfireDashboard();
+
 
 //session start
 app.UseSession();
