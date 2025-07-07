@@ -16,17 +16,17 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 //memory service
 builder.Services.AddDistributedMemoryCache();
 
-// HandFire 排程!!
-
+#region 逾期預約排程
 builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration.GetConnectionString("Test2ConnString")));
 
 //builder.Services.AddHangfireServer();
 //builder.Services.AddHostedService<ReservationService>();
 
 //RecurringJob.AddOrUpdate<ReservationService>
-//    ("這應該只是名稱八?"
+//    ("我是排程"
 //    , service => service.ExecuteAsync()
 //    , Cron.Minutely);
+#endregion
 
 //session service
 builder.Services.AddSession(options =>
