@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
-using test2.Services;
 using System.Threading;
-using test2.Models;
 using Microsoft.EntityFrameworkCore;
+using test2.Models;
+using test2.Models.ManagementModels.ZhongXian.Normal;
+using test2.Services;
 
 namespace test2.Services
 {
@@ -21,12 +22,14 @@ namespace test2.Services
         {   
             while (await _timer.WaitForNextTickAsync(stoppingToken))
             {
+                Debug.WriteLine("排程開始!");
                 using var scope = _scopeFacotry.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<Test2Context>();
-
-                var pending = await context.Reservations.Where(x => x.ReservationStatusId == 2).ToListAsync();
-                int count = pending.Count();
-                Debug.WriteLine($"預約次數: {count}");
+                Debug.WriteLine("逾期檢查!!!");
+                var result = await context.Set<MessageDTO>().FromSqlInterpolated($"EXEC OverDue").ToListAsync();
+                if (result[0].ResultCode == 0) { Debug.WriteLine("今天沒有逾期"); }
+                else { Debug.WriteLine("今天有逾期書本"); }
+                Debug.WriteLine("排程結束.......");
             }
         }
         public override void Dispose()

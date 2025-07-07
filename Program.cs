@@ -17,11 +17,12 @@ builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 builder.Services.AddDistributedMemoryCache();
 
 #region 逾期預約排程
-builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration.GetConnectionString("Test2ConnString")));
+//內建版
+builder.Services.AddHostedService<ReservationService>();
 
+// Hangfire版
+//builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration.GetConnectionString("Test2ConnString")));
 //builder.Services.AddHangfireServer();
-//builder.Services.AddHostedService<ReservationService>();
-
 //RecurringJob.AddOrUpdate<ReservationService>
 //    ("我是排程"
 //    , service => service.ExecuteAsync()
@@ -60,7 +61,7 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 // HandFire頁面
-app.UseHangfireDashboard();
+//app.UseHangfireDashboard();
 
 
 //session start
