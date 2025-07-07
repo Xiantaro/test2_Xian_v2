@@ -157,7 +157,7 @@ namespace test2.Areas.Backend.Controllers
 
             Debug.WriteLine($"開始還書作業......");
             var resultMessage = await _context.Set<MessageDTO>().FromSqlInterpolated($"EXEC ReturnBook {ReturnBookCode}").ToListAsync();
-
+            Debug.WriteLine($"錯誤代碼{resultMessage[0].ResultCode}: {resultMessage[0].Message}");
             var resultViewModel = new ResultViewModel()
             {
                 ResultCode = resultMessage[0].ResultCode,
@@ -167,7 +167,7 @@ namespace test2.Areas.Backend.Controllers
                 title = retrunBookIsReal[0].Title,
                 bookcode = ReturnBookCode,
             };
-            Debug.WriteLine($"借閱者:Cid、{ReturnBookCode}還書成功");
+            Debug.WriteLine($"借閱者:{resultViewModel.Cid}、{ReturnBookCode}還書成功");
             return PartialView("~/Areas/Backend/Views/Manage/ReturnBookContent.cshtml", resultViewModel);
         }
         #endregion 還書模式 END

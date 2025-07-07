@@ -18,7 +18,7 @@ builder.Services.AddDistributedMemoryCache();
 
 #region 逾期預約排程
 //內建版
-builder.Services.AddHostedService<ReservationService>();
+// builder.Services.AddHostedService<ReservationService>();
 
 // Hangfire版
 //builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration.GetConnectionString("Test2ConnString")));

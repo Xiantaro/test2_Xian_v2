@@ -25,10 +25,12 @@ namespace test2.Services
                 Debug.WriteLine("排程開始!");
                 using var scope = _scopeFacotry.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<Test2Context>();
-                Debug.WriteLine("逾期檢查!!!");
+                Debug.WriteLine("逾期取書檢查!!!");
                 var result = await context.Set<MessageDTO>().FromSqlInterpolated($"EXEC OverDue").ToListAsync();
-                if (result[0].ResultCode == 0) { Debug.WriteLine("今天沒有逾期"); }
-                else { Debug.WriteLine("今天有逾期書本"); }
+                Debug.WriteLine(result[0].Message);
+                Debug.WriteLine("逾期歸還檢查!!!");
+                var result2 = await context.Set<MessageDTO>().FromSqlInterpolated($"EXEC LateReturn").ToListAsync();
+                Debug.WriteLine(result2[0].Message);
                 Debug.WriteLine("排程結束.......");
             }
         }
