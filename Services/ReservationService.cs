@@ -20,7 +20,7 @@ namespace test2.Services
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {   
-            while (await _timer.WaitForNextTickAsync(stoppingToken))
+            if(await _timer.WaitForNextTickAsync(stoppingToken))
             {
                 Debug.WriteLine("零晨排程開始!");
                 using var scope = _scopeFacotry.CreateScope();
@@ -38,6 +38,7 @@ namespace test2.Services
                         
                 Debug.WriteLine("排程結束.......");
             }
+            _timer.Dispose();
         }
         public override void Dispose()
         {
