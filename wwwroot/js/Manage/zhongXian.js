@@ -87,10 +87,13 @@ function SendCancelAppointmentBtn() {
     console.log(`表單序列話 :${CancelForm}`)
     $.post("/Backend/Manage/CancelAppointment", CancelForm, (result) => {
         console.log("已回傳");
-        if (result == 0) {alert("取消預約失敗....") }
-        if (result == 1) {alert("取消預約成功!!!!") }
+        if (result == 0) { alert("取消預約失敗...."); }
+        if (result == 1) { alert("取消預約成功!!!!"); }
     })
     console.log("送出")
+    $('#notificationModal').modal("hide");
+    setTimeout(() => appointment_queryEvent(), 1000)
+    appointment_queryEvent();
 }
 
 // #endregion 預約查詢Module "END""
