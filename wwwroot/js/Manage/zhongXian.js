@@ -58,15 +58,7 @@ let appointmentDate;
 // 重新選擇
 function CancelNotificationChange() {
     let cancelAppointmentText =
-        `主旨：您預約的書籍已由管理員取消親愛的用戶您好
-您於 {${appointmentDate}} 
-所預約的書籍《 ${booktitle} 》
-已於 {${new Date().toLocaleString('zh-TW')}} 由本館管理員取消。
-取消原因： OOXX ，
-若您仍有借閱需求，歡迎重新進行預約。
-如有任何問題或需協助，敬請聯繫本館服務人員，
-我們將竭誠為您服務。
-感謝您的配合與理解！圖書館管理系統 敬上`
+        `【取消預約通知】\n親愛的用戶您好，\n您於 {${appointmentDate}}\n所預約的書籍《 ${booktitle} 》\n已於 {${new Date().toLocaleString('zh-TW')}} 由本館管理員取消。\n取消原因： OOXX ，若您仍有借閱需求，歡迎重新進行預約。\n如有任何問題或需協助，敬請聯繫本館服務人員，我們將竭誠為您服務。感謝您的配合與理解！圖書館管理系統 敬上。`
     $("#NotificationTextarea").val(cancelAppointmentText);
 }
 
@@ -341,8 +333,8 @@ function NotificationBtn() {
 // 預設通知內容
 function ChageNotificationType() {
     let NotificationType = $("#NotificationType").val();
-    let UpcomingExpirationNoticeText = `親愛的讀者您好\n您所借閱的書籍「《${TempBookName}》」\n即將於 { ${DueDate} } 到期 \n 請您於期限前歸還，以避免產生逾期費用。 \n 如需展延，歡迎提前登入系統進行續借操作。`;
-    let ExpirationNoticeWarningText = `【逾期提醒】]\n書籍「《${TempBookName}》已逾期 \n請儘速歸還並聯繫館方補辦相關事宜，謝謝您的配合。`;
+    let UpcomingExpirationNoticeText = `【即將到期通知】\n親愛的用戶您好，\n您所借閱的書籍「《${TempBookName}》」\n即將於 { ${DueDate} } 到期 \n 請您於期限前歸還，謝謝。圖書館管理系統 敬上。`;
+    let ExpirationNoticeWarningText = `【逾期警告通知】\n親愛的用戶您好，你所借閱的《${TempBookName}》已逾期\n請儘速歸還並聯繫館方補辦相關事宜，謝謝您的配合。`;
 
     if (NotificationType === "UpcomingExpirationNotice") { $("#NotificationTextarea").val(UpcomingExpirationNoticeText); }
     if (NotificationType === "ExpirationNoticeWarning") { $("#NotificationTextarea").val(ExpirationNoticeWarningText); }
@@ -409,12 +401,12 @@ let appointmentQueryBookHtml = `
     </table><h1 class="text-danger">查無書籍...</h1>`;
 
 let pleaseInputUserId = `<div class="alert alert-danger fs-1">該名借閱者不存在，請重新輸入</div>`;
-let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">查無書本，請重新輸入</div>`;
+let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">該本書籍不存在，請重新輸入!</div>`;
 let pleaseInputUserId2 = `<div class="alert alert-danger fs-1">請輸入借閱者ID</div>`
 let pleaseInputBookId2 = `<div class="alert alert-danger fs-1">請輸入書本編號</div>`;
-let QueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後</div>`;
+let QueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後....</div>`;
 let QueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`;
-let retrunFalse = `<div class="alert alert-danger fs-1">此本書本不存在於借閱紀錄中</div>`;
+let retrunFalse = `<div class="alert alert-danger fs-1">輸入錯誤，請重新輸入!</div>`;
 
 
 // #endregion

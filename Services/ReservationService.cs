@@ -22,15 +22,20 @@ namespace test2.Services
         {   
             while (await _timer.WaitForNextTickAsync(stoppingToken))
             {
-                Debug.WriteLine("排程開始!");
+                Debug.WriteLine("零晨排程開始!");
                 using var scope = _scopeFacotry.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<Test2Context>();
-                Debug.WriteLine("逾期取書檢查!!!");
+                
+                Debug.WriteLine("逾期取書檢查開始~~~!!!");
                 var result = await context.Set<MessageDTO>().FromSqlInterpolated($"EXEC OverDue").ToListAsync();
                 Debug.WriteLine(result[0].Message);
-                Debug.WriteLine("逾期歸還檢查!!!");
+                Debug.WriteLine("逾期歸還檢查開始~~~!!!");
                 var result2 = await context.Set<MessageDTO>().FromSqlInterpolated($"EXEC LateReturn").ToListAsync();
                 Debug.WriteLine(result2[0].Message);
+                Debug.WriteLine("即將預期溫馨提醒開始~~~!!!");
+                var result3 = await context.Set<MessageDTO>().FromSqlInterpolated($"EXEC LateReturnOneToThree").ToListAsync();
+                Debug.WriteLine(result3[0].Message);
+                        
                 Debug.WriteLine("排程結束.......");
             }
         }
