@@ -1,5 +1,5 @@
 ﻿html {
-    height: 100%;
+    height: 80%;
     margin: 0;
 }
 
@@ -24,11 +24,11 @@ header {
     text-decoration: none;
 }
 
-    .nav-link:hover {
-        color: #F5F5DC; /* 米色 */
-        background-color: #8C5B42; /* 棕色 */
-        border-radius: 5px;
-    }
+.nav-link:hover {
+    color: #F5F5DC; /* 米色 */
+    background-color: #8C5B42; /* 棕色 */
+    border-radius: 5px;
+}
 
 .accordion {
     background-color: #D0E0B8;
@@ -43,21 +43,21 @@ header {
     border-radius: 5px;
 }
 
-    .accordion-button:not(.collapsed) {
-        background-color: #8C5B42;
-        color: white;
-    }
+.accordion-button:not(.collapsed) {
+    background-color: #8C5B42;
+    color: white;
+}
 
 .nav-link {
     color: #235A32;
     padding-left: 1rem;
 }
 
-    .nav-link:hover {
-        color: #F5F5DC;
-        background-color: #8C5B42;
-        border-radius: 5px;
-    }
+.nav-link:hover {
+    color: #F5F5DC;
+    background-color: #8C5B42;
+    border-radius: 5px;
+}
 
 .sub-category {
     margin-top: 5px;
@@ -74,7 +74,7 @@ footer {
 .wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 92.5vh;
+    min-height: 88.7vh;
 }
 
 .content {

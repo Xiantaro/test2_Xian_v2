@@ -300,7 +300,8 @@ function BooksAdded() {
     $("#content-panel").load("/Backend/Manage/BooksAdds", () => {
         $("#BookAdd_InputImg").on("change", BooksAdded_ShowImg);
         $("#BookAdd_Remove").on("click", BooksAdded_Remove);
-        $("#BooksAdded_BtnSend").on("click", BooksAdded_BtnSend )
+        $("#BooksAdded_BtnSend").on("click", BooksAdded_BtnSend);
+        $("#BooksAdded_BtnReset").on("click", BooksAdded_Reset);
     })
 }
 
@@ -338,9 +339,11 @@ function BooksAdded_BtnSend() {
     });
 };
 
-
-
-
+// 重置輸入
+function BooksAdded_Reset() {
+    $("#BooksAdded_FormData")[0].reset();
+    BooksAdded_Remove();
+}
 
 
 
