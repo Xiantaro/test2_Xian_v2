@@ -310,12 +310,13 @@ function BooksAdded_ShowImg() {
         var reader = new FileReader();
         reader.onload = (xian) => {$("#BookAdd_Display").attr("src", xian.target.result); }
         reader.readAsDataURL(this.files[0]);
-        
+        $('#BookAdd_Remove').prop('disabled', false); 
     }
 }
 // 移除圖片
 function BooksAdded_Remove() {
     $("#BookAdd_Display").attr("src", "");
+    $("#BookAdd_Remove").prop("disabled", true);
 }
 
 // 確定登入

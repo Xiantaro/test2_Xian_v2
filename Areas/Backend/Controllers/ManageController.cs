@@ -231,6 +231,7 @@ namespace test2.Areas.Backend.Controllers
         public IActionResult BooksAdds()
         {
 
+
             Debug.WriteLine("成功進入書籍登陸");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml");
         }
@@ -243,7 +244,7 @@ namespace test2.Areas.Backend.Controllers
                 using var ms = new MemoryStream();
                 BookAdd_InputImg.CopyTo(ms);
                 byte[] imageBytes = ms.ToArray();
-                var newBook = new Collection()
+                var newCollection = new Collection()
                 {
                     Title = formdata.BooksAdded_Title!,
                     CollectionDesc = formdata.BooksAdded_Dec,
@@ -256,7 +257,34 @@ namespace test2.Areas.Backend.Controllers
                     PublishDate = formdata.BooksAdded_puDate,
                     CollectionImg = imageBytes,
                 };
-                _context.Add(newBook);
+                _context.Add(newCollection);
+                await _context.SaveChangesAsync();
+
+                var collectionId = newCollection.CollectionId;
+
+                List<string> bookCodeList = [];
+                string TypId = formdata.BooksAdded_Type.ToString().PadLeft(3, '0');
+                string CollecionId = collectionId.ToString().PadLeft(4, '0');
+
+                // ‘TYP’ + ‘004’ + -COL + ‘0085’ + ‘-CP’ + 0001
+                for (int x = 1; x <= formdata.BooksAdded_inCount; x++)
+                {
+                    string num = x.ToString().PadLeft(4, '0');
+                    string xBookcode = $"TYP{TypId}-COL{CollecionId}-CP{num}";
+                    bookCodeList.Add(xBookcode);
+                }
+                List<Book> bookList = [];
+                foreach (string str in bookCodeList)
+                {
+                    bookList.Add(new Book()
+                    {
+                        CollectionId = collectionId,
+                        BookCode = str,
+                        BookStatusId = 1,
+                        AccessionDate = DateTime.Now
+                    });
+                }
+                _context.AddRange(bookList);
                 await _context.SaveChangesAsync();
             }
             else { return Json("發生錯誤...."); }

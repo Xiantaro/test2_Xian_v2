@@ -6,7 +6,7 @@ using test2.Models;
 using test2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
