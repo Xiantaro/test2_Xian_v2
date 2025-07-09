@@ -55,6 +55,7 @@ function appointmentNotificationClose() {
 }
 let booktitle;
 let appointmentDate;
+
 // 重新選擇
 function CancelNotificationChange() {
     let cancelAppointmentText =

@@ -1,7 +1,15 @@
 ﻿@model List<test2.Models.ManagementModels.ZhongXian.Borrow.BorrowBookInfomationDTO>
 
 <div class="my-auto">
-    <img src="https://dummyimage.com/200x300/000/fff" style="width:300px ;height:400px" alt="@Model[0].collectionImg"/>
+    @if (@Model[0].collectionImg != null)
+    {
+        <img src="data:image/*;base64, @(Convert.ToBase64String(Model[0].collectionImg!))" style="width:300px ;height:400px" alt="@Model[0].title" />
+    }
+    else
+    {
+        <img src="https://dummyimage.com/200x300/000/fff" style="width:300px ;height:400px" alt="@Model[0].collectionImg" />
+    }
+
 </div>
 <table class="table table-hover table-borderless mx-3 my-auto table-dark">
     <tr class="fs-4 fw-bold"><td style="width:200px">書本編號:</td><td style="max-width:400px" title="@Model[0].bookCode">@Model[0].bookCode</td></tr>
