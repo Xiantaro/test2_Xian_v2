@@ -313,16 +313,29 @@ function BooksAdded_ShowImg() {
         
     }
 }
+// 移除圖片
 function BooksAdded_Remove() {
     $("#BookAdd_Display").attr("src", "");
 }
 
 // 確定登入
 function BooksAdded_BtnSend() {
-    
-    var formdata = new FormData($("BooksAdded_FormData")[0]);
-    console.log("輸入資料: " + formdata);
-}
+    var formdata = new FormData($("#BooksAdded_FormData")[0]);
+    for (let pair of formdata.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+    }
+    $.ajax({
+        url: "/Backend/Manage/BooksCreate",
+        type: "post",
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: (result) => {
+            if (result == 1) { alert("成功登陸書籍"); }
+            else {alert("登陸書籍失敗.....") }
+        }
+    });
+};
 
 
 

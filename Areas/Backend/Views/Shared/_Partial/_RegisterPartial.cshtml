@@ -14,7 +14,7 @@
                     <div class="col">
                         <label   class="form-label fs-3" for="BooksAdded_Type">書籍分類</label>
                         <select class="form-select required-field" id="BooksAdded_Type" name="BooksAdded_Type">
-                            <option value="">請選擇分類</option>
+                            <option value="1">請選擇分類</option>
                             <option value="1">小說</option>
                             <option value="2">漫畫</option>
                             <option value="3">傳記</option>
@@ -30,9 +30,9 @@
                     <div class="col">
                         <label   class="form-label fs-3" for="BooksAdded_leng">語言</label>
                         <select class="form-select required-field" id="BooksAdded_leng" name="BooksAdded_leng">
-                            <option value="1">English</option>
                             <option value="1">中文</option>
-                            <option value="1">法文</option>
+                            <option value="2">English</option>
+                            <option value="3">法文</option>
                         </select>
                         <span   class="text-danger"></span>
                     </div>
@@ -68,8 +68,8 @@
                 <!--   入庫總數 -->
                 <div class="mb-3 row">
                     <div class="col">
-                        <label   class="form-label fs-3" for="BooksAdded_puDate">入庫數量</label>
-                        <input   class="form-control required-field" min="1" id="BooksAdded_puDate" name="BooksAdded_puDate" type="number" value="1"/>
+                        <label   class="form-label fs-3" for="BooksAdded_inCount">入庫數量</label>
+                        <input   class="form-control required-field" min="1" id="BooksAdded_inCount" name="BooksAdded_inCount" type="number" value="1"/>
                         <span  class="text-danger"></span>
                     </div>
                 </div>

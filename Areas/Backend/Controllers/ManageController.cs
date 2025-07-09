@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using test2.Models;
+using test2.Models.ManagementModels.ZhongXian;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
@@ -229,8 +230,40 @@ namespace test2.Areas.Backend.Controllers
         #region 書籍登陸
         public IActionResult BooksAdds()
         {
+
             Debug.WriteLine("成功進入書籍登陸");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml");
+        }
+        
+        public async Task<IActionResult> BooksCreate(BookAddsClass formdata, IFormFile BookAdd_InputImg)
+        {
+            
+            if (BookAdd_InputImg != null && BookAdd_InputImg.Length >0)
+            {
+                using var ms = new MemoryStream();
+                BookAdd_InputImg.CopyTo(ms);
+                byte[] imageBytes = ms.ToArray();
+                var newBook = new Collection()
+                {
+                    Title = formdata.BooksAdded_Title!,
+                    CollectionDesc = formdata.BooksAdded_Dec,
+                    TypeId = formdata.BooksAdded_Type,
+                    Author = formdata.BooksAdded_author!,
+                    Translator = formdata.BooksAdded_translator,
+                    Publisher = formdata.BooksAdded_pushier!,
+                    LanguageId = formdata.BooksAdded_leng,
+                    Isbn = formdata.BooksAdded_ISBM!,
+                    PublishDate = formdata.BooksAdded_puDate,
+                    CollectionImg = imageBytes,
+                };
+                _context.Add(newBook);
+                await _context.SaveChangesAsync();
+            }
+            else { return Json("發生錯誤...."); }
+
+
+            Debug.WriteLine("回傳結果");
+            return Json(1);
         }
 
         #endregion
