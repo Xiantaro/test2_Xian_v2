@@ -226,6 +226,23 @@ namespace test2.Areas.Backend.Controllers
         }
         #endregion
 
+        #region 書籍登陸
+        public IActionResult BooksAdds()
+        {
+            Debug.WriteLine("成功進入書籍登陸");
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml");
+        }
+
+        #endregion
+
+        #region 書籍查詢
+        public IActionResult BooksQuerys()
+        {
+            Debug.WriteLine("成功進入書籍查詢");
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchPartial.cshtml");
+        }
+        #endregion
+
         #region 通用Action
         // 傳送通知
         public async Task<IActionResult> Notification(int NotificationId, string NotificationType, string NotificationTextarea)

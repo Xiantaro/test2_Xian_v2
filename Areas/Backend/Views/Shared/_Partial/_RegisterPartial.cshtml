@@ -1,0 +1,110 @@
+﻿
+
+<h1>書籍登錄</h1>
+<form   id="BooksAdded_FormData">
+    <div class="card p-4">
+        <div class="row g-4">
+            <div class="col-md-7">
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label   class="form-label fs-3" for="BooksAdded_ISBM">ISBN</label>
+                        <input   class="form-control" id="BooksAdded_ISBM" name="BooksAdded_ISBM"/>
+                        <span   class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label   class="form-label fs-3" for="BooksAdded_Type">書籍分類</label>
+                        <select class="form-select required-field" id="BooksAdded_Type" name="BooksAdded_Type">
+                            <option value="">請選擇分類</option>
+                            <option value="1">小說</option>
+                            <option value="2">漫畫</option>
+                            <option value="3">傳記</option>
+                        </select>
+                    </div>          
+                </div>
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label  class="form-label fs-3" for="BooksAdded_Title">書名</label>
+                        <input   class="form-control required-field" id="BooksAdded_Title" name="BooksAdded_Title" />
+                        <span   class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label   class="form-label fs-3" for="BooksAdded_leng">語言</label>
+                        <select class="form-select required-field" id="BooksAdded_leng" name="BooksAdded_leng">
+                            <option value="1">English</option>
+                            <option value="1">中文</option>
+                            <option value="1">法文</option>
+                        </select>
+                        <span   class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 作者 + 譯者 -->
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label   class="form-label fs-3" for="BooksAdded_author">作者</label>
+                        <input   class="form-control" id="BooksAdded_author" name="BooksAdded_author"/>
+                        <span   class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label   class="form-label fs-3" name="BooksAdded_translator">譯者</label>
+                        <input   class="form-control" id="BooksAdded_translator" name="BooksAdded_translator"/>
+                        <span   class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- 出版社 + 出版日期 -->
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label  class="form-label fs-3" for="BooksAdded_pushier">出版社</label>
+                        <input  class="form-control required-field" id="BooksAdded_pushier" name="BooksAdded_pushier"/>
+                        <span   class="text-danger"></span>
+                    </div>
+                    <div class="col">
+                        <label   class="form-label fs-3" for="BooksAdded_puDate">出版日期</label>
+                        <input   type="date" class="form-control required-field" id="BooksAdded_puDate" name="BooksAdded_puDate" />
+                        <span   class="text-danger"></span>
+                    </div>
+                </div>
+                <!--   入庫總數 -->
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label   class="form-label fs-3" for="BooksAdded_puDate">入庫數量</label>
+                        <input   class="form-control required-field" min="1" id="BooksAdded_puDate" name="BooksAdded_puDate" type="number" value="1"/>
+                        <span  class="text-danger"></span>
+                    </div>
+                </div>
+                <!-- 書籍簡介 -->
+                <div class="mb-3">
+                    <label   class="form-label fs-3" for="BooksAdded_Dec">書籍簡介</label>
+                    <textarea  class="form-control" id="BooksAdded_Dec" name="BooksAdded_Dec"></textarea>
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <!-- 封面圖片 -->
+                <div class="mb-3">
+                    <label class="form-label fs-3">封面圖片</label>
+                    <input type="file"
+                           name="BookAdd_InputImg"
+                           id="BookAdd_InputImg"
+                           class="form-control"
+                           accept="image/*" />
+                    <!-- 預覽圖，預設先顯示提示圖（先隱藏也可） -->
+                    <img id="BookAdd_Display"
+                         class="img-thumbnail mt-2"
+                         style="height:500px; width:350px;"
+                         src=""/>
+                    <!-- 清除按鈕，一開始先隱藏 -->
+                    <button id="BookAdd_Remove" type="button" class="btn btn-sm btn-outline-danger mt-2"> 移除</button>
+
+                    <!-- 隱藏欄位，存放從 DB 載入的封面 Base64 -->
+                    @*<input type="hidden" id="originalCoverBase64" value="" />*@
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            <button type="button" class="btn btn-primary px-5 me-3" id="BooksAdded_BtnSend"> 確定登陸</button>
+            <button type="button" class="btn btn-outline-secondary px-5">取消入庫</button>
+        </div>
+    </div>
+</form>

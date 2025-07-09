@@ -7,6 +7,8 @@ $(() => {
     $("#ReturnMode").on("click", ReturnBookMode);
     $("#AppointmentMode").on("click", AppointmentMode);
     $("#dbConnect").on("click", DbContextText);
+    $("#BooksAdded").on("click", BooksAdded);
+    $("#BooksQuery").on("click", BooksQuery);
     console.log("綁定結束")
 })
 // #endregion
@@ -290,6 +292,59 @@ function CancelBtn_AppointVersion() {
 }
 
 // #endregion 預約模式 Module END
+
+
+// #region 書籍登陸
+function BooksAdded() {
+    console.log("進入書籍登陸.......");
+    $("#content-panel").load("/Backend/Manage/BooksAdds", () => {
+        $("#BookAdd_InputImg").on("change", BooksAdded_ShowImg);
+        $("#BookAdd_Remove").on("click", BooksAdded_Remove);
+        $("#BooksAdded_BtnSend").on("click", BooksAdded_BtnSend )
+    })
+}
+
+// 圖片顯示
+function BooksAdded_ShowImg() {
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (xian) => {$("#BookAdd_Display").attr("src", xian.target.result); }
+        reader.readAsDataURL(this.files[0]);
+        
+    }
+}
+function BooksAdded_Remove() {
+    $("#BookAdd_Display").attr("src", "");
+}
+
+// 確定登入
+function BooksAdded_BtnSend() {
+    
+    var formdata = new FormData($("BooksAdded_FormData")[0]);
+    console.log("輸入資料: " + formdata);
+}
+
+
+
+
+
+
+
+
+// #endregion
+
+
+// #region 書籍查詢
+function BooksQuery() {
+    console.log("進入書籍查詢.......");
+    $("#content-panel").load("/Backend/Manage/BooksQuerys", () => {
+        console.log("回傳書籍查詢")
+    })
+}
+
+
+// #endregion
+
 
 // #region 通用函數
 let TempBookName;
