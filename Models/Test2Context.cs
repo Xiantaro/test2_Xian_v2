@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.Normal;
+using test2.Models.ManagementModels.ZhongXian.RegisterBook;
 
 namespace test2.Models;
 
@@ -16,10 +17,12 @@ public partial class Test2Context : DbContext
     public Test2Context(DbContextOptions<Test2Context> options)
         : base(options)
     { }
-    // 憲自訂
+    // 憲自訂 Start
     public virtual DbSet<AppoimtmentKeywordShow> AppoimtmentKeywordShows { get; set; }
     public virtual DbSet<BorrowBookInfomationDTO> BorrowBookInfomationDTOs { get; set; }
     public virtual DbSet<MessageDTO> BorrwoMessageDTOs { get; set; }
+    public virtual DbSet<LanguageAndType> LanguageAndTypes { get; set; }
+    // 憲自訂 END
     public virtual DbSet<Activity> Activities { get; set; }
 
     public virtual DbSet<ActivityType> ActivityTypes { get; set; }
@@ -417,6 +420,7 @@ public partial class Test2Context : DbContext
         modelBuilder.Entity<BorrowBookInfomationDTO>().HasNoKey();
         modelBuilder.Entity<MessageDTO>().HasNoKey();
         modelBuilder.Entity<AppoimtmentKeywordShow>().HasNoKey();
+        modelBuilder.Entity<LanguageAndType>().HasNoKey();
         OnModelCreatingPartial(modelBuilder);
     }
 

@@ -1,4 +1,4 @@
-﻿
+﻿@model test2.Models.ManagementModels.ZhongXian.RegisterBook.LanguageAndType
 
 <h1>書籍登錄</h1>
 <form   id="BooksAdded_FormData">
@@ -14,9 +14,15 @@
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_Type">書籍分類:</label>
                         <select class="form-select required-field" id="BooksAdded_Type" name="BooksAdded_Type">
-                            <option value="1">小說</option>
-                            <option value="2">漫畫</option>
-                            <option value="3">傳記</option>
+                            @if (Model.Type?.Count > 0)
+                            {
+                                foreach (var x in Model.Type)
+                                {
+                                    <option value="@x.TypeId">@x.Type1</option>
+                                }
+                            }
+                            else { <option value="0">沒有類別??</option>}
+                            
                         </select>
                     </div>
                 </div>
@@ -29,9 +35,14 @@
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_leng">語言:</label>
                         <select class="form-select required-field" id="BooksAdded_leng" name="BooksAdded_leng">
-                            <option value="1">中文</option>
-                            <option value="2">English</option>
-                            <option value="3">法文</option>
+                            @if (Model.Language?.Count > 0)
+                            {
+                                foreach (var x in Model.Language)
+                                {
+                                    <option value="@x.LanguageId">@x.Language1</option>
+                                }
+                            }
+                            else{<option value="0">沒有語言???</option>}
                         </select>
                         <span class="text-danger"></span>
                     </div>
@@ -87,7 +98,7 @@
             <div class="col-3">
                 <!-- 封面 -->
                 <div class="mb-1">
-                    <label class="form-label fs-3 fw-bold">封面圖片:</label>
+                    <label class="form-label fs-3 fw-bold">封面:</label>
                     <input type="file" name="BookAdd_InputImg" id="BookAdd_InputImg"class="form-control"accept="image/*" />
                     <!-- 預覽圖-->
                     <img id="BookAdd_Display"class="img-thumbnail mt-2 mx-3"style="height:600px; width:400px;"src="" />

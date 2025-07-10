@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace test2.Models.ManagementModels.ZhongXian
+namespace test2.Models.ManagementModels.ZhongXian.RegisterBook
 {
     public class BookAddsClass
     {

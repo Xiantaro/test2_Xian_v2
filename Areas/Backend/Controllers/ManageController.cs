@@ -6,12 +6,12 @@ using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using test2.Models;
-using test2.Models.ManagementModels.ZhongXian;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.BorrowQuery;
 using test2.Models.ManagementModels.ZhongXian.Normal;
+using test2.Models.ManagementModels.ZhongXian.RegisterBook;
 
 namespace test2.Areas.Backend.Controllers
 {
@@ -228,14 +228,23 @@ namespace test2.Areas.Backend.Controllers
         #endregion
 
         #region 書籍登陸
-        public IActionResult BooksAdds()
+        
+        public async Task<IActionResult> BooksAdds()
         {
-
+            var bookLanguages = await _context.Languages.ToListAsync();
+            var bookTypes = await _context.Types.ToListAsync();
+            LanguageAndType LanguageAndTypes = new LanguageAndType()
+            {
+                Language = bookLanguages,
+                Type = bookTypes
+            };
 
             Debug.WriteLine("成功進入書籍登陸");
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml");
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml", LanguageAndTypes);
         }
-        
+
+        BookCodeListClass mybookCode = new BookCodeListClass();
+
         public async Task<IActionResult> BooksCreate(BookAddsClass formdata, IFormFile BookAdd_InputImg)
         {
             
@@ -262,28 +271,7 @@ namespace test2.Areas.Backend.Controllers
 
                 var collectionId = newCollection.CollectionId;
 
-                List<string> bookCodeList = [];
-                string TypId = formdata.BooksAdded_Type.ToString().PadLeft(3, '0');
-                string CollecionId = collectionId.ToString().PadLeft(4, '0');
-
-                // ‘TYP’ + ‘004’ + -COL + ‘0085’ + ‘-CP’ + 0001
-                for (int x = 1; x <= formdata.BooksAdded_inCount; x++)
-                {
-                    string num = x.ToString().PadLeft(4, '0');
-                    string xBookcode = $"TYP{TypId}-COL{CollecionId}-CP{num}";
-                    bookCodeList.Add(xBookcode);
-                }
-                List<Book> bookList = [];
-                foreach (string str in bookCodeList)
-                {
-                    bookList.Add(new Book()
-                    {
-                        CollectionId = collectionId,
-                        BookCode = str,
-                        BookStatusId = 1,
-                        AccessionDate = DateTime.Now
-                    });
-                }
+                List<Book> bookList = mybookCode.BookCodeAddToList(formdata.BooksAdded_Type, collectionId, formdata.BooksAdded_inCount);
                 _context.AddRange(bookList);
                 await _context.SaveChangesAsync();
             }
