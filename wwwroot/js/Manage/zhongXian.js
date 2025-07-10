@@ -293,7 +293,6 @@ function CancelBtn_AppointVersion() {
 
 // #endregion 預約模式 Module END
 
-
 // #region 書籍登陸
 function BooksAdded() {
     console.log("進入書籍登陸.......");
@@ -302,6 +301,7 @@ function BooksAdded() {
         $("#BookAdd_Remove").on("click", BooksAdded_Remove);
         $("#BooksAdded_BtnSend").on("click", BooksAdded_BtnSend);
         $("#BooksAdded_BtnReset").on("click", BooksAdded_Reset);
+        AuthorAutocomplete();
     })
 }
 
@@ -344,12 +344,37 @@ function BooksAdded_Reset() {
     $("#BooksAdded_FormData")[0].reset();
     BooksAdded_Remove();
 }
-
+// 作者關鍵字
+function AuthorAutocomplete() {
+    
+    $("#BooksAdded_authorName").autocomplete({
+        minLength: 1,
+        source: function (request, response) {
+            $.ajax({
+                url: "/Backend/Manage/AuthorSearch",
+                data: { authorLike: request.term },
+                success: function (data) {
+                    const result = data.map(x => ({
+                        label: x.Author1,
+                        value: x.AuthorId
+                    }));
+                    console.log(result)
+                    response(result);
+                }
+            })
+        },
+        select: function (event, ui) {
+            console.log("++++" + ui.item.label);
+            console.log(ui.item.value);
+            $("#BooksAdded_authorName").val(ui.item.label);
+            $("#BooksAdded_authorId").val(ui.item.value);
+        }
+    })
+}
 
 
 
 // #endregion
-
 
 // #region 書籍查詢
 function BooksQuery() {
@@ -361,7 +386,6 @@ function BooksQuery() {
 
 
 // #endregion
-
 
 // #region 通用函數
 let TempBookName;

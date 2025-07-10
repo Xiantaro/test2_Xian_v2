@@ -1,6 +1,4 @@
-﻿@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+﻿
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -100,6 +98,8 @@
     </footer>
     <!-- Bootstrap JS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js" integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/smoothness/jquery-ui.css">
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="@Url.Content("~/js/Manage/zhongXian.js")"></script>
     @await RenderSectionAsync("Scripts", required: false)

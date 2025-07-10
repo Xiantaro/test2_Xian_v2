@@ -15,7 +15,8 @@ namespace test2.Models.ManagementModels.ZhongXian.RegisterBook
         public int BooksAdded_leng { get; set; }
 
         [Required(ErrorMessage = "請輸入作者名稱!")]
-        public string? BooksAdded_author { get; set; }
+        public string? BooksAdded_authorName { get; set; }
+        public int BooksAdded_authorId { get; set; }
 
         public string? BooksAdded_translator { get; set; }
 

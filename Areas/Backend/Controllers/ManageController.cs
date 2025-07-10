@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.SqlServer.Server;
+using System.Diagnostics;
+using System.Reflection;
+using System.Threading.Tasks;
 using test2.Models;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
@@ -233,12 +234,12 @@ namespace test2.Areas.Backend.Controllers
         {
             var bookLanguages = await _context.Languages.ToListAsync();
             var bookTypes = await _context.Types.ToListAsync();
-            var bookAuthor = await _context.Authors.ToListAsync();
+            //var bookAuthor = await _context.Authors.ToListAsync();
             LanguageAndTypeViewModel LanguageAndTypes = new LanguageAndTypeViewModel()
             {
                 Language = bookLanguages,
                 Type = bookTypes,
-                Author = bookAuthor
+                //Author = bookAuthor
             };
 
             Debug.WriteLine("成功進入書籍登陸");
@@ -249,7 +250,8 @@ namespace test2.Areas.Backend.Controllers
 
         public async Task<IActionResult> BooksCreate(BookAddsClass formdata, IFormFile BookAdd_InputImg)
         {
-            
+            var authorid = await CreateAuthor(formdata.BooksAdded_authorId, formdata.BooksAdded_authorName!);
+
             if (BookAdd_InputImg != null && BookAdd_InputImg.Length >0)
             {
                 using var ms = new MemoryStream();
@@ -260,7 +262,7 @@ namespace test2.Areas.Backend.Controllers
                     Title = formdata.BooksAdded_Title!,
                     CollectionDesc = formdata.BooksAdded_Dec,
                     TypeId = formdata.BooksAdded_Type,
-                    AuthorId = 1,
+                    AuthorId = authorid,
                     Translator = formdata.BooksAdded_translator,
                     Publisher = formdata.BooksAdded_pushier!,
                     LanguageId = formdata.BooksAdded_leng,
@@ -283,6 +285,32 @@ namespace test2.Areas.Backend.Controllers
             Debug.WriteLine("回傳結果");
             return Json(1);
         }
+        
+        public async Task<IActionResult> AuthorSearch(string authorLike)
+        {
+            Debug.WriteLine("作者書入關鍵字進入....");
+            var author = await _context.Authors.Where(x => x.Author1.Contains(authorLike)).Select(result => new
+            {
+                Author1 = result.Author1,
+                AuthorId = result.AuthorId
+            }).ToListAsync();
+
+            return Json(author);
+        }
+        // 建立新作者
+        public async Task<int> CreateAuthor(int AuthorId, string AuthorName)
+        {
+            Debug.WriteLine($"++++++++++++++{AuthorId} ++++ {AuthorName} ");
+            var authoTest = await _context.Authors.FirstOrDefaultAsync(x => x.AuthorId == AuthorId && x.Author1 == AuthorName);
+            if (authoTest != null) { return AuthorId; }
+
+            var newAuthor = new Author { Author1 = AuthorName };
+             _context.Authors.Add(newAuthor);
+            await _context.SaveChangesAsync();
+            var authoerId = newAuthor.AuthorId;
+            return authoerId;
+        }
+
 
         #endregion
 
