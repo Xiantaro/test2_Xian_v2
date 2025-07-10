@@ -9,5 +9,7 @@ public partial class Author
 
     public string Author1 { get; set; } = null!;
 
+    public string? AuthorDesc { get; set; }
+
     public virtual ICollection<Collection> Collections { get; set; } = new List<Collection>();
 }

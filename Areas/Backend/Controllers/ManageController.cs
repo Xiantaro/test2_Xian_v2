@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Execution;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.SqlServer.Server;
+using NuGet.Protocol.Plugins;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -248,42 +250,39 @@ namespace test2.Areas.Backend.Controllers
         
         public async Task<IActionResult> BooksCreate(BookAddsClass formdata, IFormFile BookAdd_InputImg)
         {
-            if (formdata.BooksAdded_authorName.IsNullOrEmpty()) { return Json("作者為空"); }
+            bool IsbnUNIQUE =  _context.Collections.Any(x => x.Isbn == formdata.BooksAdded_ISBM);
+            if(IsbnUNIQUE == true) { return Json(new { ResltCode = 0, Message = "重複ISBM，請重新輸入" }); }
+            if (BookAdd_InputImg == null && BookAdd_InputImg?.Length == 0) { return Json(new { ResltCode = 0, Message = "請放入封面!" }); }
+
             NewAuthor myNewAuthor = new NewAuthor(_context);
             var authorid = await myNewAuthor.CreateAuthor(formdata.BooksAdded_authorId, formdata.BooksAdded_authorName!);
-
-            if (BookAdd_InputImg != null && BookAdd_InputImg.Length >0)
+            using var ms = new MemoryStream();
+            BookAdd_InputImg!.CopyTo(ms);
+            byte[] imageBytes = ms.ToArray();
+            var newCollection = new Collection()
             {
-                using var ms = new MemoryStream();
-                BookAdd_InputImg.CopyTo(ms);
-                byte[] imageBytes = ms.ToArray();
-                var newCollection = new Collection()
-                {
-                    Title = formdata.BooksAdded_Title!,
-                    CollectionDesc = formdata.BooksAdded_Dec,
-                    TypeId = formdata.BooksAdded_Type,
-                    AuthorId = authorid,
-                    Translator = formdata.BooksAdded_translator,
-                    Publisher = formdata.BooksAdded_pushier!,
-                    LanguageId = formdata.BooksAdded_leng,
-                    Isbn = formdata.BooksAdded_ISBM!,
-                    PublishDate = formdata.BooksAdded_puDate,
-                    CollectionImg = imageBytes,
-                };
-                _context.Add(newCollection);
-                await _context.SaveChangesAsync();
+                Title = formdata.BooksAdded_Title!,
+                CollectionDesc = formdata.BooksAdded_Dec,
+                TypeId = formdata.BooksAdded_Type,
+                AuthorId = authorid,
+                Translator = formdata.BooksAdded_translator,
+                Publisher = formdata.BooksAdded_pushier!,
+                LanguageId = formdata.BooksAdded_leng,
+                Isbn = formdata.BooksAdded_ISBM!,
+                PublishDate = formdata.BooksAdded_puDate,
+                CollectionImg = imageBytes,
+            };
+            _context.Add(newCollection);
+            await _context.SaveChangesAsync();
 
-                var collectionId = newCollection.CollectionId;
+            var collectionId = newCollection.CollectionId;
 
-                List<Book> bookList = myBookCode.BookCodeAddToList(formdata.BooksAdded_Type, collectionId, formdata.BooksAdded_inCount);
-                _context.AddRange(bookList);
-                await _context.SaveChangesAsync();
-            }
-            else { return Json("發生錯誤...."); }
-
-
+            List<Book> bookList = myBookCode.BookCodeAddToList(formdata.BooksAdded_Type, collectionId, formdata.BooksAdded_inCount);
+            _context.AddRange(bookList);
+            await _context.SaveChangesAsync();
+          
             Debug.WriteLine("回傳結果");
-            return Json(1);
+            return Json(new { ResltCode = 1, Message = "成功新增書籍!" });
         }
         // 作者AutoComplete
         public async Task<IActionResult> AuthorSearch(string authorLike)

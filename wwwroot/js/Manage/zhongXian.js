@@ -1,4 +1,5 @@
-﻿// #region 載入parital => 預約查詢、借閱查詢、借書模式、還書模式、預約模式
+﻿
+// #region 載入parital => 預約查詢、借閱查詢、借書模式、還書模式、預約模式
 $(() => {
     console.log("已綁定事件");
     $("#AppointmentQuery").on("click", AppointmentQueryModule)
@@ -332,7 +333,13 @@ function FormatISBM() {
 }
 // 確定登入書籍
 function BooksAdded_BtnSend() {
-    CollecionDontEmpty();
+    const form = document.getElementById("BooksAdded_FormData");
+    if ($("#BooksAdded_ISBM").length > 13) { return; alert("請輸入正確的ISBN") }
+    if (!form.checkValidity()) {
+        form.classList.add("was-validated"); // 啟用 Bootstrap 錯誤樣式（若你有用 Bootstrap）
+        return; // ⚠️ 停止送出，直到通過驗證
+    }
+
     var formdata = new FormData($("#BooksAdded_FormData")[0]);
     for (let pair of formdata.entries()) {
         console.log(pair[0] + ": " + pair[1]);
@@ -344,8 +351,10 @@ function BooksAdded_BtnSend() {
         processData: false,
         contentType: false,
         success: (result) => {
-            if (result == 1) { alert("成功登陸書籍"); BooksAdded_Reset ()}
-            else {alert(restult) }
+            if (result.ResltCode == 1) {
+                alert(result.Message); BooksAdded_Reset(); $("#BooksAdded_FormData").removeClass("was-validated");
+ }
+            else { alert(result.Message) }
         }
     });
 };
@@ -386,7 +395,7 @@ function AuthorAutocomplete() {
 }
 // Collection不能空缺
 function CollecionDontEmpty() {
-    if ($("#BooksAdded_ISBM").val() === "") { alert("請輸入ISBM!"); return; }
+    if ($("#BooksAdded_ISBM").val() === "") { alert("請輸入ISBM!"); rebrturn; }
     if ($("#BooksAdded_Title").val() === "") { alert("請輸入書名!"); return; }
     if ($("#BooksAdded_authorName").val() === "") { alert("請輸入作者!"); return; }
     if ($("#BooksAdded_pushier").val() === "") { alert("請輸入出版社!"); return; }

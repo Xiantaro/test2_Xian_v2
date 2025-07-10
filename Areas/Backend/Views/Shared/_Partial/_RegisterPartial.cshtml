@@ -1,13 +1,13 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.RegisterBook.LanguageAndTypeViewModel
 
 <h1>書籍登錄</h1>
-<form   id="BooksAdded_FormData">
+<form   id="BooksAdded_FormData" class="needs-validation" novalidate>
     <div class="card p-4">
         <div class="row justify-content-center align-content-center">
             <div class="col-md-7">
                 <div class="mb-3 row">
                     <div class="col">
-                        <label  class="form-label fs-3 fw-bold" for="BooksAdded_ISBM">ISBN:</label>
+                        <label  class="form-label fs-3 fw-bold " for="BooksAdded_ISBM">ISBN:</label>
                         <input class="form-control" id="BooksAdded_ISBM" name="BooksAdded_ISBM" maxlength="17" required/>
                         <span id="BooksAdded_TitleError" class="text-danger"></span>
                     </div>
@@ -97,7 +97,7 @@
                 <!-- 封面 -->
                 <div class="mb-1">
                     <label class="form-label fs-3 fw-bold">封面:</label>
-                    <input type="file" name="BookAdd_InputImg" id="BookAdd_InputImg"class="form-control"accept=".jpg, .jpeg, .png" />
+                    <input type="file" name="BookAdd_InputImg" id="BookAdd_InputImg"class="form-control"accept=".jpg, .jpeg, .png"  required/>
                     <!-- 預覽圖-->
                     <img id="BookAdd_Display"class="img-thumbnail mt-2 mx-3"style="height:600px; width:400px;"src="" />
                 </div>
