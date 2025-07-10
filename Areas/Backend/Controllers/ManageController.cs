@@ -228,10 +228,18 @@ namespace test2.Areas.Backend.Controllers
 
             return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", FinalRestul);
         }
+
+        // 關鍵字動態搜尋
+        public async Task<IActionResult> KeyWordAuthorSearch(string keyword)
+        {
+
+            var keyWord = await _context.Collections.Where(x => x.Title.Contains(keyword)).Take(6).ToListAsync();
+            return Json(keyWord);
+        }
         #endregion
 
         #region 書籍登陸
-        
+
         public async Task<IActionResult> BooksAdds()
         {
             var bookLanguages = await _context.Languages.ToListAsync();
@@ -300,7 +308,9 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchPartial.cshtml");
         }
         #endregion
+
         // 顯示結果
+
         //public async Task<IActionResult> BooksQueryResult()
         //{
         //}

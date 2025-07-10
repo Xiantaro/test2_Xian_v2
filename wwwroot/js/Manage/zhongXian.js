@@ -225,6 +225,7 @@ function AppointmentMode() {
         $("#appointmentMode_CancelUserIdBtn ,#appointmentMode_CancelBookNumBtn").on("click", CancelBtn);
         $("#appointmentMode_CancelKeyWordBtn").on("click", CancelBtn_AppointVersion);
         //$("#appointmentMode_status, #appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
+        KeyWordComplete();
     })
 }
 
@@ -257,6 +258,31 @@ function AppointmentModeBookDynamic() {
         appointmentOnChange();
     });
 };
+// 關鍵字 autoComplete
+function KeyWordComplete() {
+    $("#appointmentMode_KeyWord").autocomplete({
+        minLength: 1,
+        source: function (request, response) {
+            $.ajax({
+                url: "/Backend/Manage/KeyWordAuthorSearch",
+                data: { keyword: request.term },
+                success: function (data) {
+                    const result = data.map(x => ({
+                        label: x.Title
+                    }));
+                    console.log("++++" + result)
+                    response(result);
+                }
+            })
+        },
+        select: function (event, ui) {
+            $("#appointmentMode_KeyWord").val(ui.item.label);
+            AppointmentModeBookDynamic();
+            return false;
+        }
+    })
+}
+
 function appointmentOnChange() {
     $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
     $("#appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
