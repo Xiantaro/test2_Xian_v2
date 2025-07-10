@@ -302,6 +302,7 @@ function BooksAdded() {
         $("#BooksAdded_BtnSend").on("click", BooksAdded_BtnSend);
         $("#BooksAdded_BtnReset").on("click", BooksAdded_Reset);
         AuthorAutocomplete();
+        $("#BooksAdded_ISBM").on("input", FormatISBM);
     })
 }
 
@@ -318,8 +319,17 @@ function BooksAdded_ShowImg() {
 function BooksAdded_Remove() {
     $("#BookAdd_Display").attr("src", "");
     $("#BookAdd_Remove").prop("disabled", true);
+    $("#BookAdd_InputImg").val("");
 }
-
+// ISBN Fomart
+function FormatISBM() {
+    console.log("ISBM...輸入...")
+    let val = $(this).val().replace(/[^0-9]/g, "");
+    if (val.length >= 13) {
+        val = `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 10)}-${val.slice(10, 11)}-${val.slice(11, 12)}`;
+    }
+    $(this).val(val);
+}
 // 確定登入書籍
 function BooksAdded_BtnSend() {
     CollecionDontEmpty();
@@ -343,6 +353,7 @@ function BooksAdded_BtnSend() {
 // 重置輸入
 function BooksAdded_Reset() {
     $("#BooksAdded_FormData")[0].reset();
+    
     BooksAdded_Remove();
 }
 // 作者關鍵字

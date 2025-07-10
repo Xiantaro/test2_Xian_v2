@@ -248,7 +248,7 @@ namespace test2.Areas.Backend.Controllers
         
         public async Task<IActionResult> BooksCreate(BookAddsClass formdata, IFormFile BookAdd_InputImg)
         {
-
+            if (formdata.BooksAdded_authorName.IsNullOrEmpty()) { return Json("作者為空"); }
             NewAuthor myNewAuthor = new NewAuthor(_context);
             var authorid = await myNewAuthor.CreateAuthor(formdata.BooksAdded_authorId, formdata.BooksAdded_authorName!);
 
@@ -285,16 +285,11 @@ namespace test2.Areas.Backend.Controllers
             Debug.WriteLine("回傳結果");
             return Json(1);
         }
-        
+        // 作者AutoComplete
         public async Task<IActionResult> AuthorSearch(string authorLike)
         {
             Debug.WriteLine("作者書入關鍵字進入....");
-            var author = await _context.Authors.Where(x => x.Author1.Contains(authorLike)).Select(result => new
-            {
-                Author1 = result.Author1,
-                AuthorId = result.AuthorId
-            }).ToListAsync();
-
+            var author = await _context.Authors.Where(x => x.Author1.Contains(authorLike)).ToListAsync();
             return Json(author);
         }
         #endregion
