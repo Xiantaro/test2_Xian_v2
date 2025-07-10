@@ -300,6 +300,10 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchPartial.cshtml");
         }
         #endregion
+        // 顯示結果
+        //public async Task<IActionResult> BooksQueryResult()
+        //{
+        //}
 
         #region 通用Action
         // 傳送通知

@@ -333,11 +333,11 @@ function FormatISBM() {
 }
 // 確定登入書籍
 function BooksAdded_BtnSend() {
+    if ($("#BooksAdded_ISBM").val().length < 13) { alert("請輸入正確的13碼 ISBM"); return; }
     const form = document.getElementById("BooksAdded_FormData");
-    if ($("#BooksAdded_ISBM").length > 13) { return; alert("請輸入正確的ISBN") }
     if (!form.checkValidity()) {
-        form.classList.add("was-validated"); // 啟用 Bootstrap 錯誤樣式（若你有用 Bootstrap）
-        return; // ⚠️ 停止送出，直到通過驗證
+        form.classList.add("was-validated"); 
+        return; 
     }
 
     var formdata = new FormData($("#BooksAdded_FormData")[0]);
@@ -393,15 +393,6 @@ function AuthorAutocomplete() {
         }
     })
 }
-// Collection不能空缺
-function CollecionDontEmpty() {
-    if ($("#BooksAdded_ISBM").val() === "") { alert("請輸入ISBM!"); rebrturn; }
-    if ($("#BooksAdded_Title").val() === "") { alert("請輸入書名!"); return; }
-    if ($("#BooksAdded_authorName").val() === "") { alert("請輸入作者!"); return; }
-    if ($("#BooksAdded_pushier").val() === "") { alert("請輸入出版社!"); return; }
-    if ($("#BooksAdded_puDate").val() === "") { alert("請輸入出版日期!"); return; }
-}
-
 
 // #endregion
 
@@ -409,8 +400,13 @@ function CollecionDontEmpty() {
 function BooksQuery() {
     console.log("進入書籍查詢.......");
     $("#content-panel").load("/Backend/Manage/BooksQuerys", () => {
-        console.log("回傳書籍查詢")
+        console.log("回傳書籍查詢");
+        $("#book_select").on("click", EnteryBookQUery)
     })
+}
+
+function EnteryBookQUery() {
+    console.log("書籍查詢!!");
 }
 
 
