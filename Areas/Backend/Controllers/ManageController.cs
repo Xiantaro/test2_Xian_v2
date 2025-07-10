@@ -233,10 +233,12 @@ namespace test2.Areas.Backend.Controllers
         {
             var bookLanguages = await _context.Languages.ToListAsync();
             var bookTypes = await _context.Types.ToListAsync();
-            LanguageAndType LanguageAndTypes = new LanguageAndType()
+            var bookAuthor = await _context.Authors.ToListAsync();
+            LanguageAndTypeViewModel LanguageAndTypes = new LanguageAndTypeViewModel()
             {
                 Language = bookLanguages,
-                Type = bookTypes
+                Type = bookTypes,
+                Author = bookAuthor
             };
 
             Debug.WriteLine("成功進入書籍登陸");
@@ -258,7 +260,7 @@ namespace test2.Areas.Backend.Controllers
                     Title = formdata.BooksAdded_Title!,
                     CollectionDesc = formdata.BooksAdded_Dec,
                     TypeId = formdata.BooksAdded_Type,
-                    Author = formdata.BooksAdded_author!,
+                    AuthorId = 1,
                     Translator = formdata.BooksAdded_translator,
                     Publisher = formdata.BooksAdded_pushier!,
                     LanguageId = formdata.BooksAdded_leng,

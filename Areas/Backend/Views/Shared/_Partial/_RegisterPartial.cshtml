@@ -1,4 +1,4 @@
-﻿@model test2.Models.ManagementModels.ZhongXian.RegisterBook.LanguageAndType
+﻿@model test2.Models.ManagementModels.ZhongXian.RegisterBook.LanguageAndTypeViewModel
 
 <h1>書籍登錄</h1>
 <form   id="BooksAdded_FormData">
@@ -52,7 +52,20 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_author">作者:</label>
-                        <input class="form-control" id="BooksAdded_author" name="BooksAdded_author" required/>
+                       @*// <input class="form-control" id="BooksAdded_author" name="BooksAdded_author" required />*@
+                        <select class="form-select required-field" id="BooksAdded_author" name="BooksAdded_author">
+                            @if (Model.Language?.Count > 0)
+                            {
+                                foreach (var x in Model.Author!)
+                                {
+                                    <option value="@x.AuthorId">@x.Author1</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="0">沒有作者???</option>
+}
+                        </select>
                         <span class="text-danger"></span>
                     </div>
                     <div class="col">

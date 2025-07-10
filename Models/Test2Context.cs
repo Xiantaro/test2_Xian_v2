@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.Normal;
@@ -16,12 +16,13 @@ public partial class Test2Context : DbContext
 
     public Test2Context(DbContextOptions<Test2Context> options)
         : base(options)
-    { }
+    {
+    }
     // 憲自訂 Start
     public virtual DbSet<AppoimtmentKeywordShow> AppoimtmentKeywordShows { get; set; }
     public virtual DbSet<BorrowBookInfomationDTO> BorrowBookInfomationDTOs { get; set; }
     public virtual DbSet<MessageDTO> BorrwoMessageDTOs { get; set; }
-    public virtual DbSet<LanguageAndType> LanguageAndTypes { get; set; }
+    public virtual DbSet<LanguageAndTypeViewModel> LanguageAndTypes { get; set; }
     // 憲自訂 END
     public virtual DbSet<Activity> Activities { get; set; }
 
@@ -32,6 +33,8 @@ public partial class Test2Context : DbContext
     public virtual DbSet<AnnouncementType> AnnouncementTypes { get; set; }
 
     public virtual DbSet<Audience> Audiences { get; set; }
+
+    public virtual DbSet<Author> Authors { get; set; }
 
     public virtual DbSet<Book> Books { get; set; }
 
@@ -59,9 +62,9 @@ public partial class Test2Context : DbContext
 
     public virtual DbSet<Type> Types { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=XIANN\\SQLEXPRESS02;Database=test2;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;User ID=andy;Password=1234");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-I57EDSL\\SQLEXPRESS;Database=test2;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;User ID=sa;Password=1234;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -69,7 +72,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Activity");
 
-            entity.HasIndex(e => e.ActivityTitle, "UQ__Activity__5F9FE5730461C05A").IsUnique();
+            entity.HasIndex(e => e.ActivityTitle, "UQ__Activity__5F9FE5733FADB099").IsUnique();
 
             entity.Property(e => e.ActivityId).HasColumnName("activityId");
             entity.Property(e => e.ActivityDesc).HasColumnName("activityDesc");
@@ -98,7 +101,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("ActivityType");
 
-            entity.HasIndex(e => e.ActivityType1, "UQ__Activity__1F1EE4DD7824764E").IsUnique();
+            entity.HasIndex(e => e.ActivityType1, "UQ__Activity__1F1EE4DDCFFFAE6E").IsUnique();
 
             entity.Property(e => e.ActivityTypeId).HasColumnName("activityTypeId");
             entity.Property(e => e.ActivityType1)
@@ -110,7 +113,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Announcement");
 
-            entity.HasIndex(e => e.AnnouncementTitle, "UQ__Announce__EBE0015FFBC8E468").IsUnique();
+            entity.HasIndex(e => e.AnnouncementTitle, "UQ__Announce__EBE0015F579A2769").IsUnique();
 
             entity.Property(e => e.AnnouncementId).HasColumnName("announcementId");
             entity.Property(e => e.AnnouncementDesc).HasColumnName("announcementDesc");
@@ -129,7 +132,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("AnnouncementType");
 
-            entity.HasIndex(e => e.AnnouncementType1, "UQ__Announce__D53C87B273E5726F").IsUnique();
+            entity.HasIndex(e => e.AnnouncementType1, "UQ__Announce__D53C87B22984DEC9").IsUnique();
 
             entity.Property(e => e.AnnouncementTypeId).HasColumnName("announcementTypeId");
             entity.Property(e => e.AnnouncementType1)
@@ -141,7 +144,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Audience");
 
-            entity.HasIndex(e => e.Audience1, "UQ__Audience__2C1B51FCE651CF62").IsUnique();
+            entity.HasIndex(e => e.Audience1, "UQ__Audience__2C1B51FCF15D941B").IsUnique();
 
             entity.Property(e => e.AudienceId).HasColumnName("audienceId");
             entity.Property(e => e.Audience1)
@@ -149,11 +152,23 @@ public partial class Test2Context : DbContext
                 .HasColumnName("audience");
         });
 
+        modelBuilder.Entity<Author>(entity =>
+        {
+            entity.ToTable("Author");
+
+            entity.HasIndex(e => e.Author1, "UQ_Author_Name").IsUnique();
+
+            entity.Property(e => e.AuthorId).HasColumnName("authorId");
+            entity.Property(e => e.Author1)
+                .HasMaxLength(50)
+                .HasColumnName("author");
+        });
+
         modelBuilder.Entity<Book>(entity =>
         {
             entity.ToTable("Book");
 
-            entity.HasIndex(e => e.BookCode, "UQ__Book__3BB8DAE6FCCC8805").IsUnique();
+            entity.HasIndex(e => e.BookCode, "UQ__Book__3BB8DAE6F11F54D2").IsUnique();
 
             entity.Property(e => e.BookId).HasColumnName("bookId");
             entity.Property(e => e.AccessionDate).HasColumnName("accessionDate");
@@ -179,7 +194,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("BookStatus");
 
-            entity.HasIndex(e => e.BookStatus1, "UQ__BookStat__6890475C0428AD50").IsUnique();
+            entity.HasIndex(e => e.BookStatus1, "UQ__BookStat__6890475C2DC102B3").IsUnique();
 
             entity.Property(e => e.BookStatusId).HasColumnName("bookStatusId");
             entity.Property(e => e.BookStatus1)
@@ -224,7 +239,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("BorrowStatus");
 
-            entity.HasIndex(e => e.BorrowStatus1, "UQ__BorrowSt__EF08F8F4A15F2DF5").IsUnique();
+            entity.HasIndex(e => e.BorrowStatus1, "UQ__BorrowSt__EF08F8F4B409EFC7").IsUnique();
 
             entity.Property(e => e.BorrowStatusId).HasColumnName("borrowStatusId");
             entity.Property(e => e.BorrowStatus1)
@@ -238,9 +253,9 @@ public partial class Test2Context : DbContext
 
             entity.ToTable("Client");
 
-            entity.HasIndex(e => e.CPhone, "UQ__Client__0A376ADC1835B096").IsUnique();
+            entity.HasIndex(e => e.CPhone, "UQ__Client__0A376ADC5C14DAE8").IsUnique();
 
-            entity.HasIndex(e => e.CAccount, "UQ__Client__2F046D2330C839BF").IsUnique();
+            entity.HasIndex(e => e.CAccount, "UQ__Client__2F046D2399440AC9").IsUnique();
 
             entity.Property(e => e.CId).HasColumnName("cId");
             entity.Property(e => e.CAccount)
@@ -262,12 +277,10 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Collection");
 
-            entity.HasIndex(e => e.Isbn, "UQ__Collecti__99F9D0A41DAAC436").IsUnique();
+            entity.HasIndex(e => e.Isbn, "UQ__Collecti__99F9D0A4B36171AF").IsUnique();
 
             entity.Property(e => e.CollectionId).HasColumnName("collectionId");
-            entity.Property(e => e.Author)
-                .HasMaxLength(50)
-                .HasColumnName("author");
+            entity.Property(e => e.AuthorId).HasColumnName("authorId");
             entity.Property(e => e.CollectionDesc).HasColumnName("collectionDesc");
             entity.Property(e => e.CollectionImg).HasColumnName("collectionImg");
             entity.Property(e => e.Isbn)
@@ -286,6 +299,11 @@ public partial class Test2Context : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("translator");
             entity.Property(e => e.TypeId).HasColumnName("typeId");
+
+            entity.HasOne(d => d.Author).WithMany(p => p.Collections)
+                .HasForeignKey(d => d.AuthorId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Author");
 
             entity.HasOne(d => d.Language).WithMany(p => p.Collections)
                 .HasForeignKey(d => d.LanguageId)
@@ -338,7 +356,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Language");
 
-            entity.HasIndex(e => e.Language1, "UQ__Language__EFADA5D9CB3AEE61").IsUnique();
+            entity.HasIndex(e => e.Language1, "UQ__Language__EFADA5D93D30595A").IsUnique();
 
             entity.Property(e => e.LanguageId).HasColumnName("languageId");
             entity.Property(e => e.Language1)
@@ -397,7 +415,7 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("ReservationStatus");
 
-            entity.HasIndex(e => e.ReservationStatus1, "UQ__Reservat__C3518793518D0616").IsUnique();
+            entity.HasIndex(e => e.ReservationStatus1, "UQ__Reservat__C351879309FCEE92").IsUnique();
 
             entity.Property(e => e.ReservationStatusId).HasColumnName("reservationStatusId");
             entity.Property(e => e.ReservationStatus1)
@@ -409,18 +427,17 @@ public partial class Test2Context : DbContext
         {
             entity.ToTable("Type");
 
-            entity.HasIndex(e => e.Type1, "UQ__Type__E3F852480165B21C").IsUnique();
+            entity.HasIndex(e => e.Type1, "UQ__Type__E3F8524832E04BDF").IsUnique();
 
             entity.Property(e => e.TypeId).HasColumnName("typeId");
             entity.Property(e => e.Type1)
                 .HasMaxLength(50)
                 .HasColumnName("type");
         });
-        // 憲自訂
         modelBuilder.Entity<BorrowBookInfomationDTO>().HasNoKey();
         modelBuilder.Entity<MessageDTO>().HasNoKey();
         modelBuilder.Entity<AppoimtmentKeywordShow>().HasNoKey();
-        modelBuilder.Entity<LanguageAndType>().HasNoKey();
+        modelBuilder.Entity<LanguageAndTypeViewModel>().HasNoKey();
         OnModelCreatingPartial(modelBuilder);
     }
 
