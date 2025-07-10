@@ -320,8 +320,9 @@ function BooksAdded_Remove() {
     $("#BookAdd_Remove").prop("disabled", true);
 }
 
-// 確定登入
+// 確定登入書籍
 function BooksAdded_BtnSend() {
+    CollecionDontEmpty();
     var formdata = new FormData($("#BooksAdded_FormData")[0]);
     for (let pair of formdata.entries()) {
         console.log(pair[0] + ": " + pair[1]);
@@ -333,8 +334,8 @@ function BooksAdded_BtnSend() {
         processData: false,
         contentType: false,
         success: (result) => {
-            if (result == 1) { alert("成功登陸書籍"); }
-            else {alert("登陸書籍失敗.....") }
+            if (result == 1) { alert("成功登陸書籍"); BooksAdded_Reset ()}
+            else {alert(restult) }
         }
     });
 };
@@ -346,7 +347,6 @@ function BooksAdded_Reset() {
 }
 // 作者關鍵字
 function AuthorAutocomplete() {
-    
     $("#BooksAdded_authorName").autocomplete({
         minLength: 1,
         source: function (request, response) {
@@ -364,14 +364,23 @@ function AuthorAutocomplete() {
             })
         },
         select: function (event, ui) {
+            
             console.log("++++" + ui.item.label);
             console.log(ui.item.value);
             $("#BooksAdded_authorName").val(ui.item.label);
             $("#BooksAdded_authorId").val(ui.item.value);
+            return false;
         }
     })
 }
-
+// Collection不能空缺
+function CollecionDontEmpty() {
+    if ($("#BooksAdded_ISBM").val() === "") { alert("請輸入ISBM!"); return; }
+    if ($("#BooksAdded_Title").val() === "") { alert("請輸入書名!"); return; }
+    if ($("#BooksAdded_authorName").val() === "") { alert("請輸入作者!"); return; }
+    if ($("#BooksAdded_pushier").val() === "") { alert("請輸入出版社!"); return; }
+    if ($("#BooksAdded_puDate").val() === "") { alert("請輸入出版日期!"); return; }
+}
 
 
 // #endregion

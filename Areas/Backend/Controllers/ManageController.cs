@@ -234,23 +234,23 @@ namespace test2.Areas.Backend.Controllers
         {
             var bookLanguages = await _context.Languages.ToListAsync();
             var bookTypes = await _context.Types.ToListAsync();
-            //var bookAuthor = await _context.Authors.ToListAsync();
             LanguageAndTypeViewModel LanguageAndTypes = new LanguageAndTypeViewModel()
             {
                 Language = bookLanguages,
                 Type = bookTypes,
-                //Author = bookAuthor
             };
 
             Debug.WriteLine("成功進入書籍登陸");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml", LanguageAndTypes);
         }
 
-        BookCodeListClass mybookCode = new BookCodeListClass();
-
+        BookCodeListClass myBookCode = new BookCodeListClass();
+        
         public async Task<IActionResult> BooksCreate(BookAddsClass formdata, IFormFile BookAdd_InputImg)
         {
-            var authorid = await CreateAuthor(formdata.BooksAdded_authorId, formdata.BooksAdded_authorName!);
+
+            NewAuthor myNewAuthor = new NewAuthor(_context);
+            var authorid = await myNewAuthor.CreateAuthor(formdata.BooksAdded_authorId, formdata.BooksAdded_authorName!);
 
             if (BookAdd_InputImg != null && BookAdd_InputImg.Length >0)
             {
@@ -275,7 +275,7 @@ namespace test2.Areas.Backend.Controllers
 
                 var collectionId = newCollection.CollectionId;
 
-                List<Book> bookList = mybookCode.BookCodeAddToList(formdata.BooksAdded_Type, collectionId, formdata.BooksAdded_inCount);
+                List<Book> bookList = myBookCode.BookCodeAddToList(formdata.BooksAdded_Type, collectionId, formdata.BooksAdded_inCount);
                 _context.AddRange(bookList);
                 await _context.SaveChangesAsync();
             }
@@ -297,21 +297,6 @@ namespace test2.Areas.Backend.Controllers
 
             return Json(author);
         }
-        // 建立新作者
-        public async Task<int> CreateAuthor(int AuthorId, string AuthorName)
-        {
-            Debug.WriteLine($"++++++++++++++{AuthorId} ++++ {AuthorName} ");
-            var authoTest = await _context.Authors.FirstOrDefaultAsync(x => x.AuthorId == AuthorId && x.Author1 == AuthorName);
-            if (authoTest != null) { return AuthorId; }
-
-            var newAuthor = new Author { Author1 = AuthorName };
-             _context.Authors.Add(newAuthor);
-            await _context.SaveChangesAsync();
-            var authoerId = newAuthor.AuthorId;
-            return authoerId;
-        }
-
-
         #endregion
 
         #region 書籍查詢
