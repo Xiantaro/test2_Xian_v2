@@ -7,11 +7,11 @@
             <tr class="fs-4 fw-bold">
                 <th scope="col" style="width:130px">預約編號</th>
                 <th scope="col" style="width:230px" >書籍編號</th>
-                <th scope="col" style="width:600px">書籍名稱</th>
+                <th scope="col" style="width:300px">書籍名稱</th>
                 <th scope="col" style="width:130px">預約者ID</th>
                 <th scope="col" style="width:230px">預約日期</th>
                 <th scope="col" style="width:150px">取書期限</th>
-                <th scope="col" style="width:140px">狀況</th>
+                <th scope="col" class="text-center">狀況</th>
                 <th scope="col" class="text-center">操作</th>
             </tr>
         </thead>
@@ -28,24 +28,24 @@
                     </td>
                     @if (@ap.appointmentStatus == "已預約")
                     {
-                        <td class='text-light fw-bold text-bg-success align-middle fs-3'>@ap.appointmentStatus</td>
+                        <td class='text-light fw-bold text-bg-success align-middle fs-3 text-center'>@ap.appointmentStatus</td>
                         <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn  fs-3" data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                     }
                     else
                     {
                         @if (@ap.appointmentStatus == "取消預約")
                         {
-                            <td class='text-light fw-bold text-bg-secondary align-middle fs-3'>@ap.appointmentStatus</td>
+                            <td class='text-light fw-bold text-bg-secondary align-middle fs-3 text-center'>@ap.appointmentStatus</td>
                             <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-3" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                         else if (@ap.appointmentStatus == "可取書")
                         {
-                            <td class='text-light fw-bold text-bg-primary align-middle fs-3'>@ap.appointmentStatus</td>
+                            <td class='text-light fw-bold text-bg-primary align-middle fs-3 text-center'>@ap.appointmentStatus</td>
                             <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-3" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                         else
                         {
-                            <td class='text-light fw-bold text-bg-warning align-middle fs-3'>@ap.appointmentStatus</td>
+                            <td class='text-light fw-bold text-bg-warning align-middle fs-3 text-center'>@ap.appointmentStatus</td>
                             <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-3" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                     }
@@ -54,28 +54,28 @@
             }
         </tbody>
     </table>
-    <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center ">
         <nav aria-label="Page navigation example">
             @if ((Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1)
             {
-                <ul class="pagination">
-                    <li class="page-item">
+                <ul class="pagination ">
+                    <li class="page-item ">
                         @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) < 2)
-                        {<a class="page-link disabled" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
+                        {<a class="page-link disabled fs-3" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
                         else
-                        {<a class="page-link" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
+                        {<a class="page-link fs-3" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
                     </li>
                     @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0); x++)
                     {@if ((Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
                     {
-                        if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x){ <li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>}
-                        else{ <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>}}
+                        if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x){ <li class="page-item fs-3"><a class="page-link bg-dark bg-gradient text-white disabled fs-3" href="#" data-page="@x">@x</a></li>}
+                        else{ <li class="page-item"><a class="page-link fs-3" href="#" data-page="@x">@x</a></li>}}
                     }
                     <li class="page-item">
                         @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0))
-                        {<a class="page-link disabled" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
+                        {<a class="page-link disabled fs-3" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
                         else
-                        {<a class="page-link" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
+                        {<a class="page-link fs-3" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
                     </li>
                 </ul>
             }

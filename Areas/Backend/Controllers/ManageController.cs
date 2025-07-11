@@ -180,18 +180,13 @@ namespace test2.Areas.Backend.Controllers
         #region 預約模式
         public IActionResult AppointmentMode1()
         {
-            Debug.WriteLine("預約模式載入成功...............");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appoimtmentPartial.cshtml");
         }
         public async Task<IActionResult> AppointmentMode1Send(int appointmentMode_UserID, int appointmentMode_BookId)
         {
-            
-            Debug.WriteLine("書本預約狀況 載入成功...." + "使用者ID: " + appointmentMode_UserID + "書籍ID: " + appointmentMode_BookId);
             var User = await _context.Clients.Where(x => x.CId == appointmentMode_UserID).ToListAsync();
-            Debug.WriteLine($"使用者是否成功: {User.Count}");
             if(User.Count != 1) { return Json(0); }
             var bookId = await _context.Collections.Where(x => x.CollectionId == appointmentMode_BookId).Select(re => new { re.Title }).ToListAsync();
-            Debug.WriteLine($"書本數量是否存在: {bookId.Count}");
             if (bookId.Count != 1) { return Json(1); }
 
             var ResultMessage = await _context.Set<MessageDTO>().FromSqlInterpolated($"EXEC RevervationMode {appointmentMode_UserID}, {appointmentMode_BookId}").ToListAsync();
@@ -204,20 +199,15 @@ namespace test2.Areas.Backend.Controllers
                 cName = User[0].CName,
                 title = bookId[0].Title,
             };
-
-            Debug.WriteLine("預約模式最後..........要發送了!");
             string ViewUrl = "~/Areas/Backend/Views/Manage/AppoimtmentContent.cshtml";
             return PartialView(ViewUrl, result);
         }
         public async Task<IActionResult> AppointmentMode1Query(string keyWord, string state, int pageCount, int  page = 1)
         {
-            Debug.WriteLine($"{DateTime.Now}:預約書本查詢 載入成功....{keyWord}、{state}、{pageCount}、{page}");
-
             var result =  await _context.Set<AppoimtmentKeywordShow>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
             var totalcount = result.Count();
-            if(totalcount == 0) { return Json(0); }
+            if (totalcount == 0) { return Json(0); }
             var final =  result.Skip((page - 1) * pageCount).Take(pageCount).ToList();
-
             var FinalRestul = new AppoimtmentResult()
             {
                 AppoimtmentKeywordShows = final,
@@ -226,17 +216,10 @@ namespace test2.Areas.Backend.Controllers
                 perPage = pageCount,
                 status = state
             };
-
             return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", FinalRestul);
         }
 
-        // 關鍵字動態搜尋
-        public async Task<IActionResult> KeyWordAuthorSearch(string keyword)
-        {
-
-            var keyWord = await _context.Collections.Where(x => x.Title.Contains(keyword)).Take(6).ToListAsync();
-            return Json(keyWord);
-        }
+        
         #endregion
 
         #region 書籍登陸
@@ -296,7 +279,7 @@ namespace test2.Areas.Backend.Controllers
         // 作者AutoComplete
         public async Task<IActionResult> AuthorSearch(string authorLike)
         {
-            Debug.WriteLine("作者書入關鍵字進入....");
+            Debug.WriteLine("作者輸入關鍵字進入....");
             var author = await _context.Authors.Where(x => x.Author1.Contains(authorLike)).ToListAsync();
             return Json(author);
         }
@@ -320,6 +303,7 @@ namespace test2.Areas.Backend.Controllers
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml", QueryResult);
         }
         #endregion
+
         #region 通用Action
         // 傳送通知
         public async Task<IActionResult> Notification(int NotificationId, string NotificationType, string NotificationTextarea)
@@ -360,6 +344,23 @@ namespace test2.Areas.Backend.Controllers
             await _context.Notifications.AddAsync(Noticaionl);
             await _context.SaveChangesAsync();
             return Json(1);
+        }
+        // 關鍵字動態搜尋
+        public async Task<IActionResult> KeyWordAuthorSearch(string keyword)
+        {
+            Debug.WriteLine("進入關鍵字");
+            var bookTitle = await _context.Collections.Where(x => x.Title.Contains(keyword)).Select(re => new { Label = re.Title + "(書名)", Value = re.Title }).ToListAsync();
+            var bookAuthor = await (from col in _context.Collections
+                                    join auth in _context.Authors on col.AuthorId equals auth.AuthorId
+                                    where auth.Author1.Contains(keyword)
+                                    group auth by auth.Author1 into re
+                                    select new
+                                    {
+                                        Label = re.Key + "(作者)",
+                                        Value = re.Key
+                                    }).ToListAsync();
+            var autoComplete = bookTitle.Concat(bookAuthor).Take(10);
+            return Json(autoComplete);
         }
         #endregion
         //------------------------------------------------------------------------------------------

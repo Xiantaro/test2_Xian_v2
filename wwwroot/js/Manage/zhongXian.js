@@ -223,8 +223,7 @@ function AppointmentMode() {
         $("#appointmentMode_KeyWord").on("input", AppointmentModeBookDynamic);
         $("#appointmentMode_CancelUserIdBtn ,#appointmentMode_CancelBookNumBtn").on("click", CancelBtn);
         $("#appointmentMode_CancelKeyWordBtn").on("click", CancelBtn_AppointVersion);
-        //$("#appointmentMode_status, #appointmentMode_perPage").on("change", AppointmentModeBookDynamic);
-        KeyWordComplete();
+        $("#appointmentMode_KeyWord").on("click", BookQueryAutoComplete);
     })
 }
 
@@ -257,30 +256,6 @@ function AppointmentModeBookDynamic() {
         appointmentOnChange();
     });
 };
-// 關鍵字 autoComplete
-function KeyWordComplete() {
-    $("#appointmentMode_KeyWord").autocomplete({
-        minLength: 1,
-        source: function (request, response) {
-            $.ajax({
-                url: "/Backend/Manage/KeyWordAuthorSearch",
-                data: { keyword: request.term },
-                success: function (data) {
-                    const result = data.map(x => ({
-                        label: x.Title
-                    }));
-                    console.log("++++" + result)
-                    response(result);
-                }
-            })
-        },
-        select: function (event, ui) {
-            $("#appointmentMode_KeyWord").val(ui.item.label);
-            AppointmentModeBookDynamic();
-            return false;
-        }
-    })
-}
 
 function appointmentOnChange() {
     $("#appointmentMode_status").on("change", AppointmentModeBookDynamic);
@@ -382,7 +357,7 @@ function BooksAdded_Reset() {
     
     BooksAdded_Remove();
 }
-// 作者關鍵字
+// 作者關鍵字Autocomplete
 function AuthorAutocomplete() {
     $("#BooksAdded_authorName").autocomplete({
         minLength: 1,
@@ -401,7 +376,6 @@ function AuthorAutocomplete() {
             })
         },
         select: function (event, ui) {
-            
             console.log("++++" + ui.item.label);
             console.log(ui.item.value);
             $("#BooksAdded_authorName").val(ui.item.label);
@@ -415,14 +389,12 @@ function AuthorAutocomplete() {
 
 // #region 書籍管理
 function BooksQuery() {
-    console.log("進入書籍查詢.......");
     $("#content-panel").load("/Backend/Manage/BooksQuerys", () => {
-        console.log("回傳書籍查詢");
         EnteryBookQuery();
         $("#book_select").on("click", EnteryBookQuery);
         $("#book_ISBN").on("input", FormatISBM);
         $("#book_clear").on("click", () => { $("#BookForm")[0].reset() });
-
+        $("#book_KeyWord").on("click", BookQueryAutoComplete);
     })
 }
 // 書籍管理搜尋
@@ -439,7 +411,6 @@ function EnteryBookQuery() {
         $("#borrow_orderBy").on("change", EnteryBookQuery);
     });
 }
-
 
 // #endregion
 
@@ -513,6 +484,31 @@ function FormatISBM() {
     }
     $(this).val(val);
 }
+
+// 關鍵字
+function BookQueryAutoComplete() {
+    $(this).autocomplete({
+        minLength: 1,
+        source: (request, response) => {
+            $.ajax({
+                url: "/Backend/Manage/KeyWordAuthorSearch",
+                data: { keyword: request.term },
+                success: (data) => {
+                    const result = data.map(x => ({
+                        label: x.Label,
+                        value: x.Value
+                    }));
+                    response(result);
+                }
+            })
+        },
+        select: (event, ui) => {
+            $(this).val(ui.item.value);
+            return false;
+        }
+    })
+}
+
 // #endregion
 
 // #region 可用的HTML

@@ -12,8 +12,8 @@
                 <th scope="col" style="width:130px">借閱者ID</th>
                 <th scope="col" style="width:230px">借閱日期</th>
                 <th scope="col" style="width:150px">借閱期限</th>
-                <th scope="col" style="width:230px">還書日期</th>
-                <th scope="col" style="width:120px">借閱狀況</th>
+                <th scope="col" >還書日期</th>
+                <th scope="col" class="text-center" >借閱狀況</th>
                 <th scope="col" class="text-center">操作</th>
             </tr>
         </thead>
@@ -56,20 +56,20 @@
             {
                 <ul class="pagination">
                     <li class="page-item">
-                        @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
-                        else{ <a class="page-link" href="#" aria-label="Previous" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage) -1)"><span aria-hidden="true">&laquo;</span></a>}
+                        @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == 1){<a class="page-link disabled fs-3" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
+                        else{ <a class="page-link fs-3" href="#" aria-label="Previous" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage) -1)"><span aria-hidden="true">&laquo;</span></a>}
                     </li>
                     @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage); x++)
                     {
                         @if((Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1) {
-                            if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == x) {<li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li> }
-                            else {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }}                    
+                            if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == x) {<li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled fs-3" href="#" data-page="@x">@x</a></li> }
+                            else {<li class="page-item "><a class="page-link fs-3" href="#" data-page="@x">@x</a></li> }}                    
                     }
                     <li class="page-item">
                         @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == (Model.PageCounts?.FirstOrDefault()?.TotalPage))
-                        {<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
+                        {<a class="page-link disabled fs-3" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
                         else
-                        { <a class="page-link" href="#" aria-label="Next" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage) + 1)"><span aria-hidden="true">&raquo;</span></a>}
+                        { <a class="page-link fs-3" href="#" aria-label="Next" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage) + 1)"><span aria-hidden="true">&raquo;</span></a>}
                     </li>
                 </ul>
             }
