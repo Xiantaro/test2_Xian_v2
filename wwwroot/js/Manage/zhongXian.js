@@ -425,13 +425,14 @@ function BooksQuery() {
 // 書籍管理搜尋
 function EnteryBookQUery() {
     console.log("書籍查詢!!");
-
-    let formDate = $("#BookForm").serialize();
-    console.log("序列化後: " + formDate);
+    let page = $(this).data("page") || 1;
+    let formDate = $("#BookForm").serialize() + `&page=${page}`;
     $.post("/Backend/Manage/BooksQueryResult", formDate, (result) => {
+        console.log("回傳了..: " + result )
         $("#BookContent").html(result);
     });
 }
+
 
 
 // #endregion

@@ -310,23 +310,12 @@ namespace test2.Areas.Backend.Controllers
         }
 
         // 書籍管理查詢結果
-        public async Task<IActionResult> BooksQueryResult(BookQueryModel borrowForm)
+        public async Task<IActionResult> BooksQueryResult(BookQueryFormModel BookForm)
         {
             Debug.WriteLine("書籍管理進入....");
-            Debug.WriteLine($"輸入結果: {borrowForm.book_ISBN}");
-            Debug.WriteLine($"輸入結果: {borrowForm.book_KeyWord}");
-            Debug.WriteLine($"輸入結果: {borrowForm.book_initDate}");
-            Debug.WriteLine($"輸入結果: {borrowForm.book_lastDate}");
-            Debug.WriteLine($"輸入結果: {borrowForm.borrow_perPage}");
-            Debug.WriteLine($"輸入結果: {borrowForm.borrow_OrderDate}");
-            Debug.WriteLine($"輸入結果: {borrowForm.borrow_orderBy}");
 
-            // wait
             var BookQueryClass = new BookQueryResult(_context);
-            var QueryResult = BookQueryClass.BookQueryResultMethod(borrowForm);
-
-            Debug.WriteLine("準備送回去!!!" + QueryResult);
-            //var finalresult = await _context.Set<BookQueryDTO>().FromSqlInterpolated($"SELECT * FROM BookQueryResultView()").Take(5).ToListAsync();
+            var QueryResult = await BookQueryClass.BookQueryResultMethod(BookForm);
 
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml", QueryResult);
         }

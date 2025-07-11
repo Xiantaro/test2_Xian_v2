@@ -2,35 +2,53 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using test2.Models.ManagementModels.ZhongXian.Normal;
 
 namespace test2.Models.ManagementModels.ZhongXian.BookQuery
 {
     public class BookQueryResult
     {
         private readonly Test2Context _context;
-        public BookQueryResult(Test2Context contest)
+        public BookQueryResult(Test2Context context)
         {
-            _context = contest;
+            _context = context;
         }
 
-        public async Task<BookQueryViewModel> BookQueryResultMethod(BookQueryModel borrowForm)
+        public async Task<BookQueryViewModel> BookQueryResultMethod(BookQueryFormModel BookForm)
         {
             Debug.WriteLine("進入BookQueryResult類別處理.......");
-            //var resutl = new List<BookQueryDTO>();
+            var QueryResult = _context.Set<BookQueryDTO>().FromSqlInterpolated($"SELECT * FROM BookQueryResultView()").AsQueryable();
+
             bool BookEmptyFIlter()
             {
-                return borrowForm.book_ISBN == null &&
-                    borrowForm.book_KeyWord == null &&
-                    borrowForm.book_initDate == null &&
-                    borrowForm.book_lastDate == null;
+                return BookForm.book_ISBN == null &&
+                    BookForm.book_KeyWord == null &&
+                    BookForm.book_initDate == null &&
+                    BookForm.book_lastDate == null;
             }
+            if(BookEmptyFIlter()) { QueryResult = QueryResult.Where(x => DateTime.Now.AddYears(-2) <= x.publishDate && DateTime.Now <= x.publishDate); }
+            if (BookForm.book_ISBN != null) { QueryResult = QueryResult.Where(x => x.isbn.Contains(BookForm.book_ISBN)); }
+            if (BookForm.book_KeyWord != null) { QueryResult = QueryResult.Where(x => x.title.Contains(BookForm.book_KeyWord) || x.author.Contains(BookForm.book_KeyWord)); }
+            // 初始有 最終空
+            if (BookForm.book_initDate != null && BookForm.book_lastDate == null) { QueryResult = QueryResult.Where(x => x.publishDate >= BookForm.book_initDate && x.publishDate <= DateTime.Now); }
+            // 初始空 最終有
+            else if (BookForm.book_initDate == null && BookForm.book_lastDate != null) { QueryResult = QueryResult.Where(x => x.publishDate <= BookForm.book_lastDate && x.publishDate <= DateTime.Now.AddYears(-1)); }
+            // 初始小 最終大
+            else if (BookForm.book_initDate <= BookForm.book_lastDate) { QueryResult = QueryResult.Where(x => x.publishDate <= BookForm.book_lastDate && x.publishDate >= BookForm.book_initDate); }
+            // 初始大 最終小
+            else if (BookForm.book_initDate >= BookForm.book_lastDate) { QueryResult = QueryResult.Where(x => x.publishDate >= BookForm.book_lastDate && x.publishDate <= BookForm.book_initDate); }
 
-            var  resutl = await _context.Set<BookQueryDTO>().FromSqlInterpolated($"SELECT * FROM BookQueryResultView()").Take(5).ToListAsync();
-            var finalResult = new BookQueryViewModel()
+            var dataCount = await QueryResult.CountAsync();
+
+            var finalResult = await QueryResult.Skip((BookForm.borrow_perPage -1) * BookForm.borrow_perPage).Take( BookForm.borrow_perPage).ToListAsync();
+
+            var finalViewModel = new BookQueryViewModel()
             {
-                BookQueryModels = resutl
+                BookQueryDTOs = finalResult,
+                PageCounts = new List<PageCount>() { new PageCount { TotalCount = dataCount, CurrentPage = BookForm.page,perPage = BookForm.borrow_perPage} }
             };
-            return resutl;
+            Debug.WriteLine($"轉化結果: {finalResult}");
+            return finalViewModel;
         }
     }
 }

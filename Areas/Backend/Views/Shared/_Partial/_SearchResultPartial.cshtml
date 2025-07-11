@@ -1,6 +1,6 @@
-﻿@model List<test2.Models.ManagementModels.ZhongXian.BookQuery.BookQueryDTO>
+﻿@model test2.Models.ManagementModels.ZhongXian.BookQuery.BookQueryViewModel
 
-<div class="mt-1 fs-5">總共查詢到  筆紀錄 目前  至  目前頁數     /    </div>
+<div class="mt-1 fs-5">總共查詢到 @Model.PageCounts[0].TotalCount  筆紀錄 目前 @Model.PageCounts[0].FromIndex  至 @Model.PageCounts[0].ToIndex  目前頁數    @Model.PageCounts[0].CurrentPage / @Model.PageCounts[0].TotalPage    </div>
 <table class="table mt-1 table-hover">
     <thead>
         <tr class="fw-bold">
@@ -16,9 +16,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Count > 0)
+        @if (Model.BookQueryDTOs?.Count != 0)
         {
-            @foreach (var x in Model)
+            @foreach (var x in Model.BookQueryDTOs!)
             {
                 <tr>
                     <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 40px" value="@x.collectionId" title="@x.isbn">@x.isbn</td>
@@ -36,7 +36,9 @@
         }
             else
             {
-            <td class="text-bg-danger">無查詢到資料.....</td>
+    <tr>
+        <td class="text-bg-danger">無查詢到資料.....</td>
+    </tr>
             }
         </tbody>
     </table>
@@ -50,7 +52,7 @@
             </li>
             @for (int x = 1; x < 5; x++)
             {
-                <li class="page-item"><a class="page-link" href="#" data-page="">@x</a></li>
+                <li class="page-item"><a class="page-link" href="#" data-page="2">@x</a></li>
             }
             <li class="page-item">
                 <a class="page-link disabled" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>
