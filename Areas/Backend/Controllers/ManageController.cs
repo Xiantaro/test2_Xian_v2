@@ -325,13 +325,12 @@ namespace test2.Areas.Backend.Controllers
             var BookQueryClass = new BookQueryResult(_context);
             var QueryResult = BookQueryClass.BookQueryResultMethod(borrowForm);
 
-            Debug.WriteLine("準備送回去!!!");
+            Debug.WriteLine("準備送回去!!!" + QueryResult);
             //var finalresult = await _context.Set<BookQueryDTO>().FromSqlInterpolated($"SELECT * FROM BookQueryResultView()").Take(5).ToListAsync();
 
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml", QueryResult);
         }
         #endregion
-
         #region 通用Action
         // 傳送通知
         public async Task<IActionResult> Notification(int NotificationId, string NotificationType, string NotificationTextarea)

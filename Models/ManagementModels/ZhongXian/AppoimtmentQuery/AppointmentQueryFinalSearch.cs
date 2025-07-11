@@ -49,7 +49,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
             if (filter.appointment_orderDate == "desc") { result = result.OrderByDescending(x => x.appointmentDate); }
             else { result = result.OrderBy(x => x.appointmentDate); }
 
-         var totalCount = await result.CountAsync();
+            var totalCount = await result.CountAsync();
 
             var finalResult = await result.Skip((filter.page  - 1) * filter.appointment_perPage ).Take(filter.appointment_perPage).ToListAsync();
             
