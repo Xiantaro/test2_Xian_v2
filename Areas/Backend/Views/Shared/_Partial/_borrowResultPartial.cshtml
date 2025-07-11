@@ -7,7 +7,7 @@
     <div class="mt-1 fs-5">@($"總共 {@Model.TotalCount} 筆紀錄 目前:{@Model.FromIndex} 至 {@Model.ToIndex}   目前頁數:   {@Model.CurrentPage} / {@Model.TotalPage}")</div>
     <table class="table mt-1 table-hover">
         <thead>
-            <tr>
+            <tr class="fs-4 fw-bold">
                 <th scope="col">借閱編號</th>
                 <th scope="col">書籍編號</th>
                 <th scope="col">借閱書籍</th>
@@ -32,7 +32,7 @@
                     <td class="align-middle">@x.returnDate </td>
                     @if (@x.borrowStatus == "借閱中")
                     {
-                        <td class='text-bg-warning align-middle fw-bold'>@x.borrowStatus</td>
+                        <td class='text-bg-warning align-middle fw-bold cent'>@x.borrowStatus</td>
                         <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                         ;
                     }
