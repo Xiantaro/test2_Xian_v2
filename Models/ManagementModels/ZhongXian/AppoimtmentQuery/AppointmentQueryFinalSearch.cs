@@ -29,7 +29,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
             var result =   _context.Reservations.Include(x => x.Book).Include(y => y.Collection).Include(z => z.ReservationStatus).Select(final => new AppointmentQueryResultDTO()
             {
                 appointmentId = final.ReservationId,
-                bookCode = final.Book.BookCode,
+                bookCode = final.Book!.BookCode,
                 title = final.Collection.Title,
                 cid = final.CId,
                 appointmentDate = final.ReservationDate,
@@ -49,7 +49,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
             if (filter.appointment_orderDate == "desc") { result = result.OrderByDescending(x => x.appointmentDate); }
             else { result = result.OrderBy(x => x.appointmentDate); }
 
-                var totalCount = await result.CountAsync();
+         var totalCount = await result.CountAsync();
 
             var finalResult = await result.Skip((filter.page  - 1) * filter.appointment_perPage ).Take(filter.appointment_perPage).ToListAsync();
             

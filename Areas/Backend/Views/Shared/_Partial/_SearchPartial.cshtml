@@ -1,4 +1,8 @@
-﻿
+﻿@{
+    string MaxDate = DateTime.Now.ToString("yyyy-MM-dd");
+}
+
+
 <!-- 主內容 START -->
 <div class="row mt-1">
     <div class="col">
@@ -10,19 +14,20 @@
             <div class="d-flex flex-wrap gap-3">
                 <div>
                     <label for="book_ISBN" class="form-label mb-0 fs-3 fw-bold">ISBN：</label>
-                    <input id="book_ISBN" name="book_ISBN" type="text" class="form-control form-control fs-4" />
+                    <input id="book_ISBN" name="book_ISBN" type="text" class="form-control form-control fs-4" style="width:250px" maxlength="17" />
                 </div>
                 <div>
                     <label for="book_KeyWord" class="form-label mb-0 fs-3 fw-bold">關鍵字：</label>
-                    <input id="book_KeyWord" name="book_KeyWord" type="text" class="form-control form-control-sm fs-4"/>
+                    <input id="book_KeyWord" name="book_KeyWord" type="text" class="form-control form-control-sm fs-4"  style="width:250px"/>
                 </div>
                 <div>
-                    <label for="book_state" class="form-label mb-0 fs-3 fw-bold">書本狀況：</label>
-                    <select id="book_state" name="book_state" class="form-select form-select-sm fs-4">
-                        <option value="ALL">全部</option>
-                    </select>
+                    <label for="book_initDate" class="form-label mb-0 fs-3 fw-bold">出版日期範圍</label>
+                    <input id="book_initDate" name="book_initDate" type="date" class="form-control form-control-sm fs-4"  max="@MaxDate"/>
                 </div>
-
+                <div>
+                    <label for="book_lastDate" class="form-label mb-0 fs-3 fw-bold">至</label>
+                    <input id="book_lastDate" name="book_lastDate" class="form-control form-control-sm fs-4" type="date" max="@MaxDate"/>
+                </div>
                 <div class="align-self-end">
                     <button id="book_select" type="button" class="btn btn-primary btn-lg">查詢</button>
                 </div>
@@ -35,9 +40,9 @@
                 <div>
                     <label for="borrow_perPage" class="form-label mb-0 fs-3 fw-bold">顯示數量：</label>
                     <select id="borrow_perPage" name="borrow_perPage" class="form-select form-select-sm fs-4">
+                        <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
-                        <option value="30">30</option>
                     </select>
                 </div>
                 <!-- 排序依據 -->
@@ -45,7 +50,6 @@
                     <label for="borrow_OrderDate" class="form-label mb-0 fs-3 fw-bold">排序依據：</label>
                     <select id="borrow_OrderDate" name="borrow_OrderDate" class="form-select form-select-sm fs-4">
                         <option value="PubDate">出版日期</option>
-                        
                     </select>
                 </div>
                 <!-- 排序方向 -->

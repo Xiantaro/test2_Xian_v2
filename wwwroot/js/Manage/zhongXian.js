@@ -1,5 +1,4 @@
-﻿
-// #region 載入parital => 預約查詢、借閱查詢、借書模式、還書模式、預約模式
+﻿// #region 載入parital => 預約查詢、借閱查詢、借書模式、還書模式、預約模式
 $(() => {
     console.log("已綁定事件");
     $("#AppointmentQuery").on("click", AppointmentQueryModule)
@@ -348,15 +347,7 @@ function BooksAdded_Remove() {
     $("#BookAdd_Remove").prop("disabled", true);
     $("#BookAdd_InputImg").val("");
 }
-// ISBN Fomart
-function FormatISBM() {
-    console.log("ISBM...輸入...")
-    let val = $(this).val().replace(/[^0-9]/g, "");
-    if (val.length >= 13) {
-        val = `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 10)}-${val.slice(10, 11)}-${val.slice(11, 12)}`;
-    }
-    $(this).val(val);
-}
+
 // 確定登入書籍
 function BooksAdded_BtnSend() {
     if ($("#BooksAdded_ISBM").val().length < 13) { alert("請輸入正確的13碼 ISBM"); return; }
@@ -422,18 +413,22 @@ function AuthorAutocomplete() {
 
 // #endregion
 
-// #region 書籍查詢
+// #region 書籍管理
 function BooksQuery() {
     console.log("進入書籍查詢.......");
     $("#content-panel").load("/Backend/Manage/BooksQuerys", () => {
         console.log("回傳書籍查詢");
-        $("#book_select").on("click", EnteryBookQUery)
+        $("#book_select").on("click", EnteryBookQUery);
+        $("#book_ISBN").on("input", FormatISBM);
     })
 }
-
+// 書籍管理搜尋
 function EnteryBookQUery() {
     console.log("書籍查詢!!");
-    $.post("/Backend/Manage/BooksQueryResult", (result) => {
+
+    let formDate = $("#BookForm").serialize();
+    console.log("序列化後: " + formDate);
+    $.post("/Backend/Manage/BooksQueryResult", formDate, (result) => {
         $("#BookContent").html(result);
     });
 }
@@ -445,27 +440,17 @@ function EnteryBookQUery() {
 let TempBookName;
 let DueDate;
 
-
 // 按鈕清除 
 function CancelBtn() {
     console.log("點擊清除按鈕")
     $(this).closest(".input-group").find(".form-control").val("");
 }
-// ++++DROP ++++通知&取消預約按鈕
-//function appointment_cancelEvent() {
-//    let appointmentid = $(this).closest("tr").find(".appointmentid").data("appointmentid");
-//    $.post("/Manage/AppointmentCancel", { appointmentid: appointmentid }, (result) => {
-//        if (result == "") { alert(`成功取消預約，預約編號: ${appointmentid}`) }
-//        else { alert("預約取消失敗"); }
-//        appointment_queryEvent();
-//    })
-//    console.log("取消按鈕測試: " + appointmentid);
-//}
 
 // 清空搜尋資料
 function appointment_clearEvent() {
     $("#appointmenSearch")[0].reset();
 }
+
 // 點擊通知
 function NotificationBtn() {
     $("#NotificationType").on("change", ChageNotificationType);
@@ -514,7 +499,15 @@ function NotificationClose() {
     $("#NotificationTextarea").val("");
     $("#NotificationType").val("UpcomingExpirationNotice");
 }
-
+// ISBN Fomart
+function FormatISBM() {
+    console.log("ISBM...輸入...")
+    let val = $(this).val().replace(/[^0-9]/g, "");
+    if (val.length > 12) {
+        val = `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 10)}-${val.slice(10, 11)}-${val.slice(11, 12)}`;
+    }
+    $(this).val(val);
+}
 // #endregion
 
 // #region 可用的HTML

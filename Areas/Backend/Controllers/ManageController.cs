@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using test2.Models;
 using test2.Models.ManagementModels.ZhongXian.Appoimtment;
 using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
+using test2.Models.ManagementModels.ZhongXian.BookQuery;
 using test2.Models.ManagementModels.ZhongXian.Borrow;
 using test2.Models.ManagementModels.ZhongXian.BorrowQuery;
 using test2.Models.ManagementModels.ZhongXian.Normal;
@@ -309,9 +310,25 @@ namespace test2.Areas.Backend.Controllers
         }
 
         // 書籍管理查詢結果
-        public async Task<IActionResult> BooksQueryResult()
+        public async Task<IActionResult> BooksQueryResult(BookQueryModel borrowForm)
         {
-            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml");
+            Debug.WriteLine("書籍管理進入....");
+            Debug.WriteLine($"輸入結果: {borrowForm.book_ISBN}");
+            Debug.WriteLine($"輸入結果: {borrowForm.book_KeyWord}");
+            Debug.WriteLine($"輸入結果: {borrowForm.book_initDate}");
+            Debug.WriteLine($"輸入結果: {borrowForm.book_lastDate}");
+            Debug.WriteLine($"輸入結果: {borrowForm.borrow_perPage}");
+            Debug.WriteLine($"輸入結果: {borrowForm.borrow_OrderDate}");
+            Debug.WriteLine($"輸入結果: {borrowForm.borrow_orderBy}");
+
+            // wait
+            var BookQueryClass = new BookQueryResult(_context);
+            var QueryResult = BookQueryClass.BookQueryResultMethod(borrowForm);
+
+            Debug.WriteLine("準備送回去!!!");
+            //var finalresult = await _context.Set<BookQueryDTO>().FromSqlInterpolated($"SELECT * FROM BookQueryResultView()").Take(5).ToListAsync();
+
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml", QueryResult);
         }
         #endregion
 

@@ -1,31 +1,47 @@
-﻿
+﻿@model List<test2.Models.ManagementModels.ZhongXian.BookQuery.BookQueryDTO>
+
+
+
 <div class="mt-1 fs-5">總共查詢到  筆紀錄 目前  至  目前頁數     /    </div>
 <table class="table mt-1 table-hover">
     <thead>
-        <tr>
-            <th scope="col">藏書編號</th>
+        <tr class="fw-bold">
+            <th scope="col">ISBN</th>
             <th scope="col">封面</th>
             <th scope="col">書籍名稱</th>
             <th scope="col">作者</th>
             <th scope="col">出版社</th>
+            <th scope="col">出版年份</th>
             <th scope="col">書籍簡介</th>
             <th scope="col">藏書量</th>
             <th scope="col" class="text-center">操作</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 150px">藏書編號</td>
-            <td class="align-middle">封面</td>
-            <td class="align-middle text-truncate booktitle" style="max-width: 150px" title="">書籍名稱</td>
-            <td class="align-middle appointmentcid" data-cid="">作者</td>
-            <td class="align-middle">出版社</td>
-            <td class="align-middle">書籍簡介</td>
-            <td class="align-middle">藏書量</td>
-            <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn" data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">修改</button></td>
-        </tr>
-    </tbody>
-</table>
+        @if (Model.Count > 0)
+        {
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 40px" value="@x.collectionId" title="@x.isbn">@x.isbn</td>
+                    <td class="align-middle" style="width:150px"><img src="data:image/*;base64, @(Convert.ToBase64String(x.collectionImg!))" style="width:150px; height:180px" alt="無圖片" /></td>
+                    <td class="align-middle text-truncate booktitle" style="max-width: 150px" title="@x.title">@x.title</td>
+                    <td class="align-middle appointmentcid text-truncate" data-cid="" title="@x.author">@x.author</td>
+                    <td class="align-middle text-truncate" title="@x.publisher">@x.publisher</td>
+                    <td class="align-middle">@x.publishDate.ToString("yyyy/MM/dd")</td>
+                    <td class="align-middle text-truncate" style="max-width:200px" title="@x.collectionDesc"><pre class="bg-light border rounded p-2" style="white-space: pre-wrap; max-height: 150px; ">@x.collectionDesc</pre></td>
+                    <td class="align-middle">@x.NumberOfBook</td>
+                    <td class="align-middle align-items-center text-center"><button class="btn btn-danger">修改</button><button class="btn btn-success">新增</button></td>
+                </tr>
+            }
+
+        }
+            else
+            {
+            <td class="text-bg-danger">無查詢到資料.....</td>
+            }
+        </tbody>
+    </table>
 
 <div class="container d-flex justify-content-center">
     <nav aria-label="Page navigation example">
