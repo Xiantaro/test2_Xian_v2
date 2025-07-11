@@ -301,19 +301,19 @@ namespace test2.Areas.Backend.Controllers
         }
         #endregion
 
-        #region 書籍查詢
+        #region 書籍管理
         public IActionResult BooksQuerys()
         {
             Debug.WriteLine("成功進入書籍查詢");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchPartial.cshtml");
         }
+
+        // 書籍管理查詢結果
+        public async Task<IActionResult> BooksQueryResult()
+        {
+            return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml");
+        }
         #endregion
-
-        // 顯示結果
-
-        //public async Task<IActionResult> BooksQueryResult()
-        //{
-        //}
 
         #region 通用Action
         // 傳送通知

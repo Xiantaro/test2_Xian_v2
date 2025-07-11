@@ -433,6 +433,9 @@ function BooksQuery() {
 
 function EnteryBookQUery() {
     console.log("書籍查詢!!");
+    $.post("/Backend/Manage/BooksQueryResult", (result) => {
+        $("#BookContent").html(result);
+    });
 }
 
 

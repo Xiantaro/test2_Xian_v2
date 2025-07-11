@@ -1,7 +1,7 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery.AppointmentQueryViewModel
 @if (Model.AppointmentQueryResultDTOs?.Count != 0)
 {
-    <div class="mt-1 fs-5">總共查詢到 @Model.TotalCount 筆紀錄 目前 @Model.FromIndex 至 @Model.ToIndex 目前頁數    @Model.CurrentPage / @Model.TotalPage   </div>
+    <div class="mt-1 fs-4 fw-light">總共查詢到: &nbsp<u>@Model.TotalCount</u> 筆預約資料  &nbsp 目前 @Model.FromIndex 至 @Model.ToIndex 筆 &nbsp 目前頁數: @Model.CurrentPage / @Model.TotalPage</div>
     <table class="table mt-1 table-hover">
         <thead>
             <tr>
@@ -16,7 +16,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach (var ap in Model.AppointmentQueryResultDTOs!)
             {
                 <tr>
@@ -86,44 +85,44 @@
 else {<div class="alert alert-danger fs-1 mt-5">查無資料</div> }
 
 
-    <div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <!-- 置中 -->
-            <div class="modal-content border">
-                <div class="modal-header">
-                    <h5 class="modal-title">取消預約&通知</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="NotificationFom">
-                        <div class="mb-3">
-                            <label for="NotificationAppointmentId" class="form-label">預約編號:</label>
-                            <input type="number" class="form-control" id="NotificationAppointmentId" name="NotificationAppointmentId" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="NotificationUser" class="form-label">借閱者ID:</label>
-                            <input type="number" class="form-control" id="NotificationUser" name="NotificationUser" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="NotificationType" class="form-label">通知類型:</label>
-                            <select class="form-select" id="NotificationType">
-                                <option value="CancelNotification" selected>取消預約通知</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="NotificationTextarea" class="form-label">內容</label>
-                            <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea" style="height:200px"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer d-flex justify-content-between">
-                    <div class="d-flex flex-wrap" gap-3>
-                        <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+<div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- 置中 -->
+        <div class="modal-content border">
+            <div class="modal-header">
+                <h5 class="modal-title">取消預約&通知</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="CancelBox"></button>
+            </div>
+            <div class="modal-body">
+                <form id="NotificationFom">
+                    <div class="mb-3">
+                        <label for="NotificationAppointmentId" class="form-label">預約編號:</label>
+                        <input type="number" class="form-control" id="NotificationAppointmentId" name="NotificationAppointmentId" readonly>
                     </div>
-                    <div class="d-flex flex-wrap" gap-3>
-                        <button type="button" class="btn btn-danger mx-3" id="NotificationClear">清除</button>
+                    <div class="mb-3">
+                        <label for="NotificationUser" class="form-label">借閱者ID:</label>
+                        <input type="number" class="form-control" id="NotificationUser" name="NotificationUser" readonly>
                     </div>
+                    <div class="mb-3">
+                        <label for="NotificationType" class="form-label">通知類型:</label>
+                        <select class="form-select" id="NotificationType">
+                            <option value="CancelNotification" selected>取消預約通知</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NotificationTextarea" class="form-label">內容</label>
+                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea" style="height:200px"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div class="d-flex flex-wrap" gap-3>
+                    <button type="button" class="btn btn-success" id="NotificationSend">送出</button>
+                </div>
+                <div class="d-flex flex-wrap" gap-3>
+                    <button type="button" class="btn btn-danger mx-3" id="NotificationClear">清除</button>
                 </div>
             </div>
         </div>
     </div>
+</div>

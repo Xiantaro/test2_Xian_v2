@@ -1,0 +1,49 @@
+﻿
+<div class="mt-1 fs-5">總共查詢到  筆紀錄 目前  至  目前頁數     /    </div>
+<table class="table mt-1 table-hover">
+    <thead>
+        <tr>
+            <th scope="col">藏書編號</th>
+            <th scope="col">封面</th>
+            <th scope="col">書籍名稱</th>
+            <th scope="col">作者</th>
+            <th scope="col">出版社</th>
+            <th scope="col">書籍簡介</th>
+            <th scope="col">藏書量</th>
+            <th scope="col" class="text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 150px">藏書編號</td>
+            <td class="align-middle">封面</td>
+            <td class="align-middle text-truncate booktitle" style="max-width: 150px" title="">書籍名稱</td>
+            <td class="align-middle appointmentcid" data-cid="">作者</td>
+            <td class="align-middle">出版社</td>
+            <td class="align-middle">書籍簡介</td>
+            <td class="align-middle">藏書量</td>
+            <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn" data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">修改</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="container d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link disabled" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>
+            </li>
+            @for (int x = 1; x < 5; x++)
+            {
+                <li class="page-item"><a class="page-link" href="#" data-page="">@x</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link disabled" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>
+            </li>
+        </ul>
+
+    </nav>
+</div>
+
+<div class="alert alert-danger fs-1 mt-5">查無資料</div>
