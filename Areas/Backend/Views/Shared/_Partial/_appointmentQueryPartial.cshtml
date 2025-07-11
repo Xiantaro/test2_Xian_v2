@@ -10,7 +10,7 @@
             <div class="d-flex flex-wrap gap-3">
                 <div>
                     <label class="form-label mb-0 fs-4 fw-bold">預約編號：</label>
-                    <input name="appointment_reservationNum" type="number" class="form-control form-control-sm fs-5 fw-bold" placeholder="All"  style="width:150px" />
+                    <input name="appointment_reservationNum" type="number" class="form-control form-control-sm fs-5 fw-bold" placeholder="All"  style="width:100px" />
                 </div>
                 <div>
                     <label class="form-label mb-0 fs-4 fw-bold">書籍編號：</label>
@@ -30,7 +30,7 @@
                 </div>
                 <div>
                     <label for="appointment_state" class="form-label mb-0 fs-4 fw-bold">目前狀態：</label>
-                    <select name="appointment_state" class="form-select form-select-sm fs-5 fw-bold">
+                    <select name="appointment_state" class="form-select form-select-sm fs-5 fw-bold" style="width:90px">
                         <option value="ALL">全部</option>
                         <option value="已預約">已預約</option>
                         <option value="已取書">已取書</option>
@@ -38,24 +38,24 @@
                         <option value="取消預約">取消預約</option>
                     </select>
                 </div>
-                <div class="d-flex align-items-center" >
+                <div class="d-flex align-items-end" >
                     <button id="appointment_select" type="button" class="btn btn-primary btn-sm btn-lg fs-3">查詢</button>
                 </div>
-                <div  class="d-flex align-items-center">
-                    <button id="appointment_clear" type="button" class="btn-lg btn-close btn-light"></button>
+                <div  class="d-flex align-items-end">
+                    <button id="appointment_clear" type="button" class="btn btn-secondary btn-sm btn-lg fs-3" >清除</button>
                 </div>
             </div>
             <!-- 排序兩兄弟 START-->
-            <div class="d-flex flex-column-reverse bd-highlight">
+            <div class="d-flex flex-row bd-highlight">
                 <!-- 排序方向 -->
-                <div class="d-flex justify-content-between bd-highlight mb-3">
-                    <label for="appointment_orderDate" class="form-label mb-0 fs-4 fw-bold">預約日期排序：</label>
+                <div >
+                    <label for="appointment_orderDate" class="form-label mb-0 fs-4 fw-bold">預約日期：</label>
                     <select id="appointment_orderDate" name="appointment_orderDate" class="form-select form-select-sm fs-5 fw-bold" style="width:90px">
                         <option value="desc">遞減（新到舊）</option>
                         <option value="asc">遞增（舊到新）</option>
                     </select>
                 </div>
-                <div class="d-flex justify-content-between bd-highlight mb-3">
+                <div>
                     <label for="appointment_perPage" class="form-label mb-0 fs-4 fw-bold">每頁筆數：</label>
                     <select id="appointment_perPage" name="appointment_perPage" valus="10" class="form-select form-select-sm fs-5 fw-bold" style="width:80px">
                         <option value="10">10</option>

@@ -466,7 +466,6 @@ function NotificationBtn() {
     ChageNotificationType();
     let recipientId = $(this).closest("tr").find(".NotificationUserid").text();
     let recipientName = $(this).closest("tr").find(".NotificationUserName").text();
-
     let typeinput = $("#NotificationType").val();
     $("#NotificationInput").val(typeinput);
     $("#NotificationId").val(recipientId);

@@ -1,7 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Diagnostics;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery;
+using test2.Models.ManagementModels.ZhongXian.Normal;
 
 namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
 {
@@ -14,8 +15,6 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
         }
         public async Task<AppointmentQueryViewModel> AppointmentQuerySearch(AppoimtmentQueryFilter filter)
         {
-            Debug.WriteLine("進入預約管理..............................");
-
             bool AppointmentEmptyFilter()
             {
                 return filter.appointment_reservationId == null &&
@@ -24,8 +23,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
                     filter.appointment_initDate == null &&
                     filter.appointment_lastDate == null &&
                     filter.appointment_state == "ALL";
-            }
-            
+            }  
             var result =   _context.Reservations.Include(x => x.Book).Include(y => y.Collection).Include(z => z.ReservationStatus).Select(final => new AppointmentQueryResultDTO()
             {
                 appointmentId = final.ReservationId,
@@ -48,17 +46,12 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
             }
             if (filter.appointment_orderDate == "desc") { result = result.OrderByDescending(x => x.appointmentDate); }
             else { result = result.OrderBy(x => x.appointmentDate); }
-
             var totalCount = await result.CountAsync();
-
             var finalResult = await result.Skip((filter.page  - 1) * filter.appointment_perPage ).Take(filter.appointment_perPage).ToListAsync();
-            
             var AppointmentViewModels = new AppointmentQueryViewModel()
             {
                 AppointmentQueryResultDTOs = finalResult,
-                TotalCount = totalCount,
-                CurrentPage = filter.page,
-                perPage = filter.appointment_perPage
+                PageCounts = new List<PageCount>(){ new PageCount(){TotalCount = totalCount,CurrentPage = filter.page, perPage = filter.appointment_perPage}}
             };
             Debug.WriteLine("準備回傳.......預約查詢結果");
             return AppointmentViewModels;

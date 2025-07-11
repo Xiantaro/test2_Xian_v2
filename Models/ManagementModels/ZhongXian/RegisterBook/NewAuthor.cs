@@ -14,10 +14,8 @@ namespace test2.Models.ManagementModels.ZhongXian.RegisterBook
         // 建立新作者
         public async Task<int> CreateAuthor(int AuthorId, string AuthorName)
         {
-            Debug.WriteLine($"++++++++++++++{AuthorId} ++++ {AuthorName} ");
             var authoTest = await _context.Authors.FirstOrDefaultAsync(x => x.AuthorId == AuthorId && x.Author1 == AuthorName);
             if (authoTest != null) { return AuthorId; }
-
             var newAuthor = new Author { Author1 = AuthorName };
             _context.Authors.Add(newAuthor);
             _context.SaveChanges();

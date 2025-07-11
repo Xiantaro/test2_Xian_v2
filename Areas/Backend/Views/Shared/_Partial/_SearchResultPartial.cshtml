@@ -2,7 +2,7 @@
 
 @if (Model.BookQueryDTOs?.Count != 0)
 {
-    <div class="mt-1 fs-4 fw-medium">總共查詢到  <u>@Model.PageCounts[0].TotalCount</u>  &nbsp筆紀錄 目前 @Model.PageCounts[0].FromIndex  至 @Model.PageCounts[0].ToIndex 筆 &nbsp  目前頁數    @Model.PageCounts[0].CurrentPage / @Model.PageCounts[0].TotalPage    </div>
+    <div class="mt-1 fs-4 fw-medium">總共查詢到  <u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u>  &nbsp筆紀錄 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0)  至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0 )筆 &nbsp  目前頁數    @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)    </div>
     <table class="table mt-1 table-hover">
         <thead>
             <tr class="fw-bold fs-4">
@@ -18,7 +18,6 @@
             </tr>
         </thead>
         <tbody>
-
             @foreach (var x in Model.BookQueryDTOs!)
             {
                 <tr class="fs-4">
@@ -37,18 +36,18 @@
     </table>
     <div class="container d-flex justify-content-center">
         <nav aria-label="Page navigation example">
-            @if (Model.PageCounts[0].TotalPage != 1)
+            @if ( (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
             {
                 <ul class="pagination">
                     <li class="page-item">
-                        @if (Model.PageCounts[0].CurrentPage == 1)
+                        @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == 1)
                         {<a class="page-link disabled" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
                         else
-                        {<a class="page-link" href="#" aria-label="Previous" data-page="@(Model.PageCounts[0].CurrentPage)"><span aria-hidden="true">&laquo;</span></a>}
+                        {<a class="page-link" href="#" aria-label="Previous" data-page="@(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0)"><span aria-hidden="true">&laquo;</span></a>}
                     </li>
-                    @for (int x = 1; x <= Model.PageCounts[0].TotalPage; x++)
+                    @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0); x++)
                     {
-                        if (Model.PageCounts[0].CurrentPage == x)
+                        if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x)
                         {
                             <li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>
                         }
@@ -58,10 +57,10 @@
                         }
                     }
                     <li class="page-item">
-                        @if (Model.PageCounts[0].CurrentPage == Model.PageCounts[0].TotalPage)
+                        @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0))
                         {<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
                         else
-                        { <a class="page-link" href="#" aria-label="Next" data-page="@(@Model.PageCounts[0].CurrentPage + 1)"><span aria-hidden="true">&raquo;</span></a>}
+                        { <a class="page-link" href="#" aria-label="Next" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) + 1)"><span aria-hidden="true">&raquo;</span></a>}
                     </li>
                 </ul>
             }

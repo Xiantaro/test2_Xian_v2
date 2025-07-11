@@ -1,21 +1,19 @@
-﻿@*以下正式版*@
-@model test2.Models.ManagementModels.ZhongXian.BorrowQuery.BorrowQueryViewModel
-
+﻿@model test2.Models.ManagementModels.ZhongXian.BorrowQuery.BorrowQueryViewModel
 
 @if (Model.BorrowQueryDTOs?.Count != 0)
 {
-    <div class="mt-1 fs-5">@($"總共 {@Model.TotalCount} 筆紀錄 目前:{@Model.FromIndex} 至 {@Model.ToIndex}   目前頁數:   {@Model.CurrentPage} / {@Model.TotalPage}")</div>
+    <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>
     <table class="table mt-1 table-hover">
         <thead>
             <tr class="fs-4 fw-bold">
-                <th scope="col">借閱編號</th>
-                <th scope="col">書籍編號</th>
-                <th scope="col">借閱書籍</th>
-                <th scope="col">借閱人編號</th>
-                <th scope="col">借閱日期</th>
-                <th scope="col">借閱期限</th>
-                <th scope="col">還書日期</th>
-                <th scope="col">借閱狀況</th>
+                <th scope="col" style="width:130px">借閱編號</th>
+                <th scope="col" style="width:230px">書籍編號</th>
+                <th scope="col" style="width:300px">借閱書籍</th>
+                <th scope="col" style="width:130px">借閱者ID</th>
+                <th scope="col" style="width:230px">借閱日期</th>
+                <th scope="col" style="width:150px">借閱期限</th>
+                <th scope="col" style="width:230px">還書日期</th>
+                <th scope="col" style="width:120px">借閱狀況</th>
                 <th scope="col" class="text-center">操作</th>
             </tr>
         </thead>
@@ -28,23 +26,23 @@
                     <td class="align-middle text-truncate BorrowBookTitle" style="max-width:200px" title="@x.title">@x.title</td>
                     <td class="align-middle text-truncate NotificationUserid" style="max-width:100px" title="@x.cId">@x.cId</td>
                     <td class="align-middle">@x.borrowDate</td>
-                    <td class="align-middle BorrowDueDate">@x.dueDateB</td>
+                    <td class="align-middle BorrowDueDate">@(x.dueDateB.HasValue ? x.dueDateB.Value.ToString("yyyy-MM-dd") : "-")</td>
                     <td class="align-middle">@x.returnDate </td>
                     @if (@x.borrowStatus == "借閱中")
                     {
-                        <td class='text-bg-warning align-middle fw-bold cent'>@x.borrowStatus</td>
-                        <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+                        <td class='text-bg-warning align-middle fw-bold cent text-center fs-3'>@x.borrowStatus</td>
+                        <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn fs-3" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                         ;
                     }
                     @if (@x.borrowStatus == "已歸還")
                     {
-                        <td class='text-bg-success align-middle fw-bold'>@x.borrowStatus</td>
-                        <td class="align-middle align-items-center text-center "><button class="btn btn-secondary mx-3 NotificationBtn disabled" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+                        <td class='text-bg-success align-middle fw-bold text-center fs-3'>@x.borrowStatus</td>
+                        <td class="align-middle align-items-center text-center "><button class="btn btn-secondary mx-3 NotificationBtn disabled fs-3" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                     }
                     @if (@x.borrowStatus == "逾期")
                     {
-                        <td class='text-bg-danger align-middle fw-bold'>@x.borrowStatus</td>
-                        <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
+                        <td class='text-bg-danger align-middle fw-bold text-center fs-3'>@x.borrowStatus</td>
+                        <td class="align-middle align-items-center text-center "><button class="btn btn-warning mx-3 NotificationBtn fs-3" data-bs-toggle="modal" data-bs-target="#notificationModal" data-type="notification">通知</button></td>
                         ;
                     }
                 </tr>
@@ -54,24 +52,24 @@
     </table>
     <div class="container d-flex justify-content-center">
         <nav aria-label="Page navigation example">
-            @if (Model.TotalPage != 1)
+            @if ((Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1)
             {
                 <ul class="pagination">
                     <li class="page-item">
-                        @if (@Model.CurrentPage == 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
-                        else{ <a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage -1)"><span aria-hidden="true">&laquo;</span></a>}
+                        @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page=""><span aria-hidden="true">&laquo;</span></a>}
+                        else{ <a class="page-link" href="#" aria-label="Previous" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage) -1)"><span aria-hidden="true">&laquo;</span></a>}
                     </li>
-                    @for (int x = 1; x <= @Model.TotalPage; x++)
+                    @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage); x++)
                     {
-                        @if(@Model.TotalPage != 1) {
-                            if (Model.CurrentPage == x) {<li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li> }
+                        @if((Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1) {
+                            if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == x) {<li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li> }
                             else {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }}                    
                     }
                     <li class="page-item">
-                        @if (@Model.CurrentPage == @Model.TotalPage)
+                        @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage) == (Model.PageCounts?.FirstOrDefault()?.TotalPage))
                         {<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
                         else
-                        { <a class="page-link" href="#" aria-label="Next" data-page="@(@Model.CurrentPage + 1)"><span aria-hidden="true">&raquo;</span></a>}
+                        { <a class="page-link" href="#" aria-label="Next" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage) + 1)"><span aria-hidden="true">&raquo;</span></a>}
                     </li>
                 </ul>
             }
@@ -110,7 +108,7 @@ else
                     </div>
                     <div class="mb-3">
                         <label for="NotificationTextarea" class="form-label">內容</label>
-                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea"></textarea>
+                        <textarea class="form-control" id="NotificationTextarea" rows="4" name="NotificationTextarea" style="height:160px"></textarea>
                     </div>
                 </form>
             </div>
