@@ -29,10 +29,10 @@
                     <input id="book_lastDate" name="book_lastDate" class="form-control form-control-sm fs-4" type="date" max="@MaxDate"/>
                 </div>
                 <div class="align-self-end">
-                    <button id="book_select" type="button" class="btn btn-primary btn-lg">查詢</button>
+                    <button id="book_select" type="button" class="btn btn-primary btn-lg fs-3">查詢</button>
                 </div>
                 <div class="align-self-end">
-                    <button id="book_clear" type="button" class="btn-lg btn-close btn-light fs-4"></button>
+                    <button id="book_clear" type="button" class="btn btn-lg btn-close btn-light fs-2 "></button>
                 </div>
             </div>
             <!-- 排序兄弟 START-->
@@ -40,9 +40,9 @@
                 <div>
                     <label for="borrow_perPage" class="form-label mb-0 fs-3 fw-bold">顯示數量：</label>
                     <select id="borrow_perPage" name="borrow_perPage" class="form-select form-select-sm fs-4">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
+                        <option value="15">15</option>
+                        <option value="25">25</option>
+                        <option value="40">40</option>
                     </select>
                 </div>
                 <!-- 排序依據 -->
@@ -63,9 +63,14 @@
             </div>
             <!-- 排序兄弟 END -->
         </form>
+
+
+
         <div id="BookContent" class="mt-2">
-            <h1>請輸入</h1>
+            <h1 class="text-danger mt-5">      加載中....</h1>
         </div>
+
+
         <!-- 借閱狀況 END -->
     </div>
     <!-- 右邊的功能 END -->

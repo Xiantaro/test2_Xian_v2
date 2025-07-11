@@ -418,21 +418,27 @@ function BooksQuery() {
     console.log("進入書籍查詢.......");
     $("#content-panel").load("/Backend/Manage/BooksQuerys", () => {
         console.log("回傳書籍查詢");
-        $("#book_select").on("click", EnteryBookQUery);
+        EnteryBookQuery();
+        $("#book_select").on("click", EnteryBookQuery);
         $("#book_ISBN").on("input", FormatISBM);
+        $("#book_clear").on("click", () => { $("#BookForm")[0].reset() });
+
     })
 }
 // 書籍管理搜尋
-function EnteryBookQUery() {
-    console.log("書籍查詢!!");
+function EnteryBookQuery() {
+    $("#BookContent").html("");
+    $("#BookContent").html(QueryWait);
     let page = $(this).data("page") || 1;
+    console.log(page)
     let formDate = $("#BookForm").serialize() + `&page=${page}`;
     $.post("/Backend/Manage/BooksQueryResult", formDate, (result) => {
-        console.log("回傳了..: " + result )
         $("#BookContent").html(result);
+        $(".page-link").on("click", EnteryBookQuery);
+        $("#borrow_perPage").on("change", EnteryBookQuery);
+        $("#borrow_orderBy").on("change", EnteryBookQuery);
     });
 }
-
 
 
 // #endregion
@@ -472,7 +478,6 @@ function ChageNotificationType() {
     let NotificationType = $("#NotificationType").val();
     let UpcomingExpirationNoticeText = `【即將到期通知】\n親愛的用戶您好，\n您所借閱的書籍「《${TempBookName}》」\n即將於 { ${DueDate} } 到期 \n 請您於期限前歸還，謝謝。圖書館管理系統 敬上。`;
     let ExpirationNoticeWarningText = `【逾期警告通知】\n親愛的用戶您好，你所借閱的《${TempBookName}》已逾期\n請儘速歸還並聯繫館方補辦相關事宜，謝謝您的配合。`;
-
     if (NotificationType === "UpcomingExpirationNotice") { $("#NotificationTextarea").val(UpcomingExpirationNoticeText); }
     if (NotificationType === "ExpirationNoticeWarning") { $("#NotificationTextarea").val(ExpirationNoticeWarningText); }
     if (NotificationType === "Other") { $("#NotificationTextarea").val(""); }
@@ -505,7 +510,7 @@ function FormatISBM() {
     console.log("ISBM...輸入...")
     let val = $(this).val().replace(/[^0-9]/g, "");
     if (val.length > 12) {
-        val = `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 10)}-${val.slice(10, 11)}-${val.slice(11, 12)}`;
+        val = `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 11)}-${val.slice(11, 12)}-${val.slice(12, 13)}`;
     }
     $(this).val(val);
 }

@@ -7,7 +7,7 @@
         public DateTime? book_initDate { get; set; }
         public DateTime? book_lastDate { get; set; }
         public int borrow_perPage { get; set; }
-        public int page => 1;
+        public int page { get; set; }
         public string? borrow_OrderDate { get; set; }
         public string? borrow_orderBy { get; set; }
     }

@@ -8,12 +8,12 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label  class="form-label fs-3 fw-bold " for="BooksAdded_ISBM">ISBN:</label>
-                        <input class="form-control" id="BooksAdded_ISBM" name="BooksAdded_ISBM" maxlength="17" required/>
+                        <input class="form-control fs-3" id="BooksAdded_ISBM" name="BooksAdded_ISBM" maxlength="17" required/>
                         <span id="BooksAdded_TitleError" class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_Type">書籍分類:</label>
-                        <select class="form-select required-field" id="BooksAdded_Type" name="BooksAdded_Type">
+                        <select class="form-select required-field fs-3" id="BooksAdded_Type" name="BooksAdded_Type">
                             @if (Model.Type?.Count > 0)
                             {
                                 foreach (var x in Model.Type)
@@ -27,12 +27,12 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_Title">書名:</label>
-                        <input class="form-control required-field" id="BooksAdded_Title" name="BooksAdded_Title" required/>
+                        <input class="form-control required-field fs-3" id="BooksAdded_Title" name="BooksAdded_Title" required/>
                         <span class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_leng">語言:</label>
-                        <select class="form-select required-field" id="BooksAdded_leng" name="BooksAdded_leng">
+                        <select class="form-select required-field fs-3" id="BooksAdded_leng" name="BooksAdded_leng">
                             @if (Model.Language?.Count > 0)
                             {
                                 foreach (var x in Model.Language)
@@ -49,13 +49,13 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_authorName">作者:</label>
-                        <input type="text" class="form-control" id="BooksAdded_authorName" name="BooksAdded_authorName" required />
+                        <input type="text" class="form-control fs-3" id="BooksAdded_authorName" name="BooksAdded_authorName" required />
                         <input  type="number"  id="BooksAdded_authorId"  name="BooksAdded_authorId" value=""  hidden/>
                         <span class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" name="BooksAdded_translator">譯者:</label>
-                        <input class="form-control" id="BooksAdded_translator" name="BooksAdded_translator" />
+                        <input class="form-control fs-3" id="BooksAdded_translator" name="BooksAdded_translator" />
                         <span class="text-danger"></span>
                     </div>
                 </div>
@@ -64,12 +64,12 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_pushier">出版社:</label>
-                        <input class="form-control required-field" id="BooksAdded_pushier" name="BooksAdded_pushier" required/>
+                        <input class="form-control required-field fs-3" id="BooksAdded_pushier" name="BooksAdded_pushier" required/>
                         <span class="text-danger"></span>
                     </div>
                     <div class="col">
                         <label class="form-label fs-3 fw-bold " for="BooksAdded_puDate">出版日期:</label>
-                        <input type="date" class="form-control required-field" id="BooksAdded_puDate" name="BooksAdded_puDate" required/>
+                        <input type="date" class="form-control required-field fs-3" id="BooksAdded_puDate" name="BooksAdded_puDate" required/>
                         <span class="text-danger"></span>
                     </div>
                 </div>
@@ -77,19 +77,19 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label class="form-label fs-3 fw-bold" for="BooksAdded_inCount">入庫數量:</label>
-                        <input class="form-control required-field" min="1" id="BooksAdded_inCount" name="BooksAdded_inCount" type="number" value="1" />
+                        <input class="form-control required-field fs-3" min="1" id="BooksAdded_inCount" name="BooksAdded_inCount" type="number" value="1" />
                         <span class="text-danger"></span>
                     </div>
                 </div>
                 <!-- 書籍簡介 -->
                 <div class="mb-3">
                     <label class="form-label fs-3 fw-bold" for="BooksAdded_Dec">書籍簡介:</label>
-                    <textarea class="form-control" id="BooksAdded_Dec" name="BooksAdded_Dec" style="height:130px"></textarea>
+                    <textarea class="form-control fs-3" id="BooksAdded_Dec" name="BooksAdded_Dec" style="height:130px"></textarea>
                     <span class="text-danger"></span>
                 </div>
                 <div class="mt-4 text-center">
-                    <button type="button" class="btn btn-primary btn-lg px-5 me-3" id="BooksAdded_BtnSend"> 確定登陸書籍</button>
-                    <button type="button" class="btn btn-outline-secondary btn-lg px-5" id="BooksAdded_BtnReset">重置</button>
+                    <button type="button" class="btn btn-primary btn-lg px-5 me-3 fs-3" id="BooksAdded_BtnSend"> 確定登陸書籍</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-5 fs-3" id="BooksAdded_BtnReset">重置</button>
                 </div>
             </div>
 
@@ -97,12 +97,12 @@
                 <!-- 封面 -->
                 <div class="mb-1">
                     <label class="form-label fs-3 fw-bold">封面:</label>
-                    <input type="file" name="BookAdd_InputImg" id="BookAdd_InputImg"class="form-control"accept=".jpg, .jpeg, .png"  required/>
+                    <input type="file" name="BookAdd_InputImg" id="BookAdd_InputImg"class="form-control fs-3"accept=".jpg, .jpeg, .png"  required/>
                     <!-- 預覽圖-->
-                    <img id="BookAdd_Display"class="img-thumbnail mt-2 mx-3"style="height:600px; width:400px;"src="" />
+                    <img id="BookAdd_Display"class="img-thumbnail mt-2 mx-3"style="height:680px; width:500px;"src="" />
                 </div>
                 <div class="row justify-content-end align-content-end mt-4">
-                    <button id="BookAdd_Remove" type="submit" class="col-5 btn btn-lg btn-danger mx-4" disabled> 移除</button>
+                    <button id="BookAdd_Remove" type="submit" class="col-5 btn btn-lg btn-danger mx-4 fs-3" disabled> 移除</button>
                 </div>
             </div>
         </div>

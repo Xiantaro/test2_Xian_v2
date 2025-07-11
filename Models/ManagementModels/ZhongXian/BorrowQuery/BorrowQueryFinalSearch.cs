@@ -67,9 +67,7 @@ namespace test2.Models.ManagementModels.ZhongXian.BorrowQuery
                 (_, _) => result.OrderByDescending(x => x.borrowDate),
             };
 
-
             var totalCount = await result.CountAsync();
-            //if (totalCount == 0) return Json(0);
             var Nextresult = await result.Skip((filter.page - 1) * filter.borrow_perPage).Take(filter.borrow_perPage).ToListAsync();
 
             var BorrowQueryViewModels = new BorrowQueryViewModel()
