@@ -28,6 +28,7 @@ function initAppointmentPage() {
         // 排列篩選綁定
         $(document).on("change", "#appointment_perPage, #appointment_orderDate ", appointment_queryEvent)
         $("#appointment_clear").on("click", appointment_clearEvent);
+        $("#appointment_bookNum").on("input", FormatISBM);
     });
 };
 // 搜尋、排列、分頁
