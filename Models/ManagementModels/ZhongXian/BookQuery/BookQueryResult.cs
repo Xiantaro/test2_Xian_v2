@@ -14,7 +14,7 @@ namespace test2.Models.ManagementModels.ZhongXian.BookQuery
             _context = context;
         }
 
-        public async Task<BookQueryViewModel> BookQueryResultMethod(BookQueryFormModel BookForm)
+        public async Task<QueryViewModel> BookQueryResultMethod(BookQueryFormModel BookForm)
         {
             var QueryResult = _context.Set<BookQueryDTO>().FromSqlInterpolated($"SELECT * FROM BookQueryResultView()").AsQueryable();
             bool BookEmptyFIlter()
@@ -41,7 +41,7 @@ namespace test2.Models.ManagementModels.ZhongXian.BookQuery
             int dataCount = await QueryResult.CountAsync();
             
             var finalResult = await QueryResult.Skip((BookForm.page -1) * BookForm.borrow_perPage).Take(BookForm.borrow_perPage).ToListAsync();
-            var finalViewModel = new BookQueryViewModel()
+            var finalViewModel = new QueryViewModel()
             {
                 BookQueryDTOs = finalResult,
                 PageCounts = new List<PageCount>() { new PageCount { TotalCount = dataCount , CurrentPage = BookForm.page, perPage = BookForm.borrow_perPage} }

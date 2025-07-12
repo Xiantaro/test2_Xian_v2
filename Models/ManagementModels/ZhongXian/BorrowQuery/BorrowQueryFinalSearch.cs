@@ -9,7 +9,7 @@ namespace test2.Models.ManagementModels.ZhongXian.BorrowQuery
     {
         private readonly Test2Context _context;
         public BorrowQueryFinalSearch(Test2Context context){_context = context;}
-        public async Task<BorrowQueryViewModel> BorrowQuerySeach(BorrowQueryFilter filter)
+        public async Task<QueryViewModel> BorrowQuerySeach(BorrowQueryFilter filter)
         {
             bool BorrowIsEmptyFilter()
             {
@@ -57,7 +57,7 @@ namespace test2.Models.ManagementModels.ZhongXian.BorrowQuery
             };
             var totalCount = await result.CountAsync();
             var Nextresult = await result.Skip((filter.page - 1) * filter.borrow_perPage).Take(filter.borrow_perPage).ToListAsync();
-            var BorrowQueryViewModels = new BorrowQueryViewModel()
+            var BorrowQueryViewModels = new QueryViewModel()
             {
                 BorrowQueryDTOs = Nextresult,
                 PageCounts = new List<PageCount>() { new PageCount() {TotalCount = totalCount,CurrentPage = filter.page,perPage = filter.borrow_perPage, } }

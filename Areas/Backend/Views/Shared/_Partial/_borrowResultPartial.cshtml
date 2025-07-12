@@ -1,4 +1,4 @@
-﻿@model test2.Models.ManagementModels.ZhongXian.BorrowQuery.BorrowQueryViewModel
+﻿@model test2.Models.ManagementModels.ZhongXian.Normal.QueryViewModel
 @if (Model.BorrowQueryDTOs?.Count != 0)
 {
     <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>

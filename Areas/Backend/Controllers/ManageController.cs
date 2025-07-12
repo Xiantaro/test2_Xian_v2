@@ -198,13 +198,13 @@ namespace test2.Areas.Backend.Controllers
         }
         public async Task<IActionResult> AppointmentMode1Query(string keyWord, string state, int pageCount, int  page = 1)
         {
-            var result =  await _context.Set<AppoimtmentKeywordShow>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
+            var result =  await _context.Set<AppoimtmentKeywordDTO>().FromSqlInterpolated($"EXEC BookStatusDetail {keyWord}, {state}").ToListAsync();
             var totalcount = result.Count();
             if (totalcount == 0) { return Json(0); }
             var final =  result.Skip((page - 1) * pageCount).Take(pageCount).ToList();
             var FinalRestul = new QueryViewModel()
             {
-                AppoimtmentKeywordShows = final,
+                AppoimtmentKeywordDTOs = final,
                 PageCounts = new List<PageCount>() { new PageCount { TotalCount = result.Count(),CurrentPage = page,perPage = pageCount,} }
             };
             return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", FinalRestul);

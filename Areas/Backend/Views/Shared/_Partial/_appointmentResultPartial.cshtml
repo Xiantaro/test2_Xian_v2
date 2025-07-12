@@ -1,4 +1,4 @@
-﻿@model test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery.AppointmentQueryViewModel
+﻿@model test2.Models.ManagementModels.ZhongXian.Normal.QueryViewModel
 @if (Model.AppointmentQueryResultDTOs?.Count != 0)
 {
     <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>
@@ -56,7 +56,7 @@
     </table>
     <div class="container d-flex justify-content-center ">
         <nav aria-label="Page navigation example">
-            @if ((Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1)
+            @if ((Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
             {
                 <ul class="pagination ">
                     <li class="page-item ">

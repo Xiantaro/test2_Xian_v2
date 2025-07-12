@@ -1,6 +1,6 @@
 ﻿namespace test2.Models.ManagementModels.ZhongXian.Appoimtment
 {
-    public class AppoimtmentKeywordShow
+    public class AppoimtmentKeywordDTO
     {
         public int collectionid { get; set; }
         public string? title { get; set; }

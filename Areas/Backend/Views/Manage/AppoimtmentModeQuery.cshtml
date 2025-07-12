@@ -17,7 +17,7 @@
                 @foreach (var option in new[] { 10, 20, 30 })
                 {
                     @*<option value="@option" selected="@(Model.perPage == @option ? "selected": "")">@option</option>*@
-                    <option value="@option" selected="@(Model.PageCounts?.FirstOrDefault()?.perPage == @option ? "selected")">@option</option>
+                    <option value="@option" selected="@(Model.PageCounts?.FirstOrDefault()?.perPage == @option ? "selected" : "")">@option</option>
                 }
 
             </select>
@@ -37,9 +37,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.AppoimtmentKeywordShows?.Count != 0)
+        @if (Model.AppoimtmentKeywordDTOs?.Count != 0)
         {
-            @foreach (var bok in Model.AppoimtmentKeywordShows!)
+            @foreach (var bok in Model.AppoimtmentKeywordDTOs!)
             {
                 <tr>
                     <td class="align-middle text-truncate fs-3" style="max-width: 200px" title="@bok.title" data-bookid="@bok.collectionid">@bok.title</td>
@@ -68,25 +68,22 @@
         }
     </tbody>
 </table>
-
-
-
-@if ( (Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1)
+@if ( (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
 {
     <div class="container d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
-                    @if (Model.CurrentPage <= 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page="" ><span aria-hidden="true">&laquo;</span></a>}
-                    else{<a class="page-link" href="#" aria-label="Previous" data-page="@(Model.CurrentPage - 1)"><span aria-hidden="true">&laquo;</span></a>}
+                    @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) <= 1){<a class="page-link disabled" href="#" aria-label="Previous" data-page="" ><span aria-hidden="true">&laquo;</span></a>}
+                    else{<a class="page-link" href="#" aria-label="Previous" data-page="@( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) - 1)"><span aria-hidden="true">&laquo;</span></a>}
                 </li>
-                @for (int x = 1; x <= Model.TotalPage; x++){
-                    if (Model.CurrentPage == x) { <li class="page-item"><a class="page-link page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>}
+                @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0); x++){
+                    if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x) { <li class="page-item"><a class="page-link page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>}
                     else {<li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li> }
                     }
             <li class="page-item">
-                @if (Model.CurrentPage == Model.TotalPage){<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
-                else{<a class="page-link" href="#" aria-label="Next" data-page="@(Model.CurrentPage + 1)"><span aria-hidden="true">&raquo;</span></a>}
+                @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == ( Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)){<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
+                else{<a class="page-link" href="#" aria-label="Next" data-page="@( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) + 1)"><span aria-hidden="true">&raquo;</span></a>}
             </li>
             </ul>
         </nav>

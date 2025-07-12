@@ -13,7 +13,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
         {
             _context = context;
         }
-        public async Task<AppointmentQueryViewModel> AppointmentQuerySearch(AppoimtmentQueryFilter filter)
+        public async Task<QueryViewModel> AppointmentQuerySearch(AppoimtmentQueryFilter filter)
         {
             bool AppointmentEmptyFilter()
             {
@@ -48,7 +48,7 @@ namespace test2.Models.ManagementModels.ZhongXian.AppoimtmentQuery
             else { result = result.OrderBy(x => x.appointmentDate); }
             var totalCount = await result.CountAsync();
             var finalResult = await result.Skip((filter.page  - 1) * filter.appointment_perPage ).Take(filter.appointment_perPage).ToListAsync();
-            var AppointmentViewModels = new AppointmentQueryViewModel()
+            var AppointmentViewModels = new QueryViewModel()
             {
                 AppointmentQueryResultDTOs = finalResult,
                 PageCounts = new List<PageCount>(){ new PageCount(){TotalCount = totalCount,CurrentPage = filter.page, perPage = filter.appointment_perPage}}
