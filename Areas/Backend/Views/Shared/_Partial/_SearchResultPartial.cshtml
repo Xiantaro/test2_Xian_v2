@@ -1,74 +1,89 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.Normal.QueryViewModel
+@using test2.Models.ManagementModels.ZhongXian.Normal
 
-@if (Model.BookQueryDTOs?.Count != 0)
-{
-    <div class="mt-1 fs-4 fw-medium">總共查詢到  <u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u>  &nbsp筆紀錄 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0)  至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0 )筆 &nbsp  目前頁數    @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)    </div>
-    <table class="table mt-1 table-hover">
-        <thead>
-            <tr class="fw-bold fs-4">
-                <th scope="col">ISBN</th>
-                <th scope="col">封面</th>
-                <th scope="col">書籍名稱</th>
-                <th scope="col">作者</th>
-                <th scope="col">出版社</th>
-                <th scope="col">出版年份</th>
-                <th scope="col">書籍簡介</th>
-                <th scope="col">藏書量</th>
-                <th scope="col" class="text-center">操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in Model.BookQueryDTOs!)
-            {
-                <tr class="fs-4">
-                    <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 100px" value="@x.collectionId" title="@x.isbn">@x.isbn</td>
-                    <td class="align-middle" style="width:150px"><img src="data:image/*;base64, @(Convert.ToBase64String(x.collectionImg!))" style="max-width: 150px; height: 180px" alt="無圖片" /></td>
-                    <td class="align-middle text-truncate booktitle" style="max-width: 200px" title="@x.title">@x.title</td>
-                    <td class="align-middle appointmentcid text-truncate" data-cid="" title="@x.author"  style="max-width: 200px">@x.author</td>
-                    <td class="align-middle text-truncate" title="@x.publisher" style="max-width:200px">@x.publisher</td>
-                    <td class="align-middle">@x.publishDate.ToString("yyyy/MM/dd")</td>
-                    <td class="align-middle text-truncate" style="max-width:200px" title="@x.collectionDesc"><pre class="bg-light border rounded p-2" style="white-space: pre-wrap; max-height: 150px; ">@x.collectionDesc</pre></td>
-                    <td class="align-middle text-center">@x.NumberOfBook</td>
-                    <td class="align-middle align-items-center text-center"><button class="btn btn-danger mx-3 btn-lg fs-3">修改</button><button class="btn btn-success btn-lg fs-3">新增</button></td>
+    @if (Model.BookQueryDTOs?.Count != 0)
+    {
+
+        @await Html.PartialAsync("~/Areas/Backend/Views/Shared/_Partial/_pageParital.cshtml", Model.PageCounts?.FirstOrDefault())
+        <table class="table mt-1 table-hover">
+            <thead>
+                <tr class="fw-bold fs-4" style="width: 100%; table-layout: fixed;">
+                    <th scope="col">ISBN</th>
+                    <th scope="col">封面</th>
+                    <th scope="col">書籍名稱</th>
+                    <th scope="col">作者</th>
+                    <th scope="col">出版社</th>
+                    <th scope="col">出版年份</th>
+                    <th scope="col">書籍簡介</th>
+                    <th scope="col">藏書量</th>
+                    <th scope="col" class="text-center" style="width:200px">操作</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div class="container d-flex justify-content-center">
-        <nav aria-label="Page navigation example">
-            @if ( (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
-            {
-                <ul class="pagination">
-                    <li class="page-item">
-                        @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == 1)
-                        {<a class="page-link disabled" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
-                        else
-                        {<a class="page-link" href="#" aria-label="Previous" data-page="@(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0)"><span aria-hidden="true">&laquo;</span></a>}
-                    </li>
-                    @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0); x++)
-                    {
-                        if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x)
-                        {
-                            <li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>
-                        }
-                        else
-                        {
-                            <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
-                        }
-                    }
-                    <li class="page-item">
-                        @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0))
-                        {<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
-                        else
-                        { <a class="page-link" href="#" aria-label="Next" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) + 1)"><span aria-hidden="true">&raquo;</span></a>}
-                    </li>
-                </ul>
-            }
-        </nav>
-    </div>
+            </thead>
+            <tbody>
+                @foreach (var x in Model.BookQueryDTOs!)
+                {
+                    <tr class="fs-4">
+                        <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 100px" value="@x.collectionId" title="@x.isbn">@x.isbn</td>
+                        <td class="align-middle" style="width:150px"><img src="data:image/*;base64, @(Convert.ToBase64String(x.collectionImg!))" style="max-width: 150px; height: 180px" alt="無圖片" /></td>
+                        <td class="align-middle text-truncate booktitle" style="max-width: 200px" title="@x.title">@x.title</td>
+                        <td class="align-middle appointmentcid text-truncate" data-cid="" title="@x.author" style="max-width: 200px">@x.author</td>
+                        <td class="align-middle text-truncate" title="@x.publisher" style="max-width:200px">@x.publisher</td>
+                        <td class="align-middle">@x.publishDate.ToString("yyyy/MM/dd")</td>
 
-}
-else
-{<div class="alert alert-danger fs-1 mt-5">查無資料</div>}
+                        @if (x.collectionDesc != "")
+                        {
+                            <td class="align-middle text-truncate" style="max-width:200px" title="@x.collectionDesc"><pre class="bg-light border rounded p-2" style="white-space: pre-wrap; max-height: 150px; ">@(x.collectionDesc != "" ? x.collectionDesc : "-")</pre></td>
+                        }
+                        else
+                        {
+                            <td class="align-middle text-truncate text-center" style="max-width:200px" title="@x.collectionDesc">-</td>
+                        }
+                        <td class="align-middle text-center">@x.NumberOfBook</td>
+                        <td class="align-middle align-items-center text-center">
+                            <div class="vstack gap-2 col-md-5 mx-auto">
+                                <button class="btn btn-danger  btn-sm fs-5">修改</button>
+                                <button class="btn btn-success btn-sm fs-5">新增</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="container d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                @if ((Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
+                {
+                    <ul class="pagination">
+                        <li class="page-item">
+                            @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == 1)
+                            {<a class="page-link disabled" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
+                            else
+                            {<a class="page-link" href="#" aria-label="Previous" data-page="@(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0)"><span aria-hidden="true">&laquo;</span></a>}
+                        </li>
+                        @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0); x++)
+                        {
+                            if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x)
+                            {
+                                <li class="page-item"><a class="page-link bg-dark bg-gradient text-white disabled" href="#" data-page="@x">@x</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link" href="#" data-page="@x">@x</a></li>
+                            }
+                        }
+                        <li class="page-item">
+                            @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0))
+                            {<a class="page-link disabled" href="#" aria-label="Next" data-page=""><span aria-hidden="true">&raquo;</span></a>}
+                            else
+                            { <a class="page-link" href="#" aria-label="Next" data-page="@((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) + 1)"><span aria-hidden="true">&raquo;</span></a>}
+                        </li>
+                    </ul>
+                }
+            </nav>
+        </div>
+
+    }
+    else
+    {<div class="alert alert-danger fs-1 mt-5">查無資料</div>}
 
 

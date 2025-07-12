@@ -23,7 +23,6 @@ function AppointmentQueryModule() {
 function initAppointmentPage() {
     $("#content-panel").load("/Backend/Manage/AppointmentQuery", () => {
         appointment_queryEvent();
-        console.log("已載入預設搜尋結果");
         // 預約查詢綁定
         $("#appointment_select").on("click", appointment_queryEvent);
         // 排列篩選綁定
@@ -37,7 +36,6 @@ function appointment_queryEvent() {
     $("#AppointmentContent").html(QueryWait);
     const value = $(this).data("page") || 1;
     let formData = $("#appointmenSearch").serialize() + `&page=${value}`;
-    console.log("預約查詢進入" + formData);
     $.post("/Backend/Manage/AppointmentResult", formData, (result) => {
         $("#AppointmentContent").html(result);
         $(".page-link").on("click", appointment_queryEvent);
@@ -297,6 +295,7 @@ function BooksAdded() {
         $("#BooksAdded_BtnReset").on("click", BooksAdded_Reset);
         AuthorAutocomplete();
         $("#BooksAdded_ISBM").on("input", FormatISBM);
+        $("#BookAdd_Display").on("click", ClickImg)
     })
 }
 
@@ -311,11 +310,13 @@ function BooksAdded_ShowImg() {
 }
 // 移除圖片
 function BooksAdded_Remove() {
-    $("#BookAdd_Display").attr("src", "");
+    $("#BookAdd_Display").attr("src", "/images/InputTheBookImg.png");
     $("#BookAdd_Remove").prop("disabled", true);
     $("#BookAdd_InputImg").val("");
 }
-
+function ClickImg() {
+    $("#BookAdd_InputImg").trigger("click");
+}
 // 確定登入書籍
 function BooksAdded_BtnSend() {
     if ($("#BooksAdded_ISBM").val().length < 13) { alert("請輸入正確的13碼 ISBM"); return; }
@@ -413,7 +414,6 @@ let DueDate;
 
 // 按鈕清除 
 function CancelBtn() {
-    console.log("點擊清除按鈕")
     $(this).closest(".input-group").find(".form-control").val("");
 }
 
@@ -463,14 +463,12 @@ function NotificationClearBtn() {
 }
 // 關閉視窗
 function NotificationClose() {
-    console.log("關閉視窗按鈕成功")
     $('#notificationModal').modal("hide");
     $("#NotificationTextarea").val("");
     $("#NotificationType").val("UpcomingExpirationNotice");
 }
 // ISBN Fomart
 function FormatISBM() {
-    console.log("ISBM...輸入...")
     let val = $(this).val().replace(/[^0-9]/g, "");
     if (val.length > 12) {
         val = `${val.slice(0, 3)}-${val.slice(3, 6)}-${val.slice(6, 11)}-${val.slice(11, 12)}-${val.slice(12, 13)}`;

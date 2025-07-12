@@ -1,12 +1,13 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.Normal.QueryViewModel
+
 @if (Model.AppointmentQueryResultDTOs?.Count != 0)
 {
-    <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>
+    @await Html.PartialAsync("~/Areas/Backend/Views/Shared/_Partial/_pageParital.cshtml", Model.PageCounts?.FirstOrDefault())
     <table class="table mt-1 table-hover" style="width: 100%; table-layout: fixed;">
         <thead class="table-success table-striped">
             <tr class="fs-4 fw-bold">
                 <th scope="col" style="width:130px">預約編號</th>
-                <th scope="col" style="width:230px" >書籍編號</th>
+                <th scope="col" style="width:230px">書籍編號</th>
                 <th scope="col" style="width:300px">書籍名稱</th>
                 <th scope="col" style="width:100px">預約者</th>
                 <th scope="col" style="width:300px">預約日期</th>
@@ -24,29 +25,30 @@
                     <td class="align-middle text-truncate booktitle fs-4" style="max-width: 150px" title="@ap.title">@ap.title</td>
                     <td class="align-middle appointmentcid fs-4" data-cid="@ap.cid">@ap.cid</td>
                     <td class="align-middle appointmentDate fs-4">@ap.appointmentDate</td>
-                    <td class="align-middle fs-4">@(ap.appointmentDue.HasValue ? ap.appointmentDue.Value.ToString("yyyy-MM-dd") : "-")
+                    <td class="align-middle fs-4">
+                        @(ap.appointmentDue.HasValue ? ap.appointmentDue.Value.ToString("yyyy-MM-dd") : "-")
                     </td>
                     @if (@ap.appointmentStatus == "已預約")
                     {
                         <td class='text-light fw-bold text-bg-success align-middle fs-3 text-center'>@ap.appointmentStatus</td>
-                        <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn  fs-3" data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
+                        <td class="align-middle align-items-center text-center"><button class="btn btn-danger NotificationBtn  fs-4" data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                     }
                     else
                     {
                         @if (@ap.appointmentStatus == "取消預約")
                         {
                             <td class='text-light fw-bold text-bg-secondary align-middle fs-3 text-center'>@ap.appointmentStatus</td>
-                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-3" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
+                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-4" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                         else if (@ap.appointmentStatus == "可取書")
                         {
                             <td class='text-light fw-bold text-bg-primary align-middle fs-3 text-center'>@ap.appointmentStatus</td>
-                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-3" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
+                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-4" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                         else
                         {
                             <td class='text-light fw-bold text-bg-warning align-middle fs-3 text-center'>@ap.appointmentStatus</td>
-                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-3" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
+                            <td class="align-middle align-items-center text-center"><button class="btn btn-secondary NotificationBtn disabled fs-4" disabled data-bs-target="#notificationModal" data-type="cancelAppointment" data-bs-toggle="modal">取消預約</button></td>
                         }
                     }
 
@@ -60,17 +62,24 @@
             {
                 <ul class="pagination ">
                     <li class="page-item ">
-                        @if ( (Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) < 2)
+                        @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) < 2)
                         {<a class="page-link disabled fs-3" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
                         else
                         {<a class="page-link fs-3" href="#" aria-label="Previous" data-page="1"><span aria-hidden="true">&laquo;</span></a>}
                     </li>
                     @for (int x = 1; x <= (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0); x++)
                     {@if ((Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
-                    {
-                        if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x){ <li class="page-item fs-3"><a class="page-link bg-dark bg-gradient text-white disabled fs-3" href="#" data-page="@x">@x</a></li>}
-                        else{ <li class="page-item"><a class="page-link fs-3" href="#" data-page="@x">@x</a></li>}}
-                    }
+                        {
+                            if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == x)
+                            {
+                                <li class="page-item fs-3"><a class="page-link bg-dark bg-gradient text-white disabled fs-3" href="#" data-page="@x">@x</a></li>
+}
+                            else
+                            {
+                                <li class="page-item"><a class="page-link fs-3" href="#" data-page="@x">@x</a></li>
+}
+                        }
+                }
                     <li class="page-item">
                         @if ((Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) == (Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0))
                         {<a class="page-link disabled fs-3" href="#" aria-label="Next" data-page="2"><span aria-hidden="true">&raquo;</span></a>}
@@ -82,7 +91,8 @@
         </nav>
     </div>
 }
-else {<div class="alert alert-danger fs-1 mt-5">查無資料</div> }
+else
+{<div class="alert alert-danger fs-1 mt-5">查無資料</div>}
 
 
 <div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
