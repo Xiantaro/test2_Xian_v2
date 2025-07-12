@@ -1,37 +1,39 @@
-﻿@model test2.Models.ManagementModels.ZhongXian.Appoimtment.AppoimtmentResult
+﻿@model test2.Models.ManagementModels.ZhongXian.Normal.QueryViewModel
 
 <div class="d-flex justify-content-between align-items-end">
-    <div class="d-flex flex-wrap gap-3 justify-content-end">
+    <div class="d-flex flex-wrap gap-3 justify-content-end fs-3">
         <div>
-            <label for="appointmentMode_status" class="form-label mb-0 ">目前狀態：</label>
-            <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+            <label for="appointmentMode_status" class="form-label mb-0 fw-bold">目前狀態：</label>
+            <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm fs-3 fw-bold">
                 <option value="IsLent">借閱中</option>
                 <option value="Available">可借閱</option>
-                <option value="ALL" >全部</option>
+                <option value="ALL">全部</option>
             </select>
         </div>
         <div>
-            <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
-            <select id="appointmentMode_perPage" name="appointmentMode_perPage" class="form-select form-select-sm">
+            <label for="appointmentMode_perPage" class="form-label mb-0 fw-bold">每頁筆數：</label>
+            <select id="appointmentMode_perPage" name="appointmentMode_perPage" class="form-select form-select-sm fs-3 fw-bold">
 
                 @foreach (var option in new[] { 10, 20, 30 })
                 {
-                    <option value="@option" selected="@(Model.perPage == @option ? "selected": "")">@option</option>
+                    @*<option value="@option" selected="@(Model.perPage == @option ? "selected": "")">@option</option>*@
+                    <option value="@option" selected="@(Model.PageCounts?.FirstOrDefault()?.perPage == @option ? "selected")">@option</option>
                 }
 
             </select>
         </div>
     </div>
-    <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start">總共 @Model.TotalCount  筆資料__目前  第 @Model.FromIndex 筆 至  第 @Model.ToIndex 筆 __ 目前頁數:@Model.CurrentPage/ @Model.TotalPage</div>
+    <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>
+    @*<div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start">總共 @Model.TotalCount  筆資料__目前  第 @Model.FromIndex 筆 至  第 @Model.ToIndex 筆 __ 目前頁數:@Model.CurrentPage/ @Model.TotalPage</div>*@
 </div>
-<table class="table mt-2 table-hover">
-    <thead>
+<table class="table mt-2 table-hover " style="width: 100%; table-layout: fixed;">
+    <thead class="fs-3">
         <tr>
-            <th scope="col">書籍名稱</th>
-            <th scope="col">作者</th>
-            <th scope="col">狀況</th>
-            <th scope="col">預約人數</th>
-            <th scope="col">操作</th>
+            <th scope="col" style="width:500px">書籍名稱</th>
+            <th scope="col" style="width:200px">作者</th>
+            <th scope="col" class="text-center" style="width:150px">狀況</th>
+            <th scope="col" class="text-center" style="width:150px">預約人數</th>
+            <th scope="col" class="text-center" style="width:100px">操作</th>
         </tr>
     </thead>
     <tbody>
@@ -40,25 +42,25 @@
             @foreach (var bok in Model.AppoimtmentKeywordShows!)
             {
                 <tr>
-                    <td class="align-middle text-truncate" style="max-width: 200px" title="@bok.title" data-bookid="@bok.collectionid">@bok.title</td>
-                    <td class="align-middle text-truncate" style="max-width:200px" title="@bok.author"> @bok.author </td>
+                    <td class="align-middle text-truncate fs-3" style="max-width: 200px" title="@bok.title" data-bookid="@bok.collectionid">@bok.title</td>
+                    <td class="align-middle text-truncate fs-3" style="max-width:200px" title="@bok.author"> @bok.author </td>
                     @if (@bok.bookstatus == "可借閱")
                     {
-                        <td class='align-middle text-bg-success'>@bok.bookstatus</td>
-                        <td class="align-middle">在本館中</td>
-                        <td></td>
+                        <td class='align-middle text-bg-success fs-3 text-center'>@bok.bookstatus</td>
+                        <td class="align-middle bg-warning bg-gradient text-white fs-4 fw-bold text-center">目前在本館</td>
+                        <td class="align-middle fs-4 text-center">-</td>
                     }
                     else if (@bok.bookstatus == "借閱中")
                     {
-                        <td class='align-middle text-bg-danger'>@bok.bookstatus</td>
-                        <td class="align-middle">@bok.number</td>
-                        <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn">加入</button></td>
+                        <td class='align-middle text-bg-danger fs-3 fs-3 text-center'>@bok.bookstatus</td>
+                        <td class="align-middle fs-3 text-center">目前 <u>@bok.number</u>  位</td>
+                        <td class="align-middle align-items-center text-center"><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn fs-3">+</button></td>
                     }
                     else
                     {
-                        <td class='align-middle text-bg-secondary'>@bok.bookstatus</td>
-                        <td class="align-middle">@bok.number</td>
-                        <td><button type="button" class="btn btn-success AppointmentMode_AddBookNumBtn disabled">加入</button></td>
+                        <td class='align-middle text-bg-secondary fs-3 text-center'>@bok.bookstatus</td>
+                        <td class="align-middle fs-4 text-center">-</td>
+                        <td class="align-middle fs-4 text-center">-</td>
                     }
 
                 </tr>
@@ -68,7 +70,8 @@
 </table>
 
 
-@if (Model.TotalPage != 1)
+
+@if ( (Model.PageCounts?.FirstOrDefault()?.TotalPage) != 1)
 {
     <div class="container d-flex justify-content-center">
         <nav aria-label="Page navigation example">

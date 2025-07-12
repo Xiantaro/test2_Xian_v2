@@ -4,6 +4,7 @@ namespace test2.Models.ManagementModels.ZhongXian.Appoimtment
     public class AppoimtmentResult
     {
         public List<AppoimtmentKeywordShow>? AppoimtmentKeywordShows { get; set; }
+        
         // 總資料量
         public int TotalCount { get; set; }
         // 總頁數

@@ -8,7 +8,7 @@
 <div class="row mt-1">
     <div class="col">
         <!-- 搜尋 START-->
-        <h1>借閱查詢</h1>
+        <h1 class="fw-bold">借閱查詢</h1>
         <hr />
         <form id="borrowForm" method="post" asp-action="Query" class="d-flex justify-content-between align-items-end flex-wrap gap-2">
             <!-- 查詢表單欄位 -->
@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <label for="borrow_state" class="form-label mb-0">借閱狀態：</label>
-                    <select id="borrow_state" name="borrow_state" class="form-select form-select-sm fs-5 fw-bold" style="width:90px">
+                    <select id="borrow_state" name="borrow_state" class="form-select form-select-sm fs-5 fw-bold" style="width:120px">
                         <option value="ALL">全部</option>
                         <option value="借閱中">借閱中</option>
                         <option value="已歸還">已歸還</option>
@@ -62,7 +62,7 @@
                 <!-- 排序依據 -->
                 <div>
                     <label for="borrow_OrderDate" class="form-label mb-0 ">排序依據：</label>
-                    <select id="borrow_OrderDate" name="borrow_OrderDate" class="form-select form-select-sm fs-5 fw-bold">
+                    <select id="borrow_OrderDate" name="borrow_OrderDate" class="form-select form-select-sm fs-5 fw-bold ">
                         <option value="borrowDate">借閱日期</option>
                         <option value="dueDate">借閱期限</option>
                         <option value="returnDate">還書日期</option>
@@ -71,7 +71,7 @@
                 <!-- 排序方向 -->
                 <div>
                     <label for="borrow_orderBy" class="form-label mb-0">排序方向：</label>
-                    <select id="borrow_orderBy" name="borrow_orderBy" class="form-select form-select-sm fs-5 fw-bold">
+                    <select id="borrow_orderBy" name="borrow_orderBy" class="form-select form-select-sm fs-5 fw-bold" style="width:90px">
                         <option value="desc">遞減（新到舊）</option>
                         <option value="asc">遞增（舊到新）</option>
                     </select>
@@ -81,7 +81,7 @@
         </form>
         <!-- 搜尋 END-->
         <!-- 借閱狀況 START-->
-        <div id="BorrowContent">
+        <div id="BorrowContent" class="mt-3">
         </div>
         <!-- 借閱狀況 END -->
     </div>

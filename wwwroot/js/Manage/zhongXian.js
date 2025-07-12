@@ -270,24 +270,20 @@ function AppointmentModeSend() {
     if (userId === "") { alert("請輸入借閱者ID!!"); return; }
     if (BookId === "") { alert("請輸入書籍編號!!"); return; }
     let formData = $("#appointmentModeForm").serialize();
-    console.log("測試輸入: " + formData);
     $.post("/Backend/Manage/AppointmentMode1Send", formData, (result) => {
         if (result === 0) { $("#appointmentSuccessContent").html(pleaseInputUserId); return; }
         if (result === 1) { $("#appointmentSuccessContent").html(pleaseInputBookId); return; }
         $("#appointmentSuccessContent").html(result);
-        console.log("預約按鈕是否成功回傳，YEEEEEE")
         AppointmentModeBookDynamic();
     })
 }
 // 加入書籍編號到輸入框
 function AppointmentModeAddBook() {
     let bookNumber = $(this).closest("tr").find("td").data("bookid");
-    console.log("你的書本編號: " + bookNumber)
     $("#appointmentMode_BookId").val(bookNumber);
 }
 // 關鍵字專屬清潔按鈕
 function CancelBtn_AppointVersion() {
-    console.log("點擊清除按鈕");
     $(this).closest(".input-group").find(".form-control").val("");
     $("#appointmentQueryBook").remove; $("#appointmentQueryBook").html(appointmentQueryBookHtml);
 }
@@ -515,35 +511,44 @@ function BookQueryAutoComplete() {
 // 預約模式_顯示欄位
 let appointmentQueryBookHtml = `
         <div class="d-flex justify-content-between align-items-end">
-            <div class="d-flex flex-wrap gap-3 justify-content-end">
+            <div class="d-flex flex-wrap gap-3 justify-content-end fs-3">
                 <div>
-                    <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
-                    <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+                    <label for="appointmentMode_status" class="form-label mb-0 fw-bold">目前狀態：</label>
+                    <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm fs-3 fw-bold">
+                        <option value="ALL" selected>全部</option>
                         <option value="IsLent">可借閱</option>
                         <option value="Available">借閱中</option>
-                        <option value="ALL" selected>全部</option>
                     </select>
                 </div>
                 <div>
-                    <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
-                    <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm">
+                    <label for="appointmentMode_perPage" class="form-label mb-0 fw-bold">每頁筆數：</label>
+                    <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm fs-3 fw-bold">
                         <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>
                 </div>
             </div>
-        </div><table class="table mt-2">
-        <thead>
-            <tr>
-                <th scope="col">書籍名稱</th>
-                <th scope="col">作者</th>
-                <th scope="col">狀況</th>
-                <th scope="col">預約人數</th>
-                <th scope="col">操作</th>
-            </tr>
-        </thead>
-    </table><h1 class="text-danger">查無書籍...</h1>`;
+        </div>
+        <div>
+            <div class="mt-1 fs-3 d-flex flex-wrap gap-3 justify-content-start"></div>
+            <table class="table mt-2">
+                <thead class="fs-3">
+                    <tr>
+                        <th scope="col" style="width:500px">書籍名稱</th>
+                        <th scope="col" style="width:200px">作者</th>
+                        <th scope="col" class="text-center" style="width:150px">狀況</th>
+                        <th scope="col" class="text-center" style="width:150px">預約人數</th>
+                        <th scope="col" class="text-center" style="width:100px">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="container align-middle">
+                <h1 class="text-danger mt-1">請輸入關鍵字搜尋書本</h1>
+            </div>
+        </div>`;
 
 let pleaseInputUserId = `<div class="alert alert-danger fs-1">該名借閱者不存在，請重新輸入</div>`;
 let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">該本書籍不存在，請重新輸入!</div>`;

@@ -3,16 +3,16 @@
 @if (Model.ResultCode !=0)
 {
     <table class="table table-hover table-info">
+        <tr class="fs-2 fw-bold " style="width:90px;"><td class="text-success">成功歸還</td><td></td></tr>
         <tr class="fs-2 fw-bold" style="width:90px;"><td>借閱者ID:</td><td>@Model.Cid</td></tr>
-        <tr class="fs-2 fw-bold" style="width:90px;"><td>於 </td><td>@DateTime.Now</td></tr>
-        <tr class="fs-2 fw-bold " style="width:90px;"><td class="text-danger">已歸還</td><td></td></tr>
+        <tr class="fs-2 fw-bold" style="width:90px;"><td>歸還時間 </td><td>@DateTime.Now</td></tr>
         <tr class="fs-2 fw-bold" style="width:90px;"><td>書籍編號:</td><td>@Model.bookcode</td></tr>
         <tr class="fs-2 fw-bold" style="width:90px;"><td>書籍名稱: </td><td>@Model.title</td></tr>
     </table>
 }
 else
 {
-    <div class="alert alert-danger h1">@Model.Message</div>
+    <div class="alert alert-danger fs-1">@Model.Message</div>
 }
 
 

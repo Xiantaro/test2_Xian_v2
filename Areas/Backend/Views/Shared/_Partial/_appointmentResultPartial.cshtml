@@ -2,15 +2,15 @@
 @if (Model.AppointmentQueryResultDTOs?.Count != 0)
 {
     <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>
-    <table class="table mt-1 table-hover">
-        <thead >
+    <table class="table mt-1 table-hover" style="width: 100%; table-layout: fixed;">
+        <thead class="table-success table-striped">
             <tr class="fs-4 fw-bold">
                 <th scope="col" style="width:130px">預約編號</th>
                 <th scope="col" style="width:230px" >書籍編號</th>
                 <th scope="col" style="width:300px">書籍名稱</th>
-                <th scope="col" style="width:130px">預約者ID</th>
-                <th scope="col" style="width:230px">預約日期</th>
-                <th scope="col" style="width:150px">取書期限</th>
+                <th scope="col" style="width:100px">預約者</th>
+                <th scope="col" style="width:300px">預約日期</th>
+                <th scope="col" style="width:200px">取書期限</th>
                 <th scope="col" class="text-center">狀況</th>
                 <th scope="col" class="text-center">操作</th>
             </tr>
@@ -19,12 +19,12 @@
             @foreach (var ap in Model.AppointmentQueryResultDTOs!)
             {
                 <tr>
-                    <td class="align-middle appointmentId" data-appointmentId="@ap.appointmentId">@ap.appointmentId</td>
-                    <td class="align-middle">@ap.bookCode</td>
-                    <td class="align-middle text-truncate booktitle" style="max-width: 150px" title="@ap.title">@ap.title</td>
-                    <td class="align-middle appointmentcid" data-cid="@ap.cid">@ap.cid</td>
-                    <td class="align-middle appointmentDate">@ap.appointmentDate</td>
-                    <td class="align-middle">@(ap.appointmentDue.HasValue ? ap.appointmentDue.Value.ToString("yyyy-MM-dd") : "-")
+                    <td class="align-middle appointmentId fs-4" data-appointmentId="@ap.appointmentId">@ap.appointmentId</td>
+                    <td class="align-middle fw-bold">@(ap.bookCode ?? "-")</td>
+                    <td class="align-middle text-truncate booktitle fs-4" style="max-width: 150px" title="@ap.title">@ap.title</td>
+                    <td class="align-middle appointmentcid fs-4" data-cid="@ap.cid">@ap.cid</td>
+                    <td class="align-middle appointmentDate fs-4">@ap.appointmentDate</td>
+                    <td class="align-middle fs-4">@(ap.appointmentDue.HasValue ? ap.appointmentDue.Value.ToString("yyyy-MM-dd") : "-")
                     </td>
                     @if (@ap.appointmentStatus == "已預約")
                     {

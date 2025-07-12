@@ -1,24 +1,23 @@
-﻿<div class="container my-5">
-    <div class="row ">
-        <div class="col-5 mt-5 ">
-            <h1>還書模式</h1>
+﻿<div class="container">
+    <div class="row justify-content-center align-self-center text-center">
+        <div class="col-6  mt-4 ">
+            <h1 class="fs-1 fw-bold">還書模式</h1>
             <hr />
             <form id="ReturnBookIdForm" class="mt-1">
                 <label class="fs-1" for="ReturnBookCode">書籍編號:</label>
-                <div class="input-group">
-                    <input class="form-control fs-3" id="ReturnBookCode" type="text" accept="" placeholder="輸入書籍編號" name="ReturnBookCode" style="height:80px" />
-                    <button class="btn btn-outline-secondary btn-lg" type="button" id="ReturnBook_CancelBookNumBtn">&times;</button>
+                <div class="row col-9 mt-4 text-center mx-auto">
+                    <div class="input-group">
+                        <input class="form-control fs-3" id="ReturnBookCode" type="text" accept="" placeholder="請輸入書籍編號" name="ReturnBookCode" style="height:80px" />
+                        <button class="btn btn-outline-secondary btn-lg" type="button" id="ReturnBook_CancelBookNumBtn">&times;</button>
+                    </div>
                 </div>
-                <div class="my-4">
-                    <button id="ReturnBookBtn" type="button" class="btn btn-success btn-lg">
-                        歸還
-                    </button>
+                <div class="row col-8 mt-4 text-center mx-auto">
+                        <button id="ReturnBookBtn" type="button" class="btn btn-success btn-lg fs-1">歸還</button>
                 </div>
             </form>
         </div>
-        <div class="col-7 mt-5">
+        <div class="mt-6 text-center mt-3">
             <div id="ReturnBookContent" class="mt-2">
-                @*回傳結果*@
             </div>
         </div>
     </div>

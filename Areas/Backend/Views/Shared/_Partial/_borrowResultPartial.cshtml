@@ -1,33 +1,32 @@
 ﻿@model test2.Models.ManagementModels.ZhongXian.BorrowQuery.BorrowQueryViewModel
-
 @if (Model.BorrowQueryDTOs?.Count != 0)
 {
     <div class="mt-1 fs-4 fw-bold">總共查詢到: &nbsp<u>@(Model.PageCounts?.FirstOrDefault()?.TotalCount ?? 0)</u> 筆預約資料  &nbsp 目前 @(Model.PageCounts?.FirstOrDefault()?.FromIndex ?? 0) 至 @(Model.PageCounts?.FirstOrDefault()?.ToIndex ?? 0) 筆 &nbsp 目前頁數: @(Model.PageCounts?.FirstOrDefault()?.CurrentPage ?? 0) / @(Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0)</div>
-    <table class="table mt-1 table-hover">
-        <thead>
+    <table class="table mt-1 table-hover" style="width: 100%; table-layout: fixed;">
+        <thead class="table-success table-striped">
             <tr class="fs-4 fw-bold">
-                <th scope="col" style="width:130px">借閱編號</th>
+                <th scope="col" style="width: 130px ">借閱編號</th>
                 <th scope="col" style="width:230px">書籍編號</th>
-                <th scope="col" style="width:300px">借閱書籍</th>
-                <th scope="col" style="width:130px">借閱者ID</th>
-                <th scope="col" style="width:230px">借閱日期</th>
+                <th scope="col" style="width:300px">書籍名稱</th>
+                <th scope="col" style="width:100px">借閱者</th>
+                <th scope="col" style="width:160px">借閱日期</th>
                 <th scope="col" style="width:150px">借閱期限</th>
-                <th scope="col" >還書日期</th>
-                <th scope="col" class="text-center" >借閱狀況</th>
-                <th scope="col" class="text-center">操作</th>
+                <th scope="col" style="width:160px">還書日期</th>
+                <th scope="col" class="text-center" >狀況</th>
+                <th scope="col" class="text-center" >操作</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var x in Model.BorrowQueryDTOs!)
             {
                 <tr>
-                    <td class="align-middle">@x.borrowId</td>
-                    <td class="align-middle ">@x.bookCode</td>
-                    <td class="align-middle text-truncate BorrowBookTitle" style="max-width:200px" title="@x.title">@x.title</td>
-                    <td class="align-middle text-truncate NotificationUserid" style="max-width:100px" title="@x.cId">@x.cId</td>
-                    <td class="align-middle">@x.borrowDate</td>
-                    <td class="align-middle BorrowDueDate">@(x.dueDateB.HasValue ? x.dueDateB.Value.ToString("yyyy-MM-dd") : "-")</td>
-                    <td class="align-middle">@x.returnDate </td>
+                    <td class="align-middle fs-4">@x.borrowId</td>
+                    <td class="align-middle fw-bold">@x.bookCode</td>
+                    <td class="align-middle text-truncate BorrowBookTitle fs-4" title="@x.title">@x.title</td>
+                    <td class="align-middle text-truncate NotificationUserid fs-4 " title="@x.cId">@x.cId</td>
+                    <td class="align-middle fs-4"> @(x.borrowDate.HasValue ? x.borrowDate.Value.ToString("yyyy/MM/dd tt hh:mm") : "-")</td>
+                    <td class="align-middle BorrowDueDate fs-4">@(x.dueDateB.HasValue ? x.dueDateB.Value.ToString("yyyy/MM/dd") : "-")</td>
+                    <td class="align-middle fs-4">@(x.returnDate.HasValue ? x.returnDate.Value.ToString("yyyy/MM/dd tt hh:mm") : "-")</td>
                     @if (@x.borrowStatus == "借閱中")
                     {
                         <td class='text-bg-warning align-middle fw-bold cent text-center fs-3'>@x.borrowStatus</td>
@@ -80,9 +79,6 @@ else
 {
     <div class="alert alert-danger fs-1 mt-5">查無資料</div>
 }
-
-
-
 
 
 <div class="modal fade" id="notificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">

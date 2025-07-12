@@ -1,53 +1,53 @@
 ﻿
 <div class="row">
-    <div class="col-4 my">
-        <h1>預約模式</h1>
-        <form id="appointmentModeForm" class="mt-1">
-            <div class="col-10 ">
+    <div class="col-3 my">
+        <h1 class="fw-bold">預約模式</h1>
+        <form id="appointmentModeForm" class="mt-1 ">
+            <div class="col-12 ">
                 <hr />
-                <label class="fs-3" for="appointmentMode_UserID">關鍵字查詢: </label>
+                <label class="fs-2 fw-bold" for="appointmentMode_UserID">關鍵字查詢: </label>
                 <div class="input-group">
                     <input id="appointmentMode_KeyWord" type="text" class="form-control" />
-                    <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelKeyWordBtn">&times;</button>
+                    <button class="btn btn-outline-secondary fs-2" type="button" id="appointmentMode_CancelKeyWordBtn">&times;</button>
                 </div>
             </div>
-            <div class="col-10">
-                <label class="fs-3" for="appointmentMode_UserID">借閱者ID: </label>
+            <div class="col-12">
+                <label class="fs-2 fw-bold" for="appointmentMode_UserID">借閱者ID: </label>
                 <div class="input-group">
                     <input id="appointmentMode_UserID" type="number" name="appointmentMode_UserID" class="form-control" />
-                    <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelUserIdBtn">&times;</button>
+                    <button class="btn btn-outline-secondary fs-2" type="button" id="appointmentMode_CancelUserIdBtn">&times;</button>
                 </div>
             </div>
-            <div class="col-10">
-                <label class="fs-3" for="appointmentMode_BookId">書籍編號: </label>
+            <div class="col-12">
+                <label class="fs-2 fw-bold" for="appointmentMode_BookId">書籍編號: </label>
                 <div class="input-group">
                     <input id="appointmentMode_BookId" type="number" name="appointmentMode_BookId" class="form-control" />
-                    <button class="btn btn-outline-secondary" type="button" id="appointmentMode_CancelBookNumBtn">&times;</button>
+                    <button class="btn btn-outline-secondary fs-2" type="button" id="appointmentMode_CancelBookNumBtn">&times;</button>
                 </div>
             </div>
-            <div class="my-4">
-                <button id="appointmentSend" type="button" class="btn btn-success btn-lg" value="appointment">預約</button>
+            <div class="row col-8 mt-3 mx-auto">
+                 <button id="appointmentSend" type="button" class="btn btn-success btn-lg fs-3" value="appointment">預約</button>
             </div>
         </form>
         @*預約發送後的顯示*@
-        <div id="appointmentSuccessContent">
+        <div id="appointmentSuccessContent" class="mt-3">
         </div>
     </div>
-    <div class="col-8" id="appointmentQueryBook">
+    <div class="col-9" id="appointmentQueryBook">
 
         <div class="d-flex justify-content-between align-items-end">
-            <div class="d-flex flex-wrap gap-3 justify-content-end">
+            <div class="d-flex flex-wrap gap-3 justify-content-end fs-3">
                 <div>
-                    <label for="appointmentMode_status" class="form-label mb-0">目前狀態：</label>
-                    <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm">
+                    <label for="appointmentMode_status" class="form-label mb-0 fw-bold">目前狀態：</label>
+                    <select id="appointmentMode_status" name="appointmentMode_status" class="form-select form-select-sm fs-3 fw-bold">
                         <option value="ALL" selected>全部</option>
                         <option value="IsLent">可借閱</option>
                         <option value="Available">借閱中</option>
                     </select>
                 </div>
                 <div>
-                    <label for="appointmentMode_perPage" class="form-label mb-0">每頁筆數：</label>
-                    <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm">
+                    <label for="appointmentMode_perPage" class="form-label mb-0 fw-bold">每頁筆數：</label>
+                    <select id="appointmentMode_perPage" name="appointmentMode_perPage" valus="10" class="form-select form-select-sm fs-3 fw-bold">
                         <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
@@ -58,14 +58,15 @@
 
         @*這裡是結果*@
         <div>
-            <div class="mt-1 fs-5 d-flex flex-wrap gap-3 justify-content-start"></div>
+            <div class="mt-1 fs-3 d-flex flex-wrap gap-3 justify-content-start"></div>
             <table class="table mt-2">
-                <thead>
+                <thead class="fs-3">
                     <tr>
-                        <th scope="col">書籍編號</th>
-                        <th scope="col">書籍名稱</th>
-                        <th scope="col">狀況</th>
-                        <th scope="col">操作</th>
+                        <th scope="col" style="width:500px">書籍名稱</th>
+                        <th scope="col" style="width:200px">作者</th>
+                        <th scope="col" class="text-center" style="width:150px">狀況</th>
+                        <th scope="col" class="text-center" style="width:150px">預約人數</th>
+                        <th scope="col" class="text-center" style="width:100px">操作</th>
                     </tr>
                 </thead>
                 <tbody>
