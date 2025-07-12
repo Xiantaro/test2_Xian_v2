@@ -5,50 +5,66 @@
     {
 
         @await Html.PartialAsync("~/Areas/Backend/Views/Shared/_Partial/_pageParital.cshtml", Model.PageCounts?.FirstOrDefault())
-        <table class="table mt-1 table-hover">
-            <thead>
-                <tr class="fw-bold fs-4" style="width: 100%; table-layout: fixed;">
-                    <th scope="col">ISBN</th>
-                    <th scope="col">封面</th>
-                    <th scope="col">書籍名稱</th>
-                    <th scope="col">作者</th>
-                    <th scope="col">出版社</th>
-                    <th scope="col">出版年份</th>
-                    <th scope="col">書籍簡介</th>
-                    <th scope="col">藏書量</th>
-                    <th scope="col" class="text-center" style="width:200px">操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var x in Model.BookQueryDTOs!)
-                {
-                    <tr class="fs-4">
-                        <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 100px" value="@x.collectionId" title="@x.isbn">@x.isbn</td>
-                        <td class="align-middle" style="width:150px"><img src="data:image/*;base64, @(Convert.ToBase64String(x.collectionImg!))" style="max-width: 150px; height: 180px" alt="無圖片" /></td>
-                        <td class="align-middle text-truncate booktitle" style="max-width: 200px" title="@x.title">@x.title</td>
-                        <td class="align-middle appointmentcid text-truncate" data-cid="" title="@x.author" style="max-width: 200px">@x.author</td>
-                        <td class="align-middle text-truncate" title="@x.publisher" style="max-width:200px">@x.publisher</td>
-                        <td class="align-middle">@x.publishDate.ToString("yyyy/MM/dd")</td>
+<table class="table mt-1 table-hover">
+    <thead>
+        <tr class="fw-bold fs-4" style="width: 100%; table-layout: fixed;">
+            <th scope="col">ISBN</th>
+            <th scope="col">封面</th>
+            <th scope="col">書籍名稱</th>
+            <th scope="col">作者</th>
+            <th scope="col">出版社</th>
+            <th scope="col">出版年份</th>
+            <th scope="col">書籍簡介</th>
+            <th scope="col">藏書量</th>
+            <th scope="col" class="text-center" style="width:200px">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.BookQueryDTOs!)
+        {
+            <tr class="fs-4" data-bs-toggle="collapse" data-bs-target="#@x.collectionId">
+                <td class="align-middle appointmentId" data-appointmentId="" style="max-width: 100px" value="@x.collectionId" title="@x.isbn">@x.isbn</td>
+                <td class="align-middle" style="width:150px"><img src="data:image/*;base64, @(Convert.ToBase64String(x.collectionImg!))" style="max-width: 150px; height: 180px" alt="無圖片" /></td>
+                <td class="align-middle text-truncate booktitle" style="max-width: 200px" title="@x.title">@x.title</td>
+                <td class="align-middle appointmentcid text-truncate" data-cid="" title="@x.author" style="max-width: 200px">@x.author</td>
+                <td class="align-middle text-truncate" title="@x.publisher" style="max-width:200px">@x.publisher</td>
+                <td class="align-middle">@x.publishDate.ToString("yyyy/MM/dd")</td>
 
-                        @if (x.collectionDesc != "")
-                        {
-                            <td class="align-middle text-truncate" style="max-width:200px" title="@x.collectionDesc"><pre class="bg-light border rounded p-2" style="white-space: pre-wrap; max-height: 150px; ">@(x.collectionDesc != "" ? x.collectionDesc : "-")</pre></td>
-                        }
-                        else
-                        {
-                            <td class="align-middle text-truncate text-center" style="max-width:200px" title="@x.collectionDesc">-</td>
-                        }
-                        <td class="align-middle text-center">@x.NumberOfBook</td>
-                        <td class="align-middle align-items-center text-center">
-                            <div class="vstack gap-2 col-md-5 mx-auto">
-                                <button class="btn btn-danger  btn-sm fs-5">修改</button>
-                                <button class="btn btn-success btn-sm fs-5">新增</button>
-                            </div>
-                        </td>
-                    </tr>
+                @if (x.collectionDesc != "")
+                {
+                    <td class="align-middle text-truncate" style="max-width:200px" title="@x.collectionDesc"><pre class="bg-light border rounded p-2" style="white-space: pre-wrap; max-height: 150px; ">@(x.collectionDesc != "" ? x.collectionDesc : "-")</pre></td>
                 }
-            </tbody>
-        </table>
+                else
+                {
+                    <td class="align-middle text-truncate text-center" style="max-width:200px" title="@x.collectionDesc">-</td>
+                }
+                <td class="align-middle text-center">@x.NumberOfBook</td>
+                <td class="align-middle align-items-center text-center">
+                    <div class="vstack gap-2 col-md-5 mx-auto">
+                        <button class="btn btn-danger  btn-sm fs-5">修改</button>
+                        <button class="btn btn-success btn-sm fs-5">新增</button>
+                    </div>
+                </td>
+            </tr>
+            <div id="@x.collectionId" class="collapse">
+                <td colspan="9" class="active" >
+                    <table class="table">
+                        <thead>
+                        <th>書籍編號</th>
+                        <th>書籍狀態</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>1</td><td><button class="btn btn-success btn-sm fs-5">新增</button></td></tr>
+                            <tr><td>1</td><td>1</td><td><button class="btn btn-success btn-sm fs-5">新增</button></td></tr>
+                            <tr><td>1</td><td>1</td><td><button class="btn btn-success btn-sm fs-5">新增</button></td></tr>
+                        </tbody>
+                    </table>
+                </td>
+                </div>
+    }
+        </tbody>
+    </table>
         <div class="container d-flex justify-content-center">
             <nav aria-label="Page navigation example">
                 @if ((Model.PageCounts?.FirstOrDefault()?.TotalPage ?? 0) != 1)
