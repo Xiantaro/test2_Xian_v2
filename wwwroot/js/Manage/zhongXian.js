@@ -382,7 +382,7 @@ function AuthorAutocomplete() {
 
 // #endregion
 
-// #region 書籍管理
+// #region 書籍管理&查詢
 function BooksQuery() {
     $("#content-panel").load("/Backend/Manage/BooksQuerys", () => {
         EnteryBookQuery();
@@ -397,14 +397,31 @@ function EnteryBookQuery() {
     $("#BookContent").html("");
     $("#BookContent").html(QueryWait);
     let page = $(this).data("page") || 1;
-    console.log(page)
     let formDate = $("#BookForm").serialize() + `&page=${page}`;
     $.post("/Backend/Manage/BooksQueryResult", formDate, (result) => {
         $("#BookContent").html(result);
         $(".page-link").on("click", EnteryBookQuery);
         $("#borrow_perPage").on("change", EnteryBookQuery);
         $("#borrow_orderBy").on("change", EnteryBookQuery);
+        $(".collectionTable").on("click", DisplayBookCode);
     });
+}
+
+// 顯示該書的bookcode
+function DisplayBookCode() {
+    let collecionId = $(this).find(".appointmentId").data("appointmentId");
+    console.log("號碼: " + collecionId)
+    $.ajax({
+        type: "Post",
+        url: "/Backend/Manage/BookQueryBookCode",
+        data: { collecionId: collecionId },
+        success: (result) => {
+            console.log("回傳: " + result)
+        },
+        error: (err) => {
+            console.log("錯誤: " + err)
+        }
+    })
 }
 
 // #endregion

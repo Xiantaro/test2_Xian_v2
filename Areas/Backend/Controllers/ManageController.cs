@@ -274,6 +274,15 @@ namespace test2.Areas.Backend.Controllers
 
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchResultPartial.cshtml", QueryResult);
         }
+        [HttpPost]
+        public async Task<IActionResult> BookQueryBookCode(string collecionId)
+        {
+            int rezero = Convert.ToInt32(collecionId);
+            Debug.WriteLine($"傳入的是: {rezero}");
+
+
+            return Json(rezero);
+        }
         #endregion
 
         #region 通用Action
