@@ -41,9 +41,7 @@ namespace test2.Areas.Backend.Controllers
         //預約管理_查詢列表_partial
         public async Task<IActionResult> AppointmentResult(int appointment_reservationNum, int appointment_UserID, string appointment_bookNum, DateTime? appointment_initDate = null, DateTime? appointment_lastDate = null, string appointment_state = "ALL", int appointment_perPage = 10, string appointment_orderDate = "desc", int page = 1)
         {
-            Debug.WriteLine("++++++++++++++預約管理_查詢列表+++++++++++++++");
             Debug.WriteLine("測試載入:  預約ID:" + appointment_reservationNum + " 使用者ID:" + appointment_UserID + " 書本名稱:" + appointment_bookNum + " 開始日期:" + appointment_initDate + " 今天日期:" + appointment_lastDate + " 狀態:" + appointment_state + " 頁數:" + appointment_perPage + " 日期排序:" + appointment_orderDate + "頁數" + page);
-            
             AppoimtmentQueryFilter filter = new AppoimtmentQueryFilter()
             {
                 appointment_reservationId = appointment_reservationNum,
@@ -56,11 +54,8 @@ namespace test2.Areas.Backend.Controllers
                 appointment_orderDate = appointment_orderDate,
                 page = page
             };
-
             var newclass = new AppointmentQueryFinalSearch(_context);
             var final = await newclass.AppointmentQuerySearch(filter);
-            
-            Debug.WriteLine("即將送出........預約搜尋結果!!");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_appointmentResultPartial.cshtml", final);
         }
         #endregion
@@ -90,7 +85,6 @@ namespace test2.Areas.Backend.Controllers
             var service = new BorrowQueryFinalSearch(_context);
             var BorrowQueryViewModels2 = await service.BorrowQuerySeach(borrowqueryFiltervar);
 
-            
             Debug.WriteLine($"測試借閱載入 {borrow_BorrowID}+{borrow_UserID} + {borrow_bookCode} + {borrow_state}+日期 + {borrow_initDate}到 {borrow_lastDate}； {borrow_perPage} + {borrow_OrderDate} + {borrow_orderBy} + 頁數: {page}");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_borrowResultPartial.cshtml", BorrowQueryViewModels2);
         }
@@ -105,7 +99,6 @@ namespace test2.Areas.Backend.Controllers
         // 借書模式_借書
         public async Task<IActionResult> BorrowSend(int borrwoMode_UserID, string borrwoMode_BookCode)
         {
-            Debug.WriteLine("借書開始" + borrwoMode_BookCode + "+++");
             var UserId = await _context.Clients.Where(x => x.CId == borrwoMode_UserID).Select(y => new { y.CId, y.CName }).FirstOrDefaultAsync();
             if (UserId == null) { return Json(0); };
             var BookInfo = await _context.Books.Join(_context.Collections, bok => bok.CollectionId, col => col.CollectionId, (bok, col) => new { bok, col }).Where(x => x.bok.BookCode == borrwoMode_BookCode).Select(result => new { result.col.Title}).FirstOrDefaultAsync();
@@ -131,10 +124,7 @@ namespace test2.Areas.Backend.Controllers
                 cId = result.CId,
                 cName = result.CName
             }).ToListAsync();
-            Debug.WriteLine("++++++++++++++++++++++++++++++++++++");
             if (UserInfoamtion.Count != 1) { return Json(false); }
-            
-            Debug.WriteLine("哈哈哈"+UserInfoamtion);
             return PartialView("~/Areas/Backend/Views/Manage/BorrowModeUser.cshtml", UserInfoamtion);
         }
         // 借書模式_書本資訊
@@ -209,8 +199,6 @@ namespace test2.Areas.Backend.Controllers
             };
             return PartialView("~/Areas/Backend/Views/Manage/AppoimtmentModeQuery.cshtml", FinalRestul);
         }
-
-        
         #endregion
 
         #region 書籍登陸
@@ -224,8 +212,6 @@ namespace test2.Areas.Backend.Controllers
                 Language = bookLanguages,
                 Type = bookTypes,
             };
-
-            Debug.WriteLine("成功進入書籍登陸");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_RegisterPartial.cshtml", LanguageAndTypes);
         }
 
@@ -263,8 +249,6 @@ namespace test2.Areas.Backend.Controllers
             List<Book> bookList = myBookCode.BookCodeAddToList(formdata.BooksAdded_Type, collectionId, formdata.BooksAdded_inCount);
             _context.AddRange(bookList);
             await _context.SaveChangesAsync();
-          
-            Debug.WriteLine("回傳結果");
             return Json(new { ResltCode = 1, Message = "成功新增書籍!" });
         }
         // 作者AutoComplete
@@ -279,15 +263,12 @@ namespace test2.Areas.Backend.Controllers
         #region 書籍管理
         public IActionResult BooksQuerys()
         {
-            Debug.WriteLine("成功進入書籍查詢");
             return PartialView("~/Areas/Backend/Views/Shared/_Partial/_SearchPartial.cshtml");
         }
 
         // 書籍管理查詢結果
         public async Task<IActionResult> BooksQueryResult(BookQueryFormModel BookForm)
         {
-            Debug.WriteLine("書籍管理進入....");
-
             var BookQueryClass = new BookQueryResult(_context);
             var QueryResult = await BookQueryClass.BookQueryResultMethod(BookForm);
 
@@ -299,10 +280,8 @@ namespace test2.Areas.Backend.Controllers
         // 傳送通知
         public async Task<IActionResult> Notification(int NotificationId, string NotificationType, string NotificationTextarea)
         {
-            Debug.WriteLine($"預約者編號: {NotificationId}、通知類型 {NotificationType}、內容 : {NotificationTextarea}");
             var user = await _context.Clients.FirstOrDefaultAsync(x => x.CId == NotificationId);
             if (user == null) { return Json("該預約者不存在"); }
-
             var NotificationSend = new Notification()
             {
                 CId = NotificationId,
@@ -316,9 +295,6 @@ namespace test2.Areas.Backend.Controllers
         // 取消預約
         public async Task<IActionResult> CancelAppointment(int NotificationAppointmentId, int NotificationUser, string NotificationTextarea)
         {
-            Debug.WriteLine($"借閱編號:{NotificationAppointmentId}");
-            Debug.WriteLine($"預約者id:{NotificationUser}");
-            Debug.WriteLine($"文本內容:{NotificationTextarea}");
             var Noticaionl = new Notification
             {
                 CId = NotificationUser,
@@ -339,7 +315,6 @@ namespace test2.Areas.Backend.Controllers
         // 關鍵字動態搜尋
         public async Task<IActionResult> KeyWordAuthorSearch(string keyword)
         {
-            Debug.WriteLine("進入關鍵字");
             var bookTitle = await _context.Collections.Where(x => x.Title.Contains(keyword)).Select(re => new { Label = re.Title + "(書名)", Value = re.Title }).ToListAsync();
             var bookAuthor = await (from col in _context.Collections
                                     join auth in _context.Authors on col.AuthorId equals auth.AuthorId
