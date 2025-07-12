@@ -141,16 +141,16 @@ function BorrowModeModeUserDynamic() {
     $("#BorrowModeSuccessContent").html("");
     console.log("借閱者動態查詢");
     let userId = $("#borrwoMode_UserID").val().trim();
-    if (userId === "") { $("#BorrowModeUser").html(pleaseInputUserId); return; }
+    if (userId === "") { $("#BorrowModeSuccessContent").html(pleaseInputUserId); return; }
     $.post("/Backend/Manage/BorrowUserMessage", { userId: userId }, (result) => {
-        if (result === false) { $("#BorrowModeUser").html(pleaseInputUserId); return; }
-        $("#BorrowModeUser").html(result);
+        if (result === false) { $("#BorrowModeSuccessContent").html(pleaseInputUserId); return; }
+        $("#BorrowModeSuccessContent").html(result);
     })
 }
 // 動態搜尋 書本資訊
 function BorrowModeModeBookDynamic() {
     console.log("書本資訊");
-    $("#BorrowModeSuccessContent").html("");
+    //$("#BorrowModeSuccessContent").html("");
     let bookId = $("#borrwoMode_BookCode").val().trim();
     if (bookId === "") { $("#BorrowModeBook").html(pleaseInputBookId); return; }
     console.log("測試動態書本資訊: " + bookId);
@@ -182,13 +182,13 @@ function CancelBtnUser() {
     console.log("點擊清除按鈕")
     $(this).closest(".input-group").find(".form-control").val("");
     $("#BorrowModeSuccessContent").html("");
-    $("#BorrowModeUser").html(pleaseInputUserId2);
+    $("#BorrowModeSuccessContent").html(pleaseInputUserId2);
     $
 }
 function CancelBtnBook() {
     console.log("點擊清除按鈕")
     $(this).closest(".input-group").find(".form-control").val("");
-    $("#BorrowModeSuccessContent").html("");
+    //$("#BorrowModeSuccessContent").html("");
     $("#BorrowModeBook").html(pleaseInputBookId2);
 }
 // #endregion 借書模式 END
@@ -216,9 +216,7 @@ function ReturnBookSend() {
 
 // #region 預約模式 Module
 function AppointmentMode() {
-    console.log("預約模式進入");
     $("#content-panel").load("/Backend/Manage/AppointmentMode1", () => {
-        console.log("已進入Action")
         $("#appointmentSend").on("click", AppointmentModeSend);
         $("#appointmentMode_KeyWord").on("input", AppointmentModeBookDynamic);
         $("#appointmentMode_CancelUserIdBtn ,#appointmentMode_CancelBookNumBtn").on("click", CancelBtn);
@@ -251,7 +249,6 @@ function AppointmentModeBookDynamic() {
         $("#appointmentQueryBook").html(result);
         $("#appointmentMode_status").val(state);
         $("#appointmentMode_perPage").val(pageCount);
-        console.log("成功載入書本");
         $(".AppointmentMode_AddBookNumBtn").on("click", AppointmentModeAddBook);
         appointmentOnChange();
     });
@@ -500,6 +497,8 @@ function BookQueryAutoComplete() {
         },
         select: (event, ui) => {
             $(this).val(ui.item.value);
+            let autoId = $(this).attr("id");
+            if (autoId === "appointmentMode_KeyWord") { AppointmentModeBookDynamic(); }
             return false;
         }
     })
@@ -550,10 +549,10 @@ let appointmentQueryBookHtml = `
             </div>
         </div>`;
 
-let pleaseInputUserId = `<div class="alert alert-danger fs-1">該名借閱者不存在，請重新輸入</div>`;
-let pleaseInputBookId = `<div class="alert alert-danger fs-1 mt-5">該本書籍不存在，請重新輸入!</div>`;
-let pleaseInputUserId2 = `<div class="alert alert-danger fs-1">請輸入借閱者ID</div>`
-let pleaseInputBookId2 = `<div class="alert alert-danger fs-1">請輸入書本編號</div>`;
+let pleaseInputUserId = `<div class="alert alert-danger fs-1 text-center">該名借閱者不存在，請重新輸入</div>`;
+let pleaseInputBookId = `<div class="row col-12"><div class="alert alert-danger fs-1 mt-5 text-center">該本書籍不存在，請重新輸入</div></div>`;
+let pleaseInputUserId2 = `<div class="alert alert-danger fs-1 text-center">請輸入借閱者ID</div>`
+let pleaseInputBookId2 = `<div class="row col-12"><div class="alert alert-danger fs-1 mt-5 text-center">請輸入書本編號</div> </div>`;
 let QueryWait = `<div class="alert alert-danger fs-1 mt-5">請稍後....</div>`;
 let QueryFalse = `<div class="alert alert-danger fs-1">查無資料</div>`;
 let retrunFalse = `<div class="alert alert-danger fs-1">輸入錯誤，請重新輸入!</div>`;

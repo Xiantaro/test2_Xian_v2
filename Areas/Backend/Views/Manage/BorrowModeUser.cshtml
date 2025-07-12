@@ -1,6 +1,6 @@
 ﻿@model List<test2.Models.ManagementModels.ZhongXian.Borrow.BorrowUser>
 
-<ul class="list-unstyled mx-3">
-    <li class="fs-1 my-3">借閱者ID: @Model[0].cId</li>
-    <li class="fs-1 my-3 " title="老王">借閱者姓名: @Model[0].cName</li>
-</ul>
+<table class="table table-hover table-info table-borderless" >
+    <tr class="fs-1 my-3">  <td>借閱者ID: @Model[0].cId</td></tr>
+    <tr class="fs-1 my-3 " title="@Model[0].cName"><td>借閱者姓名: @Model[0].cName</td></tr>
+</table>
